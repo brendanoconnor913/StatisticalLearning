@@ -1,0 +1,752 @@
+
+R version 3.4.2 (2017-09-28) -- "Short Summer"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Workspace loaded from ~/R/.RData]
+
+> load("~/R/Hitters.rda")
+Warning message:
+R graphics engine version 12 is not supported by this version of RStudio. The Plots tab will be disabled until a newer version of RStudio is installed. 
+> library(randomForest)
+randomForest 4.6-12
+Type rfNews() to see new features/changes/bug fixes.
+> Hitters = na.omit(Hitters)
+> View(Hitters)
+> View(Hitters)
+> newSal = log(Hitters$Salary)
+> newHit = data.frame(Hitters,newSal)
+> train = 1:200
+> newHit = newHit[,-Salary]
+Error in `[.data.frame`(newHit, , -Salary) : object 'Salary' not found
+> View(newHit)
+> newHit$Salary = NULL
+> require(gbm)
+Loading required package: gbm
+Loading required package: survival
+Loading required package: lattice
+Loading required package: splines
+Loading required package: parallel
+Loaded gbm 2.1.3
+> boost.hitters = gbm(newSal~.,data=newHit[train,],distribution="gaussian",n.tree=1000,shrinkage=lambda)
+Error in gbm.fit(x, y, offset = offset, distribution = distribution, w = w,  : 
+  object 'lambda' not found
+> test = 1:3:50
+Warning message:
+In 1:3:50 : numerical expression has 3 elements: only the first used
+> test = seq(from=1, to=50, by3)
+Error in seq.default(from = 1, to = 50, by3) : object 'by3' not found
+> test = seq(from=1, to=50, by=3)
+> for(lambda in seq(from=0,to=1,by=.1)){
++     
++ }
+> train.mse = double(20)
+> test.mse = double(20)
+> for(lambda in seq(from=0,to=1,by=.1)){
++     boost.hitters = gbm(newSal~.,data=newHit[train,],distribution="gaussian",n.tree=1000,shrinkage=lambda)
++     
++ }
+> ?boost.hitters
+No documentation for ‘boost.hitters’ in specified packages and libraries:
+you could try ‘??boost.hitters’
+> names(boost.hitters)
+ [1] "initF"             "fit"               "train.error"      
+ [4] "valid.error"       "oobag.improve"     "trees"            
+ [7] "c.splits"          "bag.fraction"      "distribution"     
+[10] "interaction.depth" "n.minobsinnode"    "num.classes"      
+[13] "n.trees"           "nTrain"            "train.fraction"   
+[16] "response.name"     "shrinkage"         "var.levels"       
+[19] "var.monotone"      "var.names"         "var.type"         
+[22] "verbose"           "data"              "Terms"            
+[25] "cv.folds"          "call"              "m"                
+> names(boost.hitters$var.names)
+NULL
+> summary(boost.hitters)
+                var    rel.inf
+CAtBat       CAtBat 23.1111908
+PutOuts     PutOuts 10.8337779
+CWalks       CWalks  7.1262219
+Assists     Assists  6.0746940
+CHmRun       CHmRun  5.9748015
+Walks         Walks  5.8723921
+CRBI           CRBI  5.5487940
+RBI             RBI  5.0686569
+Hits           Hits  4.6829653
+Errors       Errors  4.5636603
+Years         Years  4.1458936
+AtBat         AtBat  4.0523187
+HmRun         HmRun  3.7783303
+Runs           Runs  3.3472023
+CRuns         CRuns  2.3383395
+CHits         CHits  1.9695902
+Division   Division  1.0476588
+NewLeague NewLeague  0.3606486
+League       League  0.1028633
+> boost.hitters$valid.error
+   [1] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+  [15] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+  [29] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+  [43] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+  [57] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+  [71] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+  [85] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+  [99] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [113] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [127] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [141] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [155] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [169] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [183] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [197] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [211] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [225] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [239] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [253] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [267] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [281] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [295] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [309] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [323] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [337] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [351] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [365] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [379] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [393] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [407] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [421] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [435] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [449] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [463] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [477] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [491] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [505] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [519] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [533] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [547] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [561] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [575] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [589] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [603] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [617] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [631] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [645] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [659] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [673] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [687] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [701] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [715] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [729] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [743] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [757] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [771] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [785] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [799] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [813] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [827] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [841] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [855] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [869] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [883] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [897] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [911] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [925] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [939] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [953] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [967] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [981] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+ [995] NaN NaN NaN NaN NaN NaN
+> boost.hitters$train.error
+   [1] 0.3298467308 0.3097312728 0.2934181990 0.2553216772
+   [5] 0.2472519100 0.2535869771 0.2519610096 0.2507967801
+   [9] 0.2531706885 0.2313691890 0.2326307675 0.2295432688
+  [13] 0.2193814322 0.2150561909 0.2145608177 0.2152379033
+  [17] 0.2125028473 0.2216257256 0.2079154863 0.1987811051
+  [21] 0.2046355464 0.2141883912 0.2162843119 0.2126356866
+  [25] 0.1899749574 0.1932668702 0.1916001471 0.1773309288
+  [29] 0.1846616245 0.1708338758 0.1715321603 0.1646655008
+  [33] 0.1707141182 0.1731623957 0.1651186451 0.1662816585
+  [37] 0.1668085763 0.1563507726 0.1568966010 0.1575756641
+  [41] 0.1591487541 0.1581662121 0.1698371890 0.1595165672
+  [45] 0.1544775943 0.1596650350 0.1668968539 0.1558357891
+  [49] 0.1519200369 0.1511893290 0.1448640274 0.1432942002
+  [53] 0.1454786971 0.1390936807 0.1465255627 0.1471888963
+  [57] 0.1478736639 0.1411966614 0.1360203069 0.1310040244
+  [61] 0.1355507842 0.1326169767 0.1307373891 0.1272876361
+  [65] 0.1237964608 0.1231439572 0.1200467955 0.1143437126
+  [69] 0.1142667828 0.1162200367 0.1142102845 0.1182707029
+  [73] 0.1110913673 0.1137809194 0.1094511776 0.1066710102
+  [77] 0.1103069322 0.1024187667 0.1096155194 0.1182299373
+  [81] 0.1107766172 0.1021733888 0.1030152712 0.1072452672
+  [85] 0.1079335384 0.1076324505 0.1034901692 0.1018501740
+  [89] 0.1029550705 0.0959071067 0.0922348728 0.0926872434
+  [93] 0.0930647461 0.0942144527 0.0953748645 0.1010471458
+  [97] 0.0989327287 0.1035372120 0.0979679840 0.0948945650
+ [101] 0.1006947026 0.0967783884 0.0993190864 0.0967084055
+ [105] 0.0990960458 0.0970521296 0.0938992829 0.0936421973
+ [109] 0.0910617249 0.0994499518 0.0959880496 0.0916769797
+ [113] 0.0894850495 0.0881069773 0.0845590110 0.0872051331
+ [117] 0.0876802066 0.0839154143 0.0847899666 0.0824791180
+ [121] 0.0827411106 0.0816995882 0.0844448208 0.0862216736
+ [125] 0.0816388494 0.0839372103 0.0793366682 0.0808067919
+ [129] 0.0839555197 0.0780562212 0.0760599619 0.0729344904
+ [133] 0.0745388844 0.0741959121 0.0730333029 0.0692675234
+ [137] 0.0686204224 0.0697735950 0.0696295912 0.0676838192
+ [141] 0.0659738082 0.0689552306 0.0675660504 0.0661055025
+ [145] 0.0683710517 0.0649206595 0.0639278401 0.0651350324
+ [149] 0.0639795317 0.0598039341 0.0600708419 0.0599405062
+ [153] 0.0617838538 0.0611022905 0.0599869058 0.0570652812
+ [157] 0.0575951046 0.0563834934 0.0543306403 0.0558491200
+ [161] 0.0554950625 0.0560209800 0.0544861342 0.0550299302
+ [165] 0.0546357605 0.0547122629 0.0529039810 0.0531495809
+ [169] 0.0528913893 0.0546433001 0.0541581127 0.0545426024
+ [173] 0.0534567282 0.0538566024 0.0560489184 0.0546798987
+ [177] 0.0547360816 0.0548645989 0.0525942039 0.0510316194
+ [181] 0.0518645767 0.0522015357 0.0503949825 0.0498291743
+ [185] 0.0506724617 0.0487880724 0.0509987474 0.0516105512
+ [189] 0.0503683143 0.0493885398 0.0500305192 0.0496859589
+ [193] 0.0477215784 0.0474192784 0.0471658663 0.0478889404
+ [197] 0.0479061893 0.0489337547 0.0471230675 0.0492770605
+ [201] 0.0493056593 0.0483287068 0.0469470670 0.0467232965
+ [205] 0.0434085812 0.0442033446 0.0455196982 0.0461247935
+ [209] 0.0458194866 0.0437866317 0.0471275442 0.0444563646
+ [213] 0.0450374601 0.0494603958 0.0450624964 0.0429750701
+ [217] 0.0442081939 0.0431135031 0.0427589242 0.0452037463
+ [221] 0.0443803479 0.0429409343 0.0421439330 0.0403523806
+ [225] 0.0409056226 0.0412453675 0.0418751256 0.0397437679
+ [229] 0.0402180238 0.0396955865 0.0416295598 0.0394820367
+ [233] 0.0395653524 0.0420467925 0.0416233758 0.0452464167
+ [237] 0.0448267172 0.0413495559 0.0442356455 0.0393411733
+ [241] 0.0377137024 0.0381951710 0.0359013657 0.0359000350
+ [245] 0.0404872731 0.0375873465 0.0357677443 0.0336507866
+ [249] 0.0324989597 0.0309939270 0.0310058630 0.0308765802
+ [253] 0.0304641469 0.0324755702 0.0316745428 0.0311229374
+ [257] 0.0322885603 0.0310826165 0.0296886807 0.0300462869
+ [261] 0.0284441446 0.0278754734 0.0279759915 0.0265809748
+ [265] 0.0297554975 0.0287902310 0.0277797930 0.0284842530
+ [269] 0.0266938702 0.0271406151 0.0279914756 0.0274171755
+ [273] 0.0267697878 0.0265095064 0.0268827802 0.0273922277
+ [277] 0.0268817694 0.0256275814 0.0263353802 0.0255499539
+ [281] 0.0257228004 0.0269718957 0.0274537774 0.0257986568
+ [285] 0.0261705363 0.0270271780 0.0260279499 0.0257802043
+ [289] 0.0263826831 0.0253523393 0.0240097785 0.0238508711
+ [293] 0.0229194876 0.0231229129 0.0239659298 0.0222687478
+ [297] 0.0225753746 0.0225387900 0.0223456603 0.0220105166
+ [301] 0.0217382900 0.0210975841 0.0221409932 0.0222972272
+ [305] 0.0236744840 0.0222441957 0.0216663692 0.0220395921
+ [309] 0.0222163157 0.0218359961 0.0214963546 0.0224239215
+ [313] 0.0222330780 0.0223138937 0.0238989742 0.0222771762
+ [317] 0.0227575769 0.0233044080 0.0212869012 0.0239546456
+ [321] 0.0246075630 0.0226717901 0.0222294673 0.0218288632
+ [325] 0.0218979266 0.0215009999 0.0233774823 0.0211550435
+ [329] 0.0213247116 0.0205525428 0.0228581913 0.0217097228
+ [333] 0.0216961355 0.0213320216 0.0212392202 0.0213511484
+ [337] 0.0211607465 0.0204705794 0.0202273946 0.0204082369
+ [341] 0.0201502369 0.0205124099 0.0206333205 0.0204084845
+ [345] 0.0213290812 0.0204823797 0.0211004571 0.0200215955
+ [349] 0.0201945547 0.0207179822 0.0200028601 0.0204625026
+ [353] 0.0202149892 0.0200823562 0.0212476724 0.0197512634
+ [357] 0.0202270315 0.0203557868 0.0207185791 0.0224191691
+ [361] 0.0207133883 0.0204742625 0.0189632106 0.0187337449
+ [365] 0.0193982906 0.0189550825 0.0184255939 0.0187898981
+ [369] 0.0185149571 0.0185333305 0.0186025099 0.0197599182
+ [373] 0.0199630324 0.0193595219 0.0187335617 0.0186901457
+ [377] 0.0184734875 0.0179465328 0.0175829083 0.0174945552
+ [381] 0.0177502301 0.0177293644 0.0172052604 0.0165628094
+ [385] 0.0175499122 0.0166624544 0.0165400297 0.0171125368
+ [389] 0.0164330604 0.0163362278 0.0160004419 0.0161541917
+ [393] 0.0160263571 0.0158997501 0.0163067125 0.0162381761
+ [397] 0.0159528393 0.0163014276 0.0170875521 0.0162039758
+ [401] 0.0159114326 0.0163308732 0.0156970158 0.0169188073
+ [405] 0.0153388318 0.0157446604 0.0148596170 0.0147595958
+ [409] 0.0149511068 0.0165956491 0.0154202437 0.0159346018
+ [413] 0.0169807162 0.0163759640 0.0156714762 0.0159387497
+ [417] 0.0155333212 0.0152573654 0.0153811950 0.0151727336
+ [421] 0.0154705020 0.0159690339 0.0153964715 0.0162215637
+ [425] 0.0154559599 0.0162491239 0.0156796290 0.0151941887
+ [429] 0.0157984995 0.0160007757 0.0162339463 0.0185700016
+ [433] 0.0166044399 0.0166975375 0.0169302264 0.0179930194
+ [437] 0.0175982733 0.0157397224 0.0157667313 0.0153767073
+ [441] 0.0151473279 0.0157643769 0.0156946380 0.0154574407
+ [445] 0.0143680266 0.0148051696 0.0141937474 0.0143723969
+ [449] 0.0140765105 0.0144666644 0.0146680546 0.0143256784
+ [453] 0.0132325988 0.0136594284 0.0133112358 0.0131573491
+ [457] 0.0132454394 0.0132226215 0.0136735038 0.0136922327
+ [461] 0.0134612792 0.0125025956 0.0128275281 0.0129897279
+ [465] 0.0125101157 0.0127095412 0.0125685093 0.0128780705
+ [469] 0.0128419795 0.0127149619 0.0125758569 0.0121950292
+ [473] 0.0116679315 0.0118455277 0.0120324749 0.0124564340
+ [477] 0.0128978888 0.0125231756 0.0130282617 0.0124158917
+ [481] 0.0125532785 0.0131312992 0.0130040759 0.0134060740
+ [485] 0.0128900233 0.0118977455 0.0119968109 0.0120715060
+ [489] 0.0117013142 0.0124707527 0.0115124993 0.0121104617
+ [493] 0.0126075894 0.0129862843 0.0125758298 0.0126408662
+ [497] 0.0127089173 0.0120334130 0.0120215379 0.0121714363
+ [501] 0.0127908762 0.0121155382 0.0116567024 0.0119145249
+ [505] 0.0118174536 0.0115567025 0.0113484469 0.0114072127
+ [509] 0.0114036301 0.0110779082 0.0111543562 0.0107308004
+ [513] 0.0099783137 0.0098656296 0.0099938711 0.0100471254
+ [517] 0.0105521907 0.0100971746 0.0097629983 0.0094296222
+ [521] 0.0093464771 0.0089293096 0.0088740722 0.0090675396
+ [525] 0.0089833744 0.0092977076 0.0086885041 0.0085101025
+ [529] 0.0085428347 0.0088524674 0.0087186362 0.0078683548
+ [533] 0.0080624031 0.0077802033 0.0077098117 0.0075758312
+ [537] 0.0074283976 0.0072810883 0.0071170887 0.0072488088
+ [541] 0.0073765685 0.0073870469 0.0074273615 0.0077557779
+ [545] 0.0078894102 0.0073547351 0.0074568303 0.0075350548
+ [549] 0.0076150495 0.0074284866 0.0073837257 0.0075261533
+ [553] 0.0075122309 0.0075332829 0.0075071597 0.0075091971
+ [557] 0.0072560848 0.0071672482 0.0073058348 0.0072829468
+ [561] 0.0074458265 0.0075446324 0.0073423822 0.0070199603
+ [565] 0.0069637887 0.0068666076 0.0067488673 0.0066441645
+ [569] 0.0063820612 0.0068476965 0.0063516008 0.0061485246
+ [573] 0.0064453376 0.0065613783 0.0063297409 0.0061675555
+ [577] 0.0060911587 0.0061751207 0.0059631575 0.0059353267
+ [581] 0.0061296362 0.0058010167 0.0058018579 0.0056046852
+ [585] 0.0055085303 0.0058081368 0.0057708115 0.0055352101
+ [589] 0.0053469859 0.0053637018 0.0051387670 0.0052446061
+ [593] 0.0056244304 0.0054591184 0.0060112390 0.0053882122
+ [597] 0.0054644994 0.0055034930 0.0054266837 0.0054499518
+ [601] 0.0052906749 0.0051937938 0.0054826379 0.0050926253
+ [605] 0.0050444261 0.0050313469 0.0050154130 0.0050798060
+ [609] 0.0048245340 0.0047557549 0.0048467749 0.0046228420
+ [613] 0.0044263100 0.0044637165 0.0047539881 0.0046934281
+ [617] 0.0046549631 0.0045650486 0.0046672157 0.0048107309
+ [621] 0.0047039108 0.0045899563 0.0046249749 0.0047164243
+ [625] 0.0043748727 0.0044482131 0.0044686842 0.0044070714
+ [629] 0.0043890770 0.0044599810 0.0044473847 0.0043056151
+ [633] 0.0042371025 0.0040917170 0.0039777199 0.0039662765
+ [637] 0.0041665912 0.0039779384 0.0040039737 0.0040919061
+ [641] 0.0040071906 0.0041781202 0.0040462768 0.0039994942
+ [645] 0.0040605072 0.0037544236 0.0037709225 0.0037072760
+ [649] 0.0038829716 0.0038016045 0.0037758346 0.0038934808
+ [653] 0.0038917281 0.0037758755 0.0036445600 0.0034841625
+ [657] 0.0036591900 0.0035187168 0.0035451187 0.0035092493
+ [661] 0.0034460525 0.0032431057 0.0033396021 0.0034525989
+ [665] 0.0034032429 0.0034458224 0.0033861989 0.0034843302
+ [669] 0.0034284362 0.0033923652 0.0033094397 0.0034441871
+ [673] 0.0033752042 0.0033887025 0.0033762810 0.0033112987
+ [677] 0.0034564239 0.0031907705 0.0031232105 0.0033267977
+ [681] 0.0031727766 0.0031607939 0.0031191525 0.0031496657
+ [685] 0.0031273578 0.0030938053 0.0032043428 0.0031118671
+ [689] 0.0030757310 0.0031091936 0.0030547393 0.0029991307
+ [693] 0.0029860512 0.0029710368 0.0029560760 0.0030355792
+ [697] 0.0030821856 0.0029221276 0.0028910657 0.0029792658
+ [701] 0.0030593775 0.0030173726 0.0028493855 0.0029049363
+ [705] 0.0029984942 0.0029193871 0.0032026256 0.0030107962
+ [709] 0.0030209680 0.0029142457 0.0029734800 0.0031280994
+ [713] 0.0029230741 0.0028479549 0.0027930969 0.0028798434
+ [717] 0.0028371910 0.0027647087 0.0027202974 0.0026842336
+ [721] 0.0026618488 0.0027495511 0.0026532845 0.0027207848
+ [725] 0.0027189487 0.0027773617 0.0028092700 0.0026685406
+ [729] 0.0028266292 0.0027900656 0.0030266391 0.0029073448
+ [733] 0.0028458829 0.0029298389 0.0028998349 0.0028128710
+ [737] 0.0026606250 0.0026728660 0.0026697871 0.0025686316
+ [741] 0.0025456375 0.0025270154 0.0025426207 0.0024339880
+ [745] 0.0023766223 0.0023302899 0.0022869018 0.0022313679
+ [749] 0.0023243522 0.0023383649 0.0023338425 0.0022517316
+ [753] 0.0021690653 0.0021537327 0.0021700568 0.0021999871
+ [757] 0.0022023472 0.0022423103 0.0021718801 0.0022156301
+ [761] 0.0021037054 0.0020593079 0.0020556422 0.0020002733
+ [765] 0.0019573523 0.0018966069 0.0019123700 0.0020021458
+ [769] 0.0019221055 0.0019366266 0.0018935494 0.0018390456
+ [773] 0.0019494549 0.0020037868 0.0018735860 0.0019305750
+ [777] 0.0019037090 0.0018776763 0.0019474287 0.0018559022
+ [781] 0.0018305866 0.0018587567 0.0017933397 0.0017904544
+ [785] 0.0018629924 0.0018815418 0.0018500595 0.0019298991
+ [789] 0.0018625490 0.0018476888 0.0018343174 0.0018234613
+ [793] 0.0018452756 0.0017820248 0.0017994492 0.0017629476
+ [797] 0.0017403932 0.0016354512 0.0016268250 0.0016977914
+ [801] 0.0017074832 0.0016302391 0.0016423945 0.0016753847
+ [805] 0.0015946037 0.0015602850 0.0015449239 0.0015456247
+ [809] 0.0015200231 0.0015227774 0.0014938254 0.0015123372
+ [813] 0.0015297825 0.0015646212 0.0016466156 0.0016214931
+ [817] 0.0016416894 0.0015822671 0.0018164124 0.0016068458
+ [821] 0.0015888759 0.0016232198 0.0016649389 0.0016130147
+ [825] 0.0015187878 0.0014850411 0.0015055166 0.0014589288
+ [829] 0.0015086532 0.0014592427 0.0013487607 0.0013709761
+ [833] 0.0013695724 0.0013670648 0.0014005862 0.0013959157
+ [837] 0.0013412406 0.0013366348 0.0013136619 0.0013272014
+ [841] 0.0014132503 0.0013524590 0.0013693974 0.0013955629
+ [845] 0.0014342051 0.0014540083 0.0013736657 0.0013033576
+ [849] 0.0012925385 0.0013142486 0.0013269262 0.0013723051
+ [853] 0.0013945088 0.0014002934 0.0013939396 0.0013466091
+ [857] 0.0013593868 0.0012769658 0.0011983047 0.0012287089
+ [861] 0.0012904221 0.0011974959 0.0011818395 0.0011331356
+ [865] 0.0011414035 0.0011424745 0.0011297758 0.0011070631
+ [869] 0.0011091405 0.0010938776 0.0010553689 0.0010702712
+ [873] 0.0010641437 0.0010257782 0.0010385313 0.0010691821
+ [877] 0.0010860268 0.0010586979 0.0011031601 0.0010402826
+ [881] 0.0010538642 0.0010487839 0.0011174711 0.0010379338
+ [885] 0.0010456071 0.0010066793 0.0010003006 0.0009979825
+ [889] 0.0009567064 0.0009802093 0.0009955861 0.0010316168
+ [893] 0.0010191639 0.0009899206 0.0009453202 0.0009249364
+ [897] 0.0009014573 0.0008946036 0.0009340997 0.0009073602
+ [901] 0.0009744847 0.0009029612 0.0009095668 0.0008756506
+ [905] 0.0009138661 0.0008589227 0.0008510913 0.0008756802
+ [909] 0.0008617599 0.0008429752 0.0008096416 0.0008308003
+ [913] 0.0008393514 0.0008115751 0.0008046166 0.0007963785
+ [917] 0.0008293000 0.0007983880 0.0008246429 0.0008102338
+ [921] 0.0008368492 0.0008207296 0.0007776651 0.0007884992
+ [925] 0.0008044735 0.0007844801 0.0007795075 0.0007750338
+ [929] 0.0008058527 0.0007728181 0.0008256282 0.0008805848
+ [933] 0.0008520251 0.0008120180 0.0008461072 0.0007935517
+ [937] 0.0008242103 0.0007925953 0.0007987029 0.0008080654
+ [941] 0.0007838203 0.0007915338 0.0007571011 0.0007578124
+ [945] 0.0007545996 0.0007403894 0.0007298297 0.0007264957
+ [949] 0.0007055360 0.0006946883 0.0006815683 0.0006698132
+ [953] 0.0006750660 0.0006651114 0.0006705685 0.0007031396
+ [957] 0.0006618355 0.0006492442 0.0006620587 0.0006427977
+ [961] 0.0006406098 0.0006366385 0.0006034278 0.0005979771
+ [965] 0.0005939240 0.0005878720 0.0005731813 0.0005679618
+ [969] 0.0005554310 0.0005494940 0.0005782927 0.0005530986
+ [973] 0.0005411578 0.0005546138 0.0005237797 0.0005180022
+ [977] 0.0005314660 0.0005616381 0.0005300101 0.0005156475
+ [981] 0.0005132049 0.0005086863 0.0005751554 0.0005072464
+ [985] 0.0005116824 0.0005279207 0.0005305201 0.0004959288
+ [989] 0.0005115883 0.0005189957 0.0005107070 0.0005082190
+ [993] 0.0005128458 0.0005006399 0.0005113523 0.0005038024
+ [997] 0.0005393519 0.0005098945 0.0005018560 0.0005071970
+> for(lambda in seq(from=0,to=1,by=.1)){
++     boost.hitters = gbm(newSal~.,data=newHit[train,],distribution="gaussian",n.tree=1000,shrinkage=lambda)
++     train.mse[10] = boost.hitters$train.error[1000]
++     test.mse[10] = boost.hitters$train.error[1000]
++     
++     
++ }
+> for(lambda in seq(from=0,to=1,by=.1)){
++     boost.hitters = gbm(newSal~.,data=newHit[train,],distribution="gaussian",n.tree=1000,shrinkage=lambda)
++     train.mse[10] = boost.hitters$train.error[1000]
++     pred = predict(boost.hitters, newHit[-train,])
++     test.mse[10] = with(newHit[-train], mean((newSal - pred)^2))
++     
++     
++ }
+Error in paste("Using", n.trees, "trees...\n") : 
+  argument "n.trees" is missing, with no default
+> for(lambda in seq(from=0,to=1,by=.1)){
++     boost.hitters = gbm(newSal~.,data=newHit[train,],distribution="gaussian",n.trees=1000,shrinkage=lambda)
++     train.mse[10] = boost.hitters$train.error[1000]
++     pred = predict(boost.hitters, newHit[-train,])
++     test.mse[10] = with(newHit[-train], mean((newSal - pred)^2))
++     
++     
++ }
+Error in paste("Using", n.trees, "trees...\n") : 
+  argument "n.trees" is missing, with no default
+> for(lambda in seq(from=0,to=1,by=.1)){
++     boost.hitters = gbm(newSal~.,data=newHit[train,],distribution="gaussian",n.trees=1000,shrinkage=lambda)
++     train.mse[10] = boost.hitters$train.error[1000]
++     pred = predict(boost.hitters, newHit[-train,],ntrees=1000)
++     test.mse[10] = with(newHit[-train], mean((newSal - pred)^2))
++     
++     
++ }
+Error in paste("Using", n.trees, "trees...\n") : 
+  argument "n.trees" is missing, with no default
+> for(lambda in seq(from=0,to=1,by=.1)){
++     boost.hitters = gbm(newSal~.,data=newHit[train,],distribution="gaussian",n.trees=1000,shrinkage=lambda)
++     train.mse[10] = boost.hitters$train.error[1000]
++     pred = predict(boost.hitters, newdata=newHit[-train,],ntrees=1000)
++     test.mse[10] = with(newHit[-train], mean((newSal - pred)^2))
++     
++     
++ }
+Error in paste("Using", n.trees, "trees...\n") : 
+  argument "n.trees" is missing, with no default
+> for(lambda in seq(from=0,to=1,by=.1)){
++     boost.hitters = gbm(newSal~.,data=newHit[train,],distribution="gaussian",n.trees=1000,shrinkage=lambda)
++     train.mse[10] = boost.hitters$train.error[1000]
++     pred = predict(boost.hitters, newdata=newHit[-train,],n.trees=1000)
++     test.mse[10] = with(newHit[-train], mean((newSal - pred)^2))
++     
++     
++ }
+There were 11 warnings (use warnings() to see them)
+> test.mse
+ [1] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+ [7] 0.000000 0.000000 0.000000 1.742792 0.000000 0.000000
+[13] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+[19] 0.000000 0.000000
+> train.mse
+ [1] 0.000000000 0.000000000 0.000000000 0.000000000 0.000000000
+ [6] 0.000000000 0.000000000 0.000000000 0.000000000 0.000671855
+[11] 0.000000000 0.000000000 0.000000000 0.000000000 0.000000000
+[16] 0.000000000 0.000000000 0.000000000 0.000000000 0.000000000
+> xaxis = seq(from=0,to=1,by=.5)
+> for(lambda in seq(from=0,to=1,by=.5)){
++     boost.hitters = gbm(newSal~.,data=newHit[train,],distribution="gaussian",n.trees=1000,shrinkage=lambda)
++     train.mse[10] = boost.hitters$train.error[1000]
++     pred = predict(boost.hitters, newdata=newHit[-train,],n.trees=1000)
++     test.mse[10] = with(newHit[-train], mean((newSal - pred)^2))
++     
++ }
+Warning messages:
+1: In newSal - pred :
+  longer object length is not a multiple of shorter object length
+2: In newSal - pred :
+  longer object length is not a multiple of shorter object length
+3: In newSal - pred :
+  longer object length is not a multiple of shorter object length
+> for(lambda in seq(from=0,to=1,by=.5)){
++     boost.hitters = gbm(newSal~.,data=newHit[train,],distribution="gaussian",n.trees=1000,shrinkage=lambda)
++     train.mse[10] = boost.hitters$train.error[1000]
++     pred = predict(boost.hitters, newdata=newHit[-train,],n.trees=1000)
++     test.mse[10] = mean((newHit[-train,]$newSal - pred)^2)
++     
++ }
+> i = 1
+> for(lambda in seq(from=0,to=1,by=.5)){
++     boost.hitters = gbm(newSal~.,data=newHit[train,],distribution="gaussian",n.trees=1000,shrinkage=lambda)
++     train.mse[10] = boost.hitters$train.error[1000]
++     pred = predict(boost.hitters, newdata=newHit[-train,],n.trees=1000)
++     test.mse[10] = mean((newHit[-train,]$newSal - pred)^2)
++     i = i + 1
++ }
+> i = 1
+> for(lambda in seq(from=0,to=1,by=.05)){
++     boost.hitters = gbm(newSal~.,data=newHit[train,],distribution="gaussian",n.trees=1000,shrinkage=lambda)
++     train.mse[10] = boost.hitters$train.error[1000]
++     pred = predict(boost.hitters, newdata=newHit[-train,],n.trees=1000)
++     test.mse[10] = mean((newHit[-train,]$newSal - pred)^2)
++     i = i + 1
++ }
+> i = 1
+> for(lambda in seq(from=0,to=1,by=.05)){
++     boost.hitters = gbm(newSal~.,data=newHit[train,],distribution="gaussian",n.trees=1000,shrinkage=lambda)
++     train.mse[i] = boost.hitters$train.error[1000]
++     pred = predict(boost.hitters, newdata=newHit[-train,],n.trees=1000)
++     test.mse[i] = mean((newHit[-train,]$newSal - pred)^2)
++     i = i + 1
++ }
+> test.mse
+ [1] 0.6475407 0.2675084 0.2746901 0.2551701 0.2902656 0.3338193
+ [7] 0.3022752 0.3074941 0.3543351 0.4255944 0.4492380 0.4426679
+[13] 0.3771750 0.3422999 0.3487700 0.4423571 0.3662682 0.4095692
+[19] 0.3737465 0.4979459 0.5397723
+> train.mse
+ [1] 0.8320128947 0.0779346930 0.0496883096 0.0313212457
+ [5] 0.0252546550 0.0148308389 0.0130630852 0.0079014710
+ [9] 0.0068673913 0.0061815716 0.0044983672 0.0036340257
+[13] 0.0023492331 0.0025433598 0.0021290932 0.0018801809
+[17] 0.0009344259 0.0008477299 0.0016338699 0.0004597568
+[21] 0.0007148596
+> matplot(seq(from=0,to=1,by=.05),cbind(train.mse,test.mse),pch=19,cal=c("red","blue"),type="b"
++ ))
+Error: unexpected ')' in:
+"matplot(seq(from=0,to=1,by=.05),cbind(train.mse,test.mse),pch=19,cal=c("red","blue"),type="b"
+))"
+> matplot(seq(from=0,to=1,by=.05),cbind(train.mse,test.mse),pch=19,cal=c("red","blue"),type="b"
++ )
+Warning messages:
+1: In plot.window(...) : "cal" is not a graphical parameter
+2: In plot.xy(xy, type, ...) : "cal" is not a graphical parameter
+3: In axis(side = side, at = at, labels = labels, ...) :
+  "cal" is not a graphical parameter
+4: In axis(side = side, at = at, labels = labels, ...) :
+  "cal" is not a graphical parameter
+5: In box(...) : "cal" is not a graphical parameter
+6: In title(...) : "cal" is not a graphical parameter
+> matplot(seq(from=0,to=1,by=.05),cbind(train.mse,test.mse),pch=19,cal=c("red","blue"),type="b",ylab="mse",xlab="lambda")
+Warning messages:
+1: In plot.window(...) : "cal" is not a graphical parameter
+2: In plot.xy(xy, type, ...) : "cal" is not a graphical parameter
+3: In axis(side = side, at = at, labels = labels, ...) :
+  "cal" is not a graphical parameter
+4: In axis(side = side, at = at, labels = labels, ...) :
+  "cal" is not a graphical parameter
+5: In box(...) : "cal" is not a graphical parameter
+6: In title(...) : "cal" is not a graphical parameter
+> importance(boost.hitters)
+Error in UseMethod("importance") : 
+  no applicable method for 'importance' applied to an object of class "gbm"
+> plot(boost.hitters)
+> summary(boost.hitters)
+                var    rel.inf
+CAtBat       CAtBat 17.8468690
+PutOuts     PutOuts 11.6972026
+Assists     Assists  7.8665578
+CHmRun       CHmRun  7.4909285
+HmRun         HmRun  5.5232156
+AtBat         AtBat  5.4644856
+Walks         Walks  5.3871773
+RBI             RBI  5.2901638
+CRBI           CRBI  4.9353959
+Errors       Errors  4.6356394
+CRuns         CRuns  4.5616834
+CWalks       CWalks  4.5215520
+Hits           Hits  3.9059997
+Division   Division  3.0094769
+Years         Years  2.9277754
+Runs           Runs  2.6476499
+CHits         CHits  1.3291644
+NewLeague NewLeague  0.7572281
+League       League  0.2018348
+> boost.min.testmse = min(test.mse)
+> boost.min.testmse
+[1] 0.2551701
+> lm.fit = lm(newSal~.,data=newHit[train,])
+> lm.pred = predict(lm,newdata=newHit[-train,train])
+Error in UseMethod("predict") : 
+  no applicable method for 'predict' applied to an object of class "function"
+> lm.pred = predict(lm,newdata=newHit[-train,])
+Error in UseMethod("predict") : 
+  no applicable method for 'predict' applied to an object of class "function"
+> lm.pred = predict(lm.fit,newdata=newHit[-train,])
+> lm.mse = mean((newHit[-train,]$newSal - lm.pred)^2)
+> lm.mse
+[1] 0.4917959
+> library(ISLR)
+
+Attaching package: ‘ISLR’
+
+The following object is masked _by_ ‘.GlobalEnv’:
+
+    Hitters
+
+> ?regsubsets
+No documentation for ‘regsubsets’ in specified packages and libraries:
+you could try ‘??regsubsets’
+> library(leaps)
+> ?regsubsets
+> regfit = regsubsets(newSal~.,data=newHit[train,],nvmax=19)
+> summary(regfit)
+Subset selection object
+Call: regsubsets.formula(newSal ~ ., data = newHit[train, ], nvmax = 19)
+19 Variables  (and intercept)
+           Forced in Forced out
+AtBat          FALSE      FALSE
+Hits           FALSE      FALSE
+HmRun          FALSE      FALSE
+Runs           FALSE      FALSE
+RBI            FALSE      FALSE
+Walks          FALSE      FALSE
+Years          FALSE      FALSE
+CAtBat         FALSE      FALSE
+CHits          FALSE      FALSE
+CHmRun         FALSE      FALSE
+CRuns          FALSE      FALSE
+CRBI           FALSE      FALSE
+CWalks         FALSE      FALSE
+LeagueN        FALSE      FALSE
+DivisionW      FALSE      FALSE
+PutOuts        FALSE      FALSE
+Assists        FALSE      FALSE
+Errors         FALSE      FALSE
+NewLeagueN     FALSE      FALSE
+1 subsets of each size up to 19
+Selection Algorithm: exhaustive
+          AtBat Hits HmRun Runs RBI Walks Years CAtBat CHits
+1  ( 1 )  " "   " "  " "   " "  " " " "   " "   " "    " "  
+2  ( 1 )  " "   "*"  " "   " "  " " " "   "*"   " "    " "  
+3  ( 1 )  " "   "*"  " "   " "  " " " "   "*"   " "    " "  
+4  ( 1 )  " "   "*"  " "   " "  " " " "   "*"   " "    " "  
+5  ( 1 )  "*"   "*"  " "   " "  " " "*"   "*"   " "    " "  
+6  ( 1 )  "*"   "*"  " "   " "  " " "*"   "*"   " "    " "  
+7  ( 1 )  "*"   "*"  " "   " "  " " "*"   "*"   " "    " "  
+8  ( 1 )  "*"   "*"  " "   " "  " " "*"   "*"   " "    " "  
+9  ( 1 )  "*"   "*"  " "   " "  " " "*"   "*"   " "    " "  
+10  ( 1 ) "*"   "*"  " "   " "  " " "*"   "*"   " "    " "  
+11  ( 1 ) "*"   "*"  " "   " "  " " "*"   "*"   " "    " "  
+12  ( 1 ) "*"   "*"  " "   " "  " " "*"   "*"   " "    "*"  
+13  ( 1 ) "*"   "*"  " "   " "  " " "*"   "*"   " "    "*"  
+14  ( 1 ) "*"   "*"  " "   " "  " " "*"   "*"   "*"    "*"  
+15  ( 1 ) "*"   "*"  "*"   " "  " " "*"   "*"   "*"    "*"  
+16  ( 1 ) "*"   "*"  "*"   " "  "*" "*"   "*"   "*"    "*"  
+17  ( 1 ) "*"   "*"  "*"   "*"  "*" "*"   "*"   "*"    "*"  
+18  ( 1 ) "*"   "*"  "*"   "*"  "*" "*"   "*"   "*"    "*"  
+19  ( 1 ) "*"   "*"  "*"   "*"  "*" "*"   "*"   "*"    "*"  
+          CHmRun CRuns CRBI CWalks LeagueN DivisionW PutOuts
+1  ( 1 )  " "    " "   "*"  " "    " "     " "       " "    
+2  ( 1 )  " "    " "   " "  " "    " "     " "       " "    
+3  ( 1 )  " "    " "   " "  " "    " "     " "       "*"    
+4  ( 1 )  " "    "*"   " "  " "    " "     " "       "*"    
+5  ( 1 )  " "    " "   " "  " "    " "     " "       "*"    
+6  ( 1 )  " "    "*"   " "  " "    " "     " "       "*"    
+7  ( 1 )  " "    "*"   " "  "*"    " "     " "       "*"    
+8  ( 1 )  " "    "*"   " "  "*"    " "     "*"       "*"    
+9  ( 1 )  "*"    "*"   " "  "*"    " "     "*"       "*"    
+10  ( 1 ) "*"    "*"   " "  "*"    " "     "*"       "*"    
+11  ( 1 ) "*"    "*"   " "  "*"    "*"     "*"       "*"    
+12  ( 1 ) "*"    "*"   " "  "*"    "*"     "*"       "*"    
+13  ( 1 ) "*"    "*"   " "  "*"    "*"     "*"       "*"    
+14  ( 1 ) "*"    "*"   " "  "*"    "*"     "*"       "*"    
+15  ( 1 ) "*"    "*"   " "  "*"    "*"     "*"       "*"    
+16  ( 1 ) "*"    "*"   " "  "*"    "*"     "*"       "*"    
+17  ( 1 ) " "    "*"   "*"  "*"    "*"     "*"       "*"    
+18  ( 1 ) " "    "*"   "*"  "*"    "*"     "*"       "*"    
+19  ( 1 ) "*"    "*"   "*"  "*"    "*"     "*"       "*"    
+          Assists Errors NewLeagueN
+1  ( 1 )  " "     " "    " "       
+2  ( 1 )  " "     " "    " "       
+3  ( 1 )  " "     " "    " "       
+4  ( 1 )  " "     " "    " "       
+5  ( 1 )  " "     " "    " "       
+6  ( 1 )  " "     " "    " "       
+7  ( 1 )  " "     " "    " "       
+8  ( 1 )  " "     " "    " "       
+9  ( 1 )  " "     " "    " "       
+10  ( 1 ) "*"     " "    " "       
+11  ( 1 ) "*"     " "    " "       
+12  ( 1 ) "*"     " "    " "       
+13  ( 1 ) "*"     "*"    " "       
+14  ( 1 ) "*"     "*"    " "       
+15  ( 1 ) "*"     "*"    " "       
+16  ( 1 ) "*"     "*"    " "       
+17  ( 1 ) "*"     "*"    " "       
+18  ( 1 ) "*"     "*"    "*"       
+19  ( 1 ) "*"     "*"    "*"       
+> names(regfit)
+ [1] "np"        "nrbar"     "d"         "rbar"      "thetab"   
+ [6] "first"     "last"      "vorder"    "tol"       "rss"      
+[11] "bound"     "nvmax"     "ress"      "ir"        "nbest"    
+[16] "lopt"      "il"        "ier"       "xnames"    "method"   
+[21] "force.in"  "force.out" "sserr"     "intercept" "lindep"   
+[26] "nullrss"   "nn"        "call"     
+> regfit$nbest
+[1] 1
+> val.errors = rep(NA,19)
+> for(i in 1:19){}
+> for(i in 1:19){
++     coefi=coef(regfit.best,id
++ }
+Error: unexpected '}' in:
+"    coefi=coef(regfit.best,id
+}"
+> test.mat = model.matrix(Salary~.,data=newHit[-train,])
+Error in eval(predvars, data, env) : object 'Salary' not found
+> test.mat = model.matrix(newSal~.,data=newHit[-train,])
+> for(i in 1:19){
++     coefi=coef(regfit.best,id=i)
++     pred=test.mat[,names(coefi)]%*%coefi
++     val.errors[i] = mean((newHit$newSal[-train]-pred)^2)
++ }
+Error in coef(regfit.best, id = i) : object 'regfit.best' not found
+> for(i in 1:19){
++     coefi=coef(regfit,id=i)
++     pred=test.mat[,names(coefi)]%*%coefi
++     val.errors[i] = mean((newHit$newSal[-train]-pred)^2)
++ }
+> min(val.errors)
+[1] 0.468457
+> library(randomForest)
+> ?randomForest
+> bag.tree = randomForest(newSal~.,data=newHit[train,],mtry=19,ntree=1000)
+> bag.pred = predict(bag.tree,newHit[-train,],ntree=1000)
+> bag.mse = mean((newHit[-train,]$newSal - bag.pred)^2)
+> bag.mse
+[1] 0.2295615
+

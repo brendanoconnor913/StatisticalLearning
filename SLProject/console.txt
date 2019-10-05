@@ -1,0 +1,1001 @@
+> bf = load.table("BodyFat.data", header=TRUE)
+Error in load.table("BodyFat.data", header = TRUE) : 
+  could not find function "load.table"
+In addition: Warning message:
+R graphics engine version 12 is not supported by this version of RStudio. The Plots tab will be disabled until a newer version of RStudio is installed. 
+> bf = table.load("BodyFat.data",header=TRUE)
+Error in table.load("BodyFat.data", header = TRUE) : 
+  could not find function "table.load"
+> bf = read.table("BodyFat.data", header=TRUE)
+> bf$Density = NULL
+> pairs(bf)
+> plot(bf)
+> plot(bf$Percentbodyfat~.,data=bf)
+> pca.out = prcomp(bf, scale=TRUE)
+> biplot(pca.out,scale=0)
+> pca.out$sdev
+ [1] 2.9082686 1.2558666 1.0204164 0.8209298 0.7914850
+ [6] 0.6426275 0.5516337 0.5110329 0.4421779 0.4196986
+[11] 0.3613245 0.2774343 0.2051750 0.1530840
+> names(pca.out)
+[1] "sdev"     "rotation" "center"   "scale"    "x"       
+> pca.out$rotation
+                          PC1          PC2           PC3
+Percentbodyfat     0.23088850 -0.426112446  0.1785150731
+Age.years.         0.01856371 -0.601890213 -0.5891514120
+Weight.lbs.        0.33537114  0.044798288  0.0323277229
+Height.inches.     0.08960245  0.493373767 -0.4927473697
+Neck.cm.           0.29605181 -0.003315776 -0.1676479919
+Chest.cm.          0.31215225 -0.172065680  0.0016491112
+Abdomen2circum.cm. 0.31138162 -0.255387790  0.0628789549
+Hip.cm.            0.31863632 -0.004178399  0.2004196255
+Thigh.cm.          0.30199742  0.093043552  0.3252925009
+Knee.cm.           0.29888331  0.081135919 -0.0007897367
+Ankle.cm.          0.21974830  0.252068111 -0.0821133725
+Biceps.cm.         0.29017033  0.077911647  0.0601676025
+Forearm.cm.        0.24036376  0.166235726 -0.0562900285
+Wrist.cm.          0.26734552  0.058230628 -0.4308252824
+                            PC4         PC5          PC6
+Percentbodyfat     -0.137059997  0.23171327 -0.547007654
+Age.years.         -0.041743456 -0.09884510 -0.001641045
+Weight.lbs.        -0.096057130  0.08189853  0.106595093
+Height.inches.     -0.284013743  0.59051613 -0.210678806
+Neck.cm.            0.216779278  0.04627343  0.326141557
+Chest.cm.           0.002772168  0.10581865  0.005258191
+Abdomen2circum.cm. -0.139830990  0.15285151 -0.020938100
+Hip.cm.            -0.168084398  0.04809148  0.185015789
+Thigh.cm.          -0.061021782  0.01819519  0.181682689
+Knee.cm.           -0.226479225 -0.07864997  0.075302328
+Ankle.cm.          -0.383979103 -0.68297950 -0.388763378
+Biceps.cm.          0.331778528  0.02432656  0.051043616
+Forearm.cm.         0.684085249 -0.04966050 -0.492188523
+Wrist.cm.           0.119453691 -0.25704266  0.263240674
+                            PC7         PC8           PC9
+Percentbodyfat      0.092043907 -0.02081755  0.4169280986
+Age.years.         -0.272330734 -0.19472633 -0.2385722974
+Weight.lbs.         0.047866671  0.05705599 -0.1050563734
+Height.inches.      0.007266674 -0.08963373 -0.0007508852
+Neck.cm.            0.437615536  0.10116277 -0.2752709742
+Chest.cm.           0.284871041  0.10772530 -0.2735465372
+Abdomen2circum.cm.  0.132331997  0.11515068 -0.0353887337
+Hip.cm.            -0.092810291  0.10275153 -0.0204441245
+Thigh.cm.          -0.213654219 -0.06356420  0.1025066624
+Knee.cm.           -0.676503181  0.11470122 -0.1622097197
+Ankle.cm.           0.255797556 -0.13920423 -0.1428863393
+Biceps.cm.         -0.029190013 -0.85564762  0.0769375286
+Forearm.cm.        -0.214175390  0.30364660 -0.1577463518
+Wrist.cm.           0.027843652  0.20926966  0.7196563502
+                          PC10        PC11         PC12
+Percentbodyfat     -0.31754745  0.14755099 -0.040196336
+Age.years.         -0.03072539 -0.31059862  0.065097268
+Weight.lbs.         0.15971474 -0.04615482 -0.171446612
+Height.inches.     -0.01556967 -0.11100497  0.059318351
+Neck.cm.           -0.64958912  0.10815250 -0.084966706
+Chest.cm.           0.51916544  0.30081168  0.453905084
+Abdomen2circum.cm.  0.15757514 -0.06658499 -0.114068022
+Hip.cm.             0.17965240 -0.40633721 -0.550541381
+Thigh.cm.          -0.23884249 -0.47607853  0.642305886
+Knee.cm.           -0.17236533  0.55280219 -0.034655110
+Ankle.cm.          -0.05218519 -0.07990472  0.009786236
+Biceps.cm.          0.11166986  0.14471213 -0.120908924
+Forearm.cm.         0.04406042 -0.17722864 -0.035201421
+Wrist.cm.           0.14133067  0.06781839  0.046538094
+                           PC13         PC14
+Percentbodyfat      0.231512843 -0.031640078
+Age.years.          0.080208308 -0.041023389
+Weight.lbs.         0.110054111 -0.878321706
+Height.inches.      0.003889826  0.088369714
+Neck.cm.            0.048884642  0.089141871
+Chest.cm.           0.294843759  0.202858782
+Abdomen2circum.cm. -0.839966637  0.103282895
+Hip.cm.             0.354752859  0.384147774
+Thigh.cm.          -0.025577109 -0.012578986
+Knee.cm.           -0.038501006  0.076339543
+Ankle.cm.          -0.025054548  0.036517943
+Biceps.cm.         -0.056542915  0.052004562
+Forearm.cm.        -0.033953908  0.005870118
+Wrist.cm.          -0.003329163  0.025777591
+> transform = pca.out$rotation
+> transform = pca.out$rotation[,1:5]
+> reducedbf = bf %*% transform
+Error in bf %*% transform : 
+  requires numeric/complex matrix/vector arguments
+> ?kmeans
+> k.out = kmeans(bf, 3)
+> k.out
+K-means clustering with 3 clusters of sizes 110, 86, 56
+
+Cluster means:
+  Percentbodyfat Age.years. Weight.lbs. Height.inches.
+1       20.46909   45.55455    180.6150       70.70000
+2       12.42558   44.02326    150.4186       68.94477
+3       26.88929   44.89286    219.3804       70.91518
+  Neck.cm. Chest.cm. Abdomen2circum.cm.   Hip.cm. Thigh.cm.
+1  38.1400  101.2064           93.51364 100.18636  59.70818
+2  36.0314   92.9686           82.30581  93.49535  55.00233
+3  40.7125  112.1375          106.41607 109.19464  65.57500
+  Knee.cm. Ankle.cm. Biceps.cm. Forearm.cm. Wrist.cm.
+1 38.67455  23.26545   32.36455    28.89545  18.31545
+2 36.64535  22.06860   29.89767    27.20581  17.55116
+3 41.41250  24.36964   35.74286    30.44821  19.10357
+
+Clustering vector:
+  [1] 2 1 2 1 1 3 1 1 1 1 1 3 1 3 1 1 1 3 1 3 1 3 2 2 2 2 2 2
+ [29] 2 2 1 2 2 3 3 3 3 1 3 3 3 3 3 3 2 2 2 2 2 2 2 2 2 2 2 1
+ [57] 1 3 3 1 3 1 1 1 3 1 2 2 2 2 1 2 2 2 2 2 2 1 1 1 1 2 1 1
+ [85] 1 1 2 2 1 1 1 1 2 1 1 3 1 2 2 1 1 1 1 1 1 2 1 3 1 1 1 1
+[113] 1 2 1 2 1 1 1 1 3 1 2 2 2 1 1 2 1 2 1 1 1 2 1 1 1 1 1 3
+[141] 1 1 1 2 1 2 3 3 2 3 2 3 2 2 1 1 3 1 2 1 2 1 1 2 3 3 1 3
+[169] 3 1 2 2 1 1 3 2 2 3 1 3 3 2 2 2 1 2 3 3 3 1 2 3 1 3 2 1
+[197] 2 1 2 1 1 2 3 1 3 3 1 1 2 2 2 3 1 1 1 3 2 2 1 2 2 3 2 2
+[225] 1 2 1 1 1 1 2 1 1 1 2 1 1 3 2 1 2 3 3 3 3 2 3 2 3 1 1 3
+
+Within cluster sum of squares by cluster:
+[1] 41601.45 34112.22 58440.12
+ (between_SS / total_SS =  61.8 %)
+
+Available components:
+
+[1] "cluster"      "centers"      "totss"       
+[4] "withinss"     "tot.withinss" "betweenss"   
+[7] "size"         "iter"         "ifault"      
+> k.out = kmeans(bf, 5)
+> k.out
+K-means clustering with 5 clusters of sizes 67, 58, 41, 62, 24
+
+Cluster means:
+  Percentbodyfat Age.years. Weight.lbs. Height.inches.
+1       17.25970   37.61194    175.4164       70.90672
+2       11.39138   41.27586    145.5991       68.62069
+3       18.90244   59.02439    166.1280       69.03659
+4       24.79839   46.80645    200.4435       70.80645
+5       29.01667   44.79167    235.5229       71.92708
+  Neck.cm. Chest.cm. Abdomen2circum.cm.   Hip.cm. Thigh.cm.
+1 37.56567  98.57612           89.49552  99.50896  59.78507
+2 35.45690  91.54655           80.73276  92.29138  53.94138
+3 37.70000  99.28537           90.93659  96.77561  56.83171
+4 39.65968 106.96613          100.43871 104.35484  62.60161
+5 41.50000 116.28333          112.07500 113.25833  67.69583
+  Knee.cm. Ankle.cm. Biceps.cm. Forearm.cm. Wrist.cm.
+1 38.35373  23.17313   32.00597    28.72388  18.05075
+2 36.03793  21.80690   29.49828    26.81724  17.30690
+3 37.91707  22.79756   31.00976    28.00488  18.33415
+4 40.20323  23.77742   34.43226    30.06452  18.78226
+5 42.40417  24.81250   36.30833    30.46667  19.35417
+
+Clustering vector:
+  [1] 2 1 2 1 1 4 1 1 1 1 1 4 1 4 1 1 4 4 1 4 1 4 2 2 2 2 2 2
+ [29] 2 1 1 1 1 4 5 4 4 4 5 4 5 4 5 4 2 1 2 2 2 2 2 2 2 2 2 4
+ [57] 3 4 4 3 4 3 4 3 4 4 2 3 2 3 3 2 3 2 2 2 3 3 3 3 3 3 4 3
+ [85] 3 3 3 3 1 1 1 1 3 4 1 5 1 3 2 4 4 1 1 4 1 1 4 4 4 1 1 4
+[113] 1 1 1 2 1 1 4 1 4 1 1 2 3 1 1 2 4 1 3 1 4 3 1 4 1 4 1 4
+[141] 1 1 3 2 1 2 4 4 2 5 2 5 2 2 4 1 4 1 2 1 2 4 1 2 5 4 1 5
+[169] 5 1 2 2 1 1 5 2 2 5 1 5 5 2 2 2 1 1 5 4 4 4 2 5 4 5 1 1
+[197] 2 1 1 1 1 2 4 1 5 4 1 4 2 2 2 4 3 4 3 5 2 2 4 3 3 5 3 2
+[225] 3 2 3 4 3 3 2 3 3 3 3 3 4 5 3 4 2 5 5 5 4 3 4 2 4 4 4 4
+
+Within cluster sum of squares by cluster:
+[1] 15549.249 20348.414  9796.512 24130.771 30558.550
+ (between_SS / total_SS =  71.5 %)
+
+Available components:
+
+[1] "cluster"      "centers"      "totss"       
+[4] "withinss"     "tot.withinss" "betweenss"   
+[7] "size"         "iter"         "ifault"      
+> k.out = kmeans(bf, 2)
+> k.out
+K-means clustering with 2 clusters of sizes 161, 91
+
+Cluster means:
+  Percentbodyfat Age.years. Weight.lbs. Height.inches.
+1       15.41491   44.53416    161.9016       69.60404
+2       25.76044   45.50549    209.0418       71.11264
+  Neck.cm. Chest.cm. Abdomen2circum.cm.   Hip.cm. Thigh.cm.
+1 36.79876   96.1795           86.52981  96.13913  56.81491
+2 40.10330  109.0418          103.21758 106.56703  63.99011
+  Knee.cm. Ankle.cm. Biceps.cm. Forearm.cm. Wrist.cm.
+1 37.33913  22.55963   30.77640    27.82609  17.84658
+2 40.80440  24.06264   34.92198    30.14615  18.90769
+
+Clustering vector:
+  [1] 1 1 1 1 2 2 1 1 1 2 1 2 1 2 2 1 2 2 1 2 1 2 1 1 1 1 1 1
+ [29] 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1 1 2
+ [57] 1 2 2 1 2 1 2 1 2 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1
+ [85] 1 1 1 1 1 1 1 1 1 2 1 2 1 1 1 2 2 1 1 2 1 1 2 2 2 1 1 2
+[113] 1 1 1 1 1 1 2 1 2 2 1 1 1 1 1 1 2 1 1 1 2 1 1 2 1 2 1 2
+[141] 1 1 1 1 1 1 2 2 1 2 1 2 1 1 2 1 2 1 1 1 1 2 1 1 2 2 1 2
+[169] 2 1 1 1 1 1 2 1 1 2 2 2 2 1 1 1 1 1 2 2 2 2 1 2 2 2 1 1
+[197] 1 1 1 1 1 1 2 1 2 2 1 2 1 1 1 2 1 2 1 2 1 1 2 1 1 2 1 1
+[225] 1 1 1 2 1 1 1 1 1 1 1 1 2 2 1 2 1 2 2 2 2 1 2 1 2 2 2 2
+
+Within cluster sum of squares by cluster:
+[1] 90850.54 87203.61
+ (between_SS / total_SS =  49.4 %)
+
+Available components:
+
+[1] "cluster"      "centers"      "totss"       
+[4] "withinss"     "tot.withinss" "betweenss"   
+[7] "size"         "iter"         "ifault"      
+> k.out = kmeans(bf, 3)
+> plot(bf,col=(k.out$cluster+1))
+> plot(Percentbodyfat~Weight.lbs, data=bf,col=(k.out$cluster+1))
+Error in eval(predvars, data, env) : object 'Weight.lbs' not found
+> plot(Percentbodyfat~Weightlbs, data=bf,col=(k.out$cluster+1))
+Error in eval(predvars, data, env) : object 'Weightlbs' not found
+> names(bf)
+ [1] "Percentbodyfat"     "Age.years."        
+ [3] "Weight.lbs."        "Height.inches."    
+ [5] "Neck.cm."           "Chest.cm."         
+ [7] "Abdomen2circum.cm." "Hip.cm."           
+ [9] "Thigh.cm."          "Knee.cm."          
+[11] "Ankle.cm."          "Biceps.cm."        
+[13] "Forearm.cm."        "Wrist.cm."         
+> plot(Percentbodyfat~Weight.lbs., data=bf,col=(k.out$cluster+1))
+> hc.complete=hclust(dist(x),methood="complete")
+Error in hclust(dist(x), methood = "complete") : 
+  unused argument (methood = "complete")
+> hc.complete=hclust(dist(x),method="complete")
+Error in as.matrix(x) : object 'x' not found
+> hc.complete=hclust(dist(bf),method="complete")
+> plot(hc.complete)
+> hc.ave = hclust(dist(bf),method="average")
+> plot(hc.ave)
+> hc.sing = hclust(dist(bf),method="single")
+> plot(hc.sing)
+> plot(Percentbodyfat~Height.inches, data=bf,col=(k.out$cluster+1))
+Error in eval(predvars, data, env) : object 'Height.inches' not found
+> plot(Percentbodyfat~Height.inches., data=bf,col=(k.out$cluster+1))
+> plot(Percentbodyfat~Abdomen2circum.cm., data=bf,col=(k.out$cluster+1))
+> plot(Percentbodyfat~Hip.cm., data=bf,col=(k.out$cluster+1))
+> plot(Percentbodyfat~Chest.cm., data=bf,col=(k.out$cluster+1))
+> library(leaps)
+> regfit.full = regsubsets(Percentbodyfat~.,data=bf)
+> summary(regfit.full)
+Subset selection object
+Call: regsubsets.formula(Percentbodyfat ~ ., data = bf)
+13 Variables  (and intercept)
+                   Forced in Forced out
+Age.years.             FALSE      FALSE
+Weight.lbs.            FALSE      FALSE
+Height.inches.         FALSE      FALSE
+Neck.cm.               FALSE      FALSE
+Chest.cm.              FALSE      FALSE
+Abdomen2circum.cm.     FALSE      FALSE
+Hip.cm.                FALSE      FALSE
+Thigh.cm.              FALSE      FALSE
+Knee.cm.               FALSE      FALSE
+Ankle.cm.              FALSE      FALSE
+Biceps.cm.             FALSE      FALSE
+Forearm.cm.            FALSE      FALSE
+Wrist.cm.              FALSE      FALSE
+1 subsets of each size up to 8
+Selection Algorithm: exhaustive
+         Age.years. Weight.lbs. Height.inches. Neck.cm.
+1  ( 1 ) " "        " "         " "            " "     
+2  ( 1 ) " "        "*"         " "            " "     
+3  ( 1 ) " "        "*"         " "            " "     
+4  ( 1 ) " "        "*"         " "            " "     
+5  ( 1 ) " "        "*"         " "            "*"     
+6  ( 1 ) "*"        "*"         " "            " "     
+7  ( 1 ) "*"        "*"         " "            "*"     
+8  ( 1 ) "*"        "*"         " "            "*"     
+         Chest.cm. Abdomen2circum.cm. Hip.cm. Thigh.cm.
+1  ( 1 ) " "       "*"                " "     " "      
+2  ( 1 ) " "       "*"                " "     " "      
+3  ( 1 ) " "       "*"                " "     " "      
+4  ( 1 ) " "       "*"                " "     " "      
+5  ( 1 ) " "       "*"                " "     " "      
+6  ( 1 ) " "       "*"                " "     "*"      
+7  ( 1 ) " "       "*"                " "     "*"      
+8  ( 1 ) " "       "*"                "*"     "*"      
+         Knee.cm. Ankle.cm. Biceps.cm. Forearm.cm. Wrist.cm.
+1  ( 1 ) " "      " "       " "        " "         " "      
+2  ( 1 ) " "      " "       " "        " "         " "      
+3  ( 1 ) " "      " "       " "        " "         "*"      
+4  ( 1 ) " "      " "       " "        "*"         "*"      
+5  ( 1 ) " "      " "       " "        "*"         "*"      
+6  ( 1 ) " "      " "       " "        "*"         "*"      
+7  ( 1 ) " "      " "       " "        "*"         "*"      
+8  ( 1 ) " "      " "       " "        "*"         "*"      
+> plot(Percentbodyfat~Wrist.cm., data=bf,col=(k.out$cluster+1))
+> plot(Percentbodyfat~Forearm.cm., data=bf,col=(k.out$cluster+1))
+> plot(Percentbodyfat~Neck.cm., data=bf,col=(k.out$cluster+1))
+> save.image("~/Desktop/ProjectWorkspace.RData")
+> lm.fit = lm(Percentbodyfat~.,data=bf)
+Warning message:
+R graphics engine version 12 is not supported by this version of RStudio. The Plots tab will be disabled until a newer version of RStudio is installed. 
+> summary lm.fit
+Error: unexpected symbol in "summary lm.fit"
+> summary(lm.fit)
+
+Call:
+lm(formula = Percentbodyfat ~ ., data = bf)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-11.1687  -2.8639  -0.1014   3.2085  10.0068 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        -18.18849   17.34857  -1.048  0.29551    
+Age.years.           0.06208    0.03235   1.919  0.05618 .  
+Weight.lbs.         -0.08844    0.05353  -1.652  0.09978 .  
+Height.inches.      -0.06959    0.09601  -0.725  0.46925    
+Neck.cm.            -0.47060    0.23247  -2.024  0.04405 *  
+Chest.cm.           -0.02386    0.09915  -0.241  0.81000    
+Abdomen2circum.cm.   0.95477    0.08645  11.044  < 2e-16 ***
+Hip.cm.             -0.20754    0.14591  -1.422  0.15622    
+Thigh.cm.            0.23610    0.14436   1.636  0.10326    
+Knee.cm.             0.01528    0.24198   0.063  0.94970    
+Ankle.cm.            0.17400    0.22147   0.786  0.43285    
+Biceps.cm.           0.18160    0.17113   1.061  0.28966    
+Forearm.cm.          0.45202    0.19913   2.270  0.02410 *  
+Wrist.cm.           -1.62064    0.53495  -3.030  0.00272 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 4.305 on 238 degrees of freedom
+Multiple R-squared:  0.749,	Adjusted R-squared:  0.7353 
+F-statistic: 54.65 on 13 and 238 DF,  p-value: < 2.2e-16
+
+> plot(Percentbodyfat~Age.years., data=bf,col=(k.out$cluster+1))
+> reducedbf = data.frame(bf$Percentbodyfat,bf$Age.years.,bf$Abdomen2circum.cm.,bf$Wrist.cm.,bf$Forearm.cm.,bf$Neck.cm.,bf$Weight.lbs.,bf$Age.years.)
+> reduced.lm = lm(Percentbodyfat~.,data=reducedbf)
+Error in eval(predvars, data, env) : object 'Percentbodyfat' not found
+> View(reducedbf)
+> reduced.lm = lm(bf.Percentbodyfat~.,data=reducedbf)
+> summary(reduced)
+Error in summary(reduced) : object 'reduced' not found
+> summary(reduced.lm)
+
+Call:
+lm(formula = bf.Percentbodyfat ~ ., data = reducedbf)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-10.6385  -3.1238  -0.2273   3.1358   9.7974 
+
+Coefficients: (1 not defined because of singularities)
+                       Estimate Std. Error t value Pr(>|t|)
+(Intercept)           -25.89272    8.18676  -3.163  0.00176
+bf.Age.years.           0.04605    0.02869   1.605  0.10979
+bf.Abdomen2circum.cm.   0.94526    0.06838  13.824  < 2e-16
+bf.Wrist.cm.           -1.58567    0.51241  -3.095  0.00220
+bf.Forearm.cm.          0.57210    0.18552   3.084  0.00228
+bf.Neck.cm.            -0.40039    0.22181  -1.805  0.07228
+bf.Weight.lbs.         -0.09386    0.03146  -2.984  0.00314
+bf.Age.years..1              NA         NA      NA       NA
+                         
+(Intercept)           ** 
+bf.Age.years.            
+bf.Abdomen2circum.cm. ***
+bf.Wrist.cm.          ** 
+bf.Forearm.cm.        ** 
+bf.Neck.cm.           .  
+bf.Weight.lbs.        ** 
+bf.Age.years..1          
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 4.314 on 245 degrees of freedom
+Multiple R-squared:  0.7406,	Adjusted R-squared:  0.7343 
+F-statistic: 116.6 on 6 and 245 DF,  p-value: < 2.2e-16
+
+> reducedbf = data.frame(bf$Percentbodyfat,bf$Age.years.,bf$Abdomen2circum.cm.,bf$Wrist.cm.,bf$Forearm.cm.,bf$Neck.cm.,bf$Weight.lbs.)
+> reduced.lm = lm(bf.Percentbodyfat~.,data=reducedbf)
+> summary(reduced.lm)
+
+Call:
+lm(formula = bf.Percentbodyfat ~ ., data = reducedbf)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-10.6385  -3.1238  -0.2273   3.1358   9.7974 
+
+Coefficients:
+                       Estimate Std. Error t value Pr(>|t|)
+(Intercept)           -25.89272    8.18676  -3.163  0.00176
+bf.Age.years.           0.04605    0.02869   1.605  0.10979
+bf.Abdomen2circum.cm.   0.94526    0.06838  13.824  < 2e-16
+bf.Wrist.cm.           -1.58567    0.51241  -3.095  0.00220
+bf.Forearm.cm.          0.57210    0.18552   3.084  0.00228
+bf.Neck.cm.            -0.40039    0.22181  -1.805  0.07228
+bf.Weight.lbs.         -0.09386    0.03146  -2.984  0.00314
+                         
+(Intercept)           ** 
+bf.Age.years.            
+bf.Abdomen2circum.cm. ***
+bf.Wrist.cm.          ** 
+bf.Forearm.cm.        ** 
+bf.Neck.cm.           .  
+bf.Weight.lbs.        ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 4.314 on 245 degrees of freedom
+Multiple R-squared:  0.7406,	Adjusted R-squared:  0.7343 
+F-statistic: 116.6 on 6 and 245 DF,  p-value: < 2.2e-16
+
+> plot(reduced.lm)
+Hit <Return> to see next plot: 
+Error in plot.new() : attempt to plot on null device
+> ?sample
+> .25 * 252
+[1] 63
+> test = sample(1:252,size=63,replace=TRUE)
+> reduced.train = lm(bf.Percentbodyfat~.,data=reducedbf[-test,])
+> predicted = predict(reduced.train,newdata=reducedbf[test,])
+> mse = mean((reducedbf[test,]$bf.Percentbodyfat-predicted)^2)
+> mse
+[1] 24.86519
+> sqrt(25)
+[1] 5
+> k.out$cluster
+  [1] 2 3 2 3 3 1 3 3 3 3 3 1 3 1 3 3 3 1 3 1 3 1 2 2 2 2 2 2
+ [29] 2 2 3 2 2 1 1 1 1 3 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 3
+ [57] 3 1 1 3 1 3 3 3 1 3 2 2 2 2 3 2 2 2 2 2 2 3 3 3 3 2 3 3
+ [85] 3 3 2 2 3 3 3 3 2 3 3 1 3 2 2 3 3 3 3 3 3 2 3 1 3 3 3 3
+[113] 3 2 3 2 3 3 3 3 1 3 2 2 2 3 3 2 3 2 3 3 3 2 3 3 3 3 3 1
+[141] 3 3 3 2 3 2 1 1 2 1 2 1 2 2 3 3 1 3 2 3 2 3 3 2 1 1 3 1
+[169] 1 3 2 2 3 3 1 2 2 1 3 1 1 2 2 2 3 2 1 1 1 3 2 1 3 1 2 3
+[197] 2 3 2 3 3 2 1 3 1 1 3 3 2 2 2 1 3 3 3 1 2 2 3 2 2 1 2 2
+[225] 3 2 3 3 3 3 2 3 3 3 2 3 3 1 2 3 2 1 1 1 1 2 1 2 1 3 3 1
+> highrisk = ifelse(k.out$cluster == 3,1,0) 
+> reducedbf$highrisk = highrisk
+> glm.fit = glm(highrisk~.-bf.Percentbodyfat,data=reducedbf[-test,], family=binomial)
+> glm.pred = predict(glm.fit,reducedbf[test,],type="response")
+> glm.prob = predict(glm.fit,reducedbf[test,],type="response")
+> glm.pred[glm.probs>.5]="Yes"
+Error in glm.pred[glm.probs > 0.5] = "Yes" : object 'glm.probs' not found
+> glm.pred = predict(glm.fit,reducedbf[test,],type="response")
+> glm.pred[glm.probs>.5]="Yes"
+Error in glm.pred[glm.probs > 0.5] = "Yes" : object 'glm.probs' not found
+> glm.pred[glm.pred>.5]="Yes"
+> table(glm.pred,reducedbf[test,])
+Error in table(glm.pred, reducedbf[test, ]) : 
+  all arguments must have the same length
+> table(glm.pred,reducedbf[test,]$highrisk)
+                   
+glm.pred            0 1
+  0.277484297983229 1 0
+  0.277745148454483 0 1
+  0.283385728708324 1 0
+  0.289725669970645 1 0
+  0.295704110111054 1 0
+  0.31925242572896  1 0
+  0.331933474259606 0 1
+  0.332392709289056 0 1
+  0.333751640389484 0 1
+  0.346578321364773 1 0
+  0.353928870378809 0 1
+  0.356112376720426 0 1
+  0.359767926596988 1 0
+  0.360671822562347 0 1
+  0.364905131785066 3 0
+  0.366861727765717 0 1
+  0.368610140387451 1 0
+  0.373953411268647 1 0
+  0.37575641322442  1 0
+  0.377419739531803 1 0
+  0.378648796352874 1 0
+  0.378826844671657 0 1
+  0.385623746600876 0 2
+  0.389370048421739 0 1
+  0.390784428242672 0 1
+  0.394468402746846 0 1
+  0.394610908731311 0 1
+  0.402240989501125 1 0
+  0.403401456157245 0 1
+  0.406908100022005 1 0
+  0.407046445820295 0 1
+  0.407967230991866 1 0
+  0.411499991906598 2 0
+  0.415266064202745 0 1
+  0.419362591013688 2 0
+  0.43702995643107  2 0
+  0.440959308304802 0 1
+  0.445064260631336 1 0
+  0.446662550153399 1 0
+  0.448647525125627 0 1
+  0.449371701701087 2 0
+  0.450713661463748 0 1
+  0.459027975989068 0 1
+  0.469200291849693 0 1
+  0.471284497836022 1 0
+  0.477766393690772 0 1
+  0.482698908506233 1 0
+  0.485413597802826 0 1
+  0.49808708695656  0 1
+  Yes               4 3
+> glm.pred = predict(glm.fit,reducedbf[test,],type="response")
+> glm.prob = predict(glm.fit,reducedbf[test,],type="response")
+> glm.pred=rep("No",252)
+> glm.pred[glm.prob>.5]="Yes"
+> glm.pred=rep(0,252)
+> glm.pred[glm.prob>.5]=1
+> table(glm.pred,reducedbf[test,]$highrisk)
+Error in table(glm.pred, reducedbf[test, ]$highrisk) : 
+  all arguments must have the same length
+> glm.pred=rep(0,63)
+> glm.pred[glm.prob>.5]=1
+> table(glm.pred,reducedbf[test,]$highrisk)
+        
+glm.pred  0  1
+       0 30 26
+       1  4  3
+> mean(glm.pred == reducedbf[test,]$highrisk)
+[1] 0.5238095
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf)
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(highrisk[test]+1))
+> k.out$cluster
+  [1] 2 3 2 3 3 1 3 3 3 3 3 1 3 1 3 3 3 1 3 1 3 1 2 2 2 2 2 2
+ [29] 2 2 3 2 2 1 1 1 1 3 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 3
+ [57] 3 1 1 3 1 3 3 3 1 3 2 2 2 2 3 2 2 2 2 2 2 3 3 3 3 2 3 3
+ [85] 3 3 2 2 3 3 3 3 2 3 3 1 3 2 2 3 3 3 3 3 3 2 3 1 3 3 3 3
+[113] 3 2 3 2 3 3 3 3 1 3 2 2 2 3 3 2 3 2 3 3 3 2 3 3 3 3 3 1
+[141] 3 3 3 2 3 2 1 1 2 1 2 1 2 2 3 3 1 3 2 3 2 3 3 2 1 1 3 1
+[169] 1 3 2 2 3 3 1 2 2 1 3 1 1 2 2 2 3 2 1 1 1 3 2 1 3 1 2 3
+[197] 2 3 2 3 3 2 1 3 1 1 3 3 2 2 2 1 3 3 3 1 2 2 3 2 2 1 2 2
+[225] 3 2 3 3 3 3 2 3 3 3 2 3 3 1 2 3 2 1 1 1 1 2 1 2 1 3 3 1
+> highrisk
+  [1] 0 1 0 1 1 0 1 1 1 1 1 0 1 0 1 1 1 0 1 0 1 0 0 0 0 0 0 0
+ [29] 0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+ [57] 1 0 0 1 0 1 1 1 0 1 0 0 0 0 1 0 0 0 0 0 0 1 1 1 1 0 1 1
+ [85] 1 1 0 0 1 1 1 1 0 1 1 0 1 0 0 1 1 1 1 1 1 0 1 0 1 1 1 1
+[113] 1 0 1 0 1 1 1 1 0 1 0 0 0 1 1 0 1 0 1 1 1 0 1 1 1 1 1 0
+[141] 1 1 1 0 1 0 0 0 0 0 0 0 0 0 1 1 0 1 0 1 0 1 1 0 0 0 1 0
+[169] 0 1 0 0 1 1 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 1 0 0 1 0 0 1
+[197] 0 1 0 1 1 0 0 1 0 0 1 1 0 0 0 0 1 1 1 0 0 0 1 0 0 0 0 0
+[225] 1 0 1 1 1 1 0 1 1 1 0 1 1 0 0 1 0 0 0 0 0 0 0 0 0 1 1 0
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(highrisk[test]+2))
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(highrisk[test]+1))
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(k.out$cluster+1))
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(highrisk[test]+1))
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(k.out$cluster+1))
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(highrisk[test]+1))
+> highrisk = ifelse(k.out$cluster == 1,1,0)
+> glm.fit = glm(highrisk~.-bf.Percentbodyfat,data=reducedbf[-test,], family=binomial)
+> glm.prob = predict(glm.fit,reducedbf[test,],type="response")
+> glm.pred=rep(0,63)
+> glm.pred[glm.prob>.5]=1
+> table(glm.pred,reducedbf[test,]$highrisk)
+        
+glm.pred  0  1
+       0 30 26
+       1  4  3
+> mean(glm.pred == reducedbf[test,]$highrisk)
+[1] 0.5238095
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(highrisk[test]+1))
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(highrisk+1))
+> highrisk
+  [1] 0 0 0 0 0 1 0 0 0 0 0 1 0 1 0 0 0 1 0 1 0 1 0 0 0 0 0 0 0
+ [30] 0 0 0 0 1 1 1 1 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+ [59] 1 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ [88] 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
+[117] 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0
+[146] 0 1 1 0 1 0 1 0 0 0 0 1 0 0 0 0 0 0 0 1 1 0 1 1 0 0 0 0 0
+[175] 1 0 0 1 0 1 1 0 0 0 0 0 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 1
+[204] 0 1 1 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0
+[233] 0 0 0 0 0 1 0 0 0 1 1 1 1 0 1 0 1 0 0 1
+> k.out$cluster
+  [1] 2 3 2 3 3 1 3 3 3 3 3 1 3 1 3 3 3 1 3 1 3 1 2 2 2 2 2 2 2
+ [30] 2 3 2 2 1 1 1 1 3 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 3 3 1
+ [59] 1 3 1 3 3 3 1 3 2 2 2 2 3 2 2 2 2 2 2 3 3 3 3 2 3 3 3 3 2
+ [88] 2 3 3 3 3 2 3 3 1 3 2 2 3 3 3 3 3 3 2 3 1 3 3 3 3 3 2 3 2
+[117] 3 3 3 3 1 3 2 2 2 3 3 2 3 2 3 3 3 2 3 3 3 3 3 1 3 3 3 2 3
+[146] 2 1 1 2 1 2 1 2 2 3 3 1 3 2 3 2 3 3 2 1 1 3 1 1 3 2 2 3 3
+[175] 1 2 2 1 3 1 1 2 2 2 3 2 1 1 1 3 2 1 3 1 2 3 2 3 2 3 3 2 1
+[204] 3 1 1 3 3 2 2 2 1 3 3 3 1 2 2 3 2 2 1 2 2 3 2 3 3 3 3 2 3
+[233] 3 3 2 3 3 1 2 3 2 1 1 1 1 2 1 2 1 3 3 1
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(highrisk))
+> highrisk = ifelse(k.out$cluster == 0,1,0)
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(highrisk))
+> highrisk = ifelse(k.out$cluster == 3,1,0)
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(highrisk))
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(k.out$cluster))
+> abline(reduced.lm)
+Warning message:
+In abline(reduced.lm) :
+  only using the first two of 7 regression coefficients
+> ?abline
+> reduced.lm
+
+Call:
+lm(formula = bf.Percentbodyfat ~ ., data = reducedbf)
+
+Coefficients:
+          (Intercept)          bf.Age.years.  
+            -25.89272                0.04605  
+bf.Abdomen2circum.cm.           bf.Wrist.cm.  
+              0.94526               -1.58567  
+       bf.Forearm.cm.            bf.Neck.cm.  
+              0.57210               -0.40039  
+       bf.Weight.lbs.  
+             -0.09386  
+
+> names(reduced.lm)
+ [1] "coefficients"  "residuals"     "effects"      
+ [4] "rank"          "fitted.values" "assign"       
+ [7] "qr"            "df.residual"   "xlevels"      
+[10] "call"          "terms"         "model"        
+> reduced.lm$coefficients
+          (Intercept)         bf.Age.years. 
+         -25.89272438            0.04605356 
+bf.Abdomen2circum.cm.          bf.Wrist.cm. 
+           0.94525992           -1.58567391 
+       bf.Forearm.cm.           bf.Neck.cm. 
+           0.57210141           -0.40039319 
+       bf.Weight.lbs. 
+          -0.09385782 
+> reduced.lm$coefficients[1]
+(Intercept) 
+  -25.89272 
+> a = reduced.lm$coefficients[1]
+> a = reduced.lm$coefficients[2]
+> a = reduced.lm$coefficients[1]
+> reduced.lm$coefficients[2]
+bf.Age.years. 
+   0.04605356 
+> b = reduced.lm$coefficients[2]
+> abline(a,b)
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(k.out$cluster))
+> abline(0,1)
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(k.out$cluster))
+> abline(0,1,col="blue")
+> abline(0,1,col="blue")
+Error in int_abline(a = a, b = b, h = h, v = v, untf = untf, ...) : 
+  plot.new has not been called yet
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(k.out$cluster))
+> abline(0,10,col="blue")
+> j = bf.Percentbodyfat - a*bf.Age.years. - b
+Error: object 'bf.Percentbodyfat' not found
+> j = reducedbf$bf.Percentbodyfat - a*reducedbf$bf.Age.years. - b
+> abline(j)
+Error in int_abline(a = a, b = b, h = h, v = v, untf = untf, ...) : 
+  invalid a=, b= specification
+> abline(lm(bf.Percentbodyfat~bf.Abdomen2circum.cm., data=reducedbf))
+> abline(lm(bf.Percentbodyfat~bf.Abdomen2circum.cm., data=reducedbf), col="blue")
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf,col=(k.out$cluster+3))
+> abline(lm(bf.Percentbodyfat~bf.Abdomen2circum.cm., data=reducedbf), col="red")
+> plot(bf.Percentbodyfat~bf.Wrist.cm.,data=reducedbf,col=(k.out$cluster+3))
+> abline(lm(bf.Percentbodyfat~bf.Wrist.cm., data=reducedbf), col="red")
+> summary(reduced.lm)
+
+Call:
+lm(formula = bf.Percentbodyfat ~ ., data = reducedbf)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-10.6385  -3.1238  -0.2273   3.1358   9.7974 
+
+Coefficients:
+                       Estimate Std. Error t value Pr(>|t|)
+(Intercept)           -25.89272    8.18676  -3.163  0.00176
+bf.Age.years.           0.04605    0.02869   1.605  0.10979
+bf.Abdomen2circum.cm.   0.94526    0.06838  13.824  < 2e-16
+bf.Wrist.cm.           -1.58567    0.51241  -3.095  0.00220
+bf.Forearm.cm.          0.57210    0.18552   3.084  0.00228
+bf.Neck.cm.            -0.40039    0.22181  -1.805  0.07228
+bf.Weight.lbs.         -0.09386    0.03146  -2.984  0.00314
+                         
+(Intercept)           ** 
+bf.Age.years.            
+bf.Abdomen2circum.cm. ***
+bf.Wrist.cm.          ** 
+bf.Forearm.cm.        ** 
+bf.Neck.cm.           .  
+bf.Weight.lbs.        ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 4.314 on 245 degrees of freedom
+Multiple R-squared:  0.7406,	Adjusted R-squared:  0.7343 
+F-statistic: 116.6 on 6 and 245 DF,  p-value: < 2.2e-16
+
+> summary(k.out)
+             Length Class  Mode   
+cluster      252    -none- numeric
+centers       42    -none- numeric
+totss          1    -none- numeric
+withinss       3    -none- numeric
+tot.withinss   1    -none- numeric
+betweenss      1    -none- numeric
+size           3    -none- numeric
+iter           1    -none- numeric
+ifault         1    -none- numeric
+> k.out
+K-means clustering with 3 clusters of sizes 56, 86, 110
+
+Cluster means:
+  Percentbodyfat Age.years. Weight.lbs. Height.inches.
+1       26.88929   44.89286    219.3804       70.91518
+2       12.42558   44.02326    150.4186       68.94477
+3       20.46909   45.55455    180.6150       70.70000
+  Neck.cm. Chest.cm. Abdomen2circum.cm.   Hip.cm. Thigh.cm.
+1  40.7125  112.1375          106.41607 109.19464  65.57500
+2  36.0314   92.9686           82.30581  93.49535  55.00233
+3  38.1400  101.2064           93.51364 100.18636  59.70818
+  Knee.cm. Ankle.cm. Biceps.cm. Forearm.cm. Wrist.cm.
+1 41.41250  24.36964   35.74286    30.44821  19.10357
+2 36.64535  22.06860   29.89767    27.20581  17.55116
+3 38.67455  23.26545   32.36455    28.89545  18.31545
+
+Clustering vector:
+  [1] 2 3 2 3 3 1 3 3 3 3 3 1 3 1 3 3 3 1 3 1 3 1 2 2 2 2 2 2 2
+ [30] 2 3 2 2 1 1 1 1 3 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 3 3 1
+ [59] 1 3 1 3 3 3 1 3 2 2 2 2 3 2 2 2 2 2 2 3 3 3 3 2 3 3 3 3 2
+ [88] 2 3 3 3 3 2 3 3 1 3 2 2 3 3 3 3 3 3 2 3 1 3 3 3 3 3 2 3 2
+[117] 3 3 3 3 1 3 2 2 2 3 3 2 3 2 3 3 3 2 3 3 3 3 3 1 3 3 3 2 3
+[146] 2 1 1 2 1 2 1 2 2 3 3 1 3 2 3 2 3 3 2 1 1 3 1 1 3 2 2 3 3
+[175] 1 2 2 1 3 1 1 2 2 2 3 2 1 1 1 3 2 1 3 1 2 3 2 3 2 3 3 2 1
+[204] 3 1 1 3 3 2 2 2 1 3 3 3 1 2 2 3 2 2 1 2 2 3 2 3 3 3 3 2 3
+[233] 3 3 2 3 3 1 2 3 2 1 1 1 1 2 1 2 1 3 3 1
+
+Within cluster sum of squares by cluster:
+[1] 58440.12 34112.22 41601.45
+ (between_SS / total_SS =  61.8 %)
+
+Available components:
+
+[1] "cluster"      "centers"      "totss"        "withinss"    
+[5] "tot.withinss" "betweenss"    "size"         "iter"        
+[9] "ifault"      
+> lm.vals = predict(reduced.lm,data=reducedbf[-test,])
+> lm.vals
+        1         2         3         4         5         6 
+15.291405  9.575488 18.236097 12.620704 26.452505 16.791790 
+        7         8         9        10        11        12 
+17.315157 14.040550  8.993823 10.170774  8.917055 12.375726 
+       13        14        15        16        17        18 
+18.146035 24.944268 21.594305 21.895187 23.036755 18.722428 
+       19        20        21        22        23        24 
+15.744874 23.096532 21.749551 20.643739  9.352578 11.186558 
+       25        26        27        28        29        30 
+ 7.621526  9.513874  8.636069 18.214719  6.812601 11.957205 
+       31        32        33        34        35        36 
+13.519014 12.061825  6.450060 22.919603 32.102458 39.992627 
+       37        38        39        40        41        42 
+24.306761 21.165574 44.291654 32.160919 38.287654 29.657583 
+       43        44        45        46        47        48 
+34.001159 26.282431 11.061234 10.073825  7.188742 10.208792 
+       49        50        51        52        53        54 
+17.882369  5.358746 16.727164 10.440234 14.547731  9.556618 
+       55        56        57        58        59        60 
+ 7.868526 23.868849 25.280257 27.586864 28.525160 25.188786 
+       61        62        63        64        65        66 
+25.338481 23.202096 26.855279 26.257831 29.729655 25.418950 
+       67        68        69        70        71        72 
+15.512871 15.224201  8.491726 15.434514 19.643570 12.239427 
+       73        74        75        76        77        78 
+12.145469 11.359811 16.428091 12.339133  8.476362 19.798557 
+       79        80        81        82        83        84 
+24.060460 25.593088 22.437802 18.176246 22.715619 20.688182 
+       85        86        87        88        89        90 
+27.080957 18.682016 17.007807 20.894210 12.665684 14.151523 
+       91        92        93        94        95        96 
+22.865908 18.102511 11.255003 21.753840 15.719538 18.063633 
+       97        98        99       100       101       102 
+17.597997 14.662031 17.408324 19.280608 19.718657 20.192016 
+      103       104       105       106       107       108 
+17.093407 17.970590 24.316533 17.632184 26.614285 23.295183 
+      109       110       111       112       113       114 
+13.427153 21.130897 18.239840 31.599531 19.641533 19.503383 
+      115       116       117       118       119       120 
+19.865414 16.059227 17.338613 14.440710 17.571556 13.850563 
+      121       122       123       124       125       126 
+21.483086 23.418740 12.985324 16.489632 13.863612 20.245561 
+      127       128       129       130       131       132 
+20.925987  9.055789 18.584910 15.272065 18.450607 19.831621 
+      133       134       135       136       137       138 
+24.962417 20.376063 16.364131 27.675653 15.900350 24.754830 
+      139       140       141       142       143       144 
+17.847574 28.220834 22.028484 21.063267 19.180939  5.540196 
+      145       146       147       148       149       150 
+10.896468 12.451803 21.305621 22.314527  7.604163 27.287653 
+      151       152       153       154       155       156 
+ 8.559011 21.403170  4.264536 16.642439 21.824479 11.756146 
+      157       158       159       160       161       162 
+27.199824 15.808081 13.878535 19.020415 12.962932 18.601611 
+      163       164       165       166       167       168 
+15.364703 15.778962 28.038316 17.548041 18.504529 19.491654 
+      169       170       171       172       173       174 
+36.057998 19.737925 11.640687  9.217192 17.417606 17.107202 
+      175       176       177       178       179       180 
+20.852989 11.409531 14.887616 28.274266 19.327063 22.551460 
+      181       182       183       184       185       186 
+24.646634  4.805090 15.996291 16.429993 18.770636 11.474303 
+      187       188       189       190       191       192 
+27.169845 21.414980 22.037574 26.447532 10.483668 30.151024 
+      193       194       195       196       197       198 
+18.101143 27.216681 15.895420 22.282041 16.482278 19.555405 
+      199       200       201       202       203       204 
+ 6.847370 16.542317 15.293890 16.551012 26.432110 15.440512 
+      205       206       207       208       209       210 
+36.465149 13.246337 23.102600 26.530546 13.767126 14.325575 
+      211       212       213       214       215       216 
+12.782233 26.044279 16.495172 21.808415 14.759056 42.292933 
+      217       218       219       220       221       222 
+11.995896  9.543041 23.498334 18.424835 20.706775 29.574891 
+      223       224       225       226       227       228 
+16.464472 15.838489 20.743803 12.845984 18.901775 22.067662 
+      229       230       231       232       233       234 
+16.968925 20.739701 19.261932 21.778230 16.760864 24.272231 
+      235       236       237       238       239       240 
+21.482762 22.184313 21.734470 35.513716 13.091795 25.116537 
+      241       242       243       244       245       246 
+14.601952 38.493270 28.260542 32.600963 29.891908 14.078566 
+      247       248       249       250       251       252 
+31.272373 15.148659 25.923975 36.735398 25.122726 28.286858 
+> ?sort
+> sortedbfp = sort(reducedbf[-test,]$bf.Percentbodyfat)
+> sortedbfp
+  [1]  0.7  3.0  3.7  3.7  3.9  4.0  5.2  5.6  5.7  6.1  6.3
+ [12]  6.3  6.6  7.1  7.1  7.5  7.7  7.8  8.0  8.3  8.5  8.5
+ [23]  8.6  8.8  9.0  9.4  9.4  9.6  9.6  9.9 10.0 10.1 10.2
+ [34] 10.4 10.6 10.8 10.9 11.0 11.3 11.4 11.5 11.7 11.8 11.9
+ [45] 12.1 12.2 12.3 12.4 12.4 12.4 12.5 12.9 13.0 13.1 13.5
+ [56] 13.6 13.6 13.8 13.8 13.9 14.0 14.1 14.2 14.6 14.8 14.9
+ [67] 14.9 14.9 15.0 15.2 15.2 15.4 15.6 16.5 16.5 16.5 16.6
+ [78] 16.7 16.9 16.9 17.0 17.0 17.3 17.3 17.4 17.4 17.7 18.0
+ [89] 18.1 18.2 18.3 18.3 18.4 18.5 18.6 18.8 19.2 19.3 19.6
+[100] 19.7 20.1 20.1 20.3 20.4 20.4 20.4 20.5 20.5 20.5 20.8
+[111] 20.8 20.9 21.0 21.2 21.3 21.4 21.5 21.8 21.8 22.0 22.1
+[122] 22.1 22.1 22.2 22.3 22.4 22.5 22.5 22.6 22.7 22.8 22.9
+[133] 22.9 23.3 23.6 23.6 24.2 24.3 24.4 24.4 24.5 24.6 24.8
+[144] 24.9 24.9 25.2 25.2 25.3 25.3 25.4 25.8 25.8 25.8 26.0
+[155] 26.0 26.1 26.1 26.6 26.7 27.0 27.2 27.2 27.3 28.0 28.0
+[166] 28.4 28.7 29.0 29.0 29.3 29.4 29.6 29.8 29.9 30.0 30.2
+[177] 30.4 30.7 31.2 31.5 31.6 32.0 32.3 32.3 32.6 32.6 32.8
+[188] 32.9 32.9 34.3 34.5 34.8 35.0 38.1 40.1 47.5
+> size(sortedbfp)
+Error in size(sortedbfp) : could not find function "size"
+> ?length
+> length(sortedbfp)
+[1] 196
+> length(sortedbfp)/3
+[1] 65.33333
+> sortedbfp[66]
+[1] 14.9
+> length(test)
+[1] 63
+> highrisk = rep(0, 63)
+> lm.predvals = predict(reduced.lm, newdata=[test,])
+Error: unexpected '[' in "lm.predvals = predict(reduced.lm, newdata=["
+> lm.predvals = predict(reduced.lm, newdata=reducedbf[test,])
+> highrisk[lm.predvals >= 15] = 1
+> highrisk
+ [1] 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 0 1 1 0 1
+[30] 1 0 1 1 0 1 1 1 0 0 0 1 0 1 1 1 1 1 0 1 1 1 0 1 0 0 1 1 1
+[59] 1 0 0 1 1
+> plot(bf.Percentbodyfat~bf.Abdomen2circum.cm.,data=reducedbf[test,], col=highrisk+1)
+> abline(reduced.lm)
+Warning message:
+In abline(reduced.lm) :
+  only using the first two of 7 regression coefficients
+> abline(reduced.lm,col="red")
+Warning message:
+In abline(reduced.lm, col = "red") :
+  only using the first two of 7 regression coefficients
+> sortedbfp
+  [1]  0.7  3.0  3.7  3.7  3.9  4.0  5.2  5.6  5.7  6.1  6.3
+ [12]  6.3  6.6  7.1  7.1  7.5  7.7  7.8  8.0  8.3  8.5  8.5
+ [23]  8.6  8.8  9.0  9.4  9.4  9.6  9.6  9.9 10.0 10.1 10.2
+ [34] 10.4 10.6 10.8 10.9 11.0 11.3 11.4 11.5 11.7 11.8 11.9
+ [45] 12.1 12.2 12.3 12.4 12.4 12.4 12.5 12.9 13.0 13.1 13.5
+ [56] 13.6 13.6 13.8 13.8 13.9 14.0 14.1 14.2 14.6 14.8 14.9
+ [67] 14.9 14.9 15.0 15.2 15.2 15.4 15.6 16.5 16.5 16.5 16.6
+ [78] 16.7 16.9 16.9 17.0 17.0 17.3 17.3 17.4 17.4 17.7 18.0
+ [89] 18.1 18.2 18.3 18.3 18.4 18.5 18.6 18.8 19.2 19.3 19.6
+[100] 19.7 20.1 20.1 20.3 20.4 20.4 20.4 20.5 20.5 20.5 20.8
+[111] 20.8 20.9 21.0 21.2 21.3 21.4 21.5 21.8 21.8 22.0 22.1
+[122] 22.1 22.1 22.2 22.3 22.4 22.5 22.5 22.6 22.7 22.8 22.9
+[133] 22.9 23.3 23.6 23.6 24.2 24.3 24.4 24.4 24.5 24.6 24.8
+[144] 24.9 24.9 25.2 25.2 25.3 25.3 25.4 25.8 25.8 25.8 26.0
+[155] 26.0 26.1 26.1 26.6 26.7 27.0 27.2 27.2 27.3 28.0 28.0
+[166] 28.4 28.7 29.0 29.0 29.3 29.4 29.6 29.8 29.9 30.0 30.2
+[177] 30.4 30.7 31.2 31.5 31.6 32.0 32.3 32.3 32.6 32.6 32.8
+[188] 32.9 32.9 34.3 34.5 34.8 35.0 38.1 40.1 47.5
+> lm.predvals
+      126       213       232       226        77       252 
+20.245561 16.495172 21.778230 12.845984  8.476362 28.286858 
+       88       203        21        39        82       185 
+20.894210 26.432110 21.749551 44.291654 18.176246 18.770636 
+      147       238       223        79       149       164 
+21.305621 35.513716 16.464472 24.060460  7.604163 15.778962 
+       19       136       240        16         7       194 
+15.744874 27.675653 25.116537 21.895187 17.315157 27.216681 
+      145       193       121        33       115       101 
+10.896468 18.101143 21.483086  6.450060 19.865414 19.718657 
+        9       133        86        52       114     147.1 
+ 8.993823 24.962417 18.682016 10.440234 19.503383 21.305621 
+      198       123      52.1        27      88.1       151 
+19.555405 12.985324 10.440234  8.636069 20.894210  8.559011 
+      196        99       175       214       140       210 
+22.282041 17.408324 20.852989 21.808415 28.220834 14.325575 
+      124        84       249      52.2     193.1       182 
+16.489632 20.688182 25.923975 10.440234 18.101143  4.805090 
+       30       131       204     114.1        81       215 
+11.957205 18.450607 15.440512 19.503383 22.437802 14.759056 
+      118      39.1       100 
+14.440710 44.291654 19.280608 
+> sorted(lm.predvals)
+Error in sorted(lm.predvals) : could not find function "sorted"
+> sort(lm.predvals)
+      182        33       149        77       151        27 
+ 4.805090  6.450060  7.604163  8.476362  8.559011  8.636069 
+        9        52      52.1      52.2       145        30 
+ 8.993823 10.440234 10.440234 10.440234 10.896468 11.957205 
+      226       123       210       118       215       204 
+12.845984 12.985324 14.325575 14.440710 14.759056 15.440512 
+       19       164       223       124       213         7 
+15.744874 15.778962 16.464472 16.489632 16.495172 17.315157 
+       99       193     193.1        82       131        86 
+17.408324 18.101143 18.101143 18.176246 18.450607 18.682016 
+      185       100       114     114.1       198       101 
+18.770636 19.280608 19.503383 19.503383 19.555405 19.718657 
+      115       126        84       175        88      88.1 
+19.865414 20.245561 20.688182 20.852989 20.894210 20.894210 
+      147     147.1       121        21       232       214 
+21.305621 21.305621 21.483086 21.749551 21.778230 21.808415 
+       16       196        81        79       133       240 
+21.895187 22.282041 22.437802 24.060460 24.962417 25.116537 
+      249       203       194       136       140       252 
+25.923975 26.432110 27.216681 27.675653 28.220834 28.286858 
+      238        39      39.1 
+35.513716 44.291654 44.291654 
+> highrisk
+ [1] 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 0 1 1 0 1
+[30] 1 0 1 1 0 1 1 1 0 0 0 1 0 1 1 1 1 1 0 1 1 1 0 1 0 0 1 1 1
+[59] 1 0 0 1 1
+> lm.predvals
+      126       213       232       226        77       252 
+20.245561 16.495172 21.778230 12.845984  8.476362 28.286858 
+       88       203        21        39        82       185 
+20.894210 26.432110 21.749551 44.291654 18.176246 18.770636 
+      147       238       223        79       149       164 
+21.305621 35.513716 16.464472 24.060460  7.604163 15.778962 
+       19       136       240        16         7       194 
+15.744874 27.675653 25.116537 21.895187 17.315157 27.216681 
+      145       193       121        33       115       101 
+10.896468 18.101143 21.483086  6.450060 19.865414 19.718657 
+        9       133        86        52       114     147.1 
+ 8.993823 24.962417 18.682016 10.440234 19.503383 21.305621 
+      198       123      52.1        27      88.1       151 
+19.555405 12.985324 10.440234  8.636069 20.894210  8.559011 
+      196        99       175       214       140       210 
+22.282041 17.408324 20.852989 21.808415 28.220834 14.325575 
+      124        84       249      52.2     193.1       182 
+16.489632 20.688182 25.923975 10.440234 18.101143  4.805090 
+       30       131       204     114.1        81       215 
+11.957205 18.450607 15.440512 19.503383 22.437802 14.759056 
+      118      39.1       100 
+14.440710 44.291654 19.280608 
+> plot(bf.Percentbodyfat~bf.Wrist.cm.,data=reducedbf[test,], col=highrisk+1)
+> plot(bf.Percentbodyfat~bf.Forearm.cm.,data=reducedbf[test,], col=highrisk+1)
+> plot(bf.Percentbodyfat~bf.Age.years.,data=reducedbf[test,], col=highrisk+1)
+> mean(highrisk == (reducedbf$bf.Percentbodyfat >= 15))
+[1] 0.547619
+> table(highrisk,reducedbf[test,]$bf.Percentbodyfat >= 15)
+        
+highrisk FALSE TRUE
+       0    16    1
+       1     2   44
+> mean(reducedbf$bf.Percentbodyfat)
+[1] 19.15079
+> reduced.lm
+
+Call:
+lm(formula = bf.Percentbodyfat ~ ., data = reducedbf)
+
+Coefficients:
+          (Intercept)          bf.Age.years.  
+            -25.89272                0.04605  
+bf.Abdomen2circum.cm.           bf.Wrist.cm.  
+              0.94526               -1.58567  
+       bf.Forearm.cm.            bf.Neck.cm.  
+              0.57210               -0.40039  
+       bf.Weight.lbs.  
+             -0.09386  
+

@@ -1,0 +1,154 @@
+
+R version 3.4.2 (2017-09-28) -- "Short Summer"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Workspace loaded from ~/R/.RData]
+
+> ?prcomp
+Warning message:
+R graphics engine version 12 is not supported by this version of RStudio. The Plots tab will be disabled until a newer version of RStudio is installed. 
+> pca.out = prcomp(USArrests, scale=TRUE)
+> pca.out
+Standard deviations (1, .., p=4):
+[1] 1.5748783 0.9948694 0.5971291 0.4164494
+
+Rotation (n x k) = (4 x 4):
+                PC1        PC2        PC3         PC4
+Murder   -0.5358995  0.4181809 -0.3412327  0.64922780
+Assault  -0.5831836  0.1879856 -0.2681484 -0.74340748
+UrbanPop -0.2781909 -0.8728062 -0.3780158  0.13387773
+Rape     -0.5434321 -0.1673186  0.8177779  0.08902432
+> names(pca.out)
+[1] "sdev"     "rotation" "center"   "scale"    "x"       
+> pca.out.sdev
+Error: object 'pca.out.sdev' not found
+> pca.out$sdev
+[1] 1.5748783 0.9948694 0.5971291 0.4164494
+> ?sum
+> attach(USArrests)
+> ?sqrd
+No documentation for ‘sqrd’ in specified packages and libraries:
+you could try ‘??sqrd’
+> ?square
+No documentation for ‘square’ in specified packages and libraries:
+you could try ‘??square’
+> ?apply
+> out = apply(USArrests, mean)
+Error in match.fun(FUN) : argument "FUN" is missing, with no default
+> out = apply(USArrests, 1, mean)
+> out2 = apply(USArrests, 2, mean)
+> square(x) {
+Error: unexpected '{' in "square(x) {"
+>     x*x
+Error: object 'x' not found
+> }
+Error: unexpected '}' in "}"
+> square = function(x) {
++     x*x
++ }
+> out = apply(USArrests,square)
+Error in match.fun(FUN) : argument "FUN" is missing, with no default
+> out = apply(USArrests,1,square)
+> dim(USArrests)
+[1] 50  4
+> View(out)
+> View(out)
+> out2 = apply(USArrests,2,square)
+> out3 = sapply(USArrests,square)
+> out4 = USArrests
+> View(out4)
+> View(out4)
+> View(out3)
+> sum(out4)
+[1] 13266
+> sum(out4,2)
+[1] 13268
+> ?sum
+> denom = sum(out3)
+> means = apply(USArrests, 2, mean)
+> centered = UsArrests - means
+Error: object 'UsArrests' not found
+> centered = USArrests - means
+> View(centered)
+> View(centered)
+> View(out4)
+> View(out4)
+> means
+  Murder  Assault UrbanPop     Rape 
+   7.788  170.760   65.540   21.232 
+> means = rep(1:nrow(USArrests, means[1,]))
+Error in nrow(USArrests, means[1, ]) : unused argument (means[1, ])
+> means = rep(1:nrow(USArrests), means[1,]))
+Error: unexpected ')' in "means = rep(1:nrow(USArrests), means[1,]))"
+> means = rep(1:nrow(USArrests), means[1,])
+Error in means[1, ] : incorrect number of dimensions
+> means = rep(means, 1:nrow(USArrests))
+Error in rep(means, 1:nrow(USArrests)) : invalid 'times' argument
+> means = rep(means, times=1:nrow(USArrests))
+Error in rep(means, times = 1:nrow(USArrests)) : invalid 'times' argument
+> scaled.data = scale(USArrests)
+> squared = apply(scaled.data,2,square)
+> denom = apply(scaled.data,2,square)
+> names(pca.out)
+[1] "sdev"     "rotation" "center"   "scale"    "x"       
+> pca.out$rotation
+                PC1        PC2        PC3         PC4
+Murder   -0.5358995  0.4181809 -0.3412327  0.64922780
+Assault  -0.5831836  0.1879856 -0.2681484 -0.74340748
+UrbanPop -0.2781909 -0.8728062 -0.3780158  0.13387773
+Rape     -0.5434321 -0.1673186  0.8177779  0.08902432
+> num = sum(out4 %*% pca.out$rotation)
+Error in out4 %*% pca.out$rotation : 
+  requires numeric/complex matrix/vector arguments
+> pcs = pca.out$rotation
+> data = sapply(out4, as.numeric)
+> numerator = sum(data %*% pcs)
+> finalval = numerator/ sum(denom)
+> finalval = numerator/ denom
+> finalval = numerator/ sapply(denom,2,sum)
+Error in match.fun(FUN) : '2' is not a function, character or symbol
+> finalval = numerator/ apply(denom,2,sum)
+> numerator = apply(data %*% pcs,2,sum)
+> finalval = numerator / apply(denom,2,sum)
+> numerator = apply(apply(data %*% pcs,2, square),2,sum)
+> finalval = numerator / sum(denom)
+> testsqrd = apply(data %*% pcs, 2, square)
+> mult = data %*% pcs
+> View(mult)
+> View(mult)
+> View(testsqrd)
+> View(testsqrd)
+> summed = apply(testsqrd,2,sum)
+> summed
+       PC1        PC2        PC3        PC4 
+1041123.15   48489.57  177219.34  787271.76 
+> testsqrd = apply(scale(USArrests) %*% pcs, 2, square)
+> summed = apply(testsqrd,2,sum)
+> summed/sum(squared)
+       PC1        PC2        PC3        PC4 
+0.62006039 0.24744129 0.08914080 0.04335752 
+> test.pca = prcomp(scale(USArrest))
+Error in scale(USArrest) : object 'USArrest' not found
+> test.pca = prcomp(scale(USArrests))
+> test.pca$sdev
+[1] 1.5748783 0.9948694 0.5971291 0.4164494
+> test.pca$sdev^2
+[1] 2.4802416 0.9897652 0.3565632 0.1734301
+> pve = test.pca$sdev^2/sum(test.pca$sdev^2)
+> pve
+[1] 0.62006039 0.24744129 0.08914080 0.04335752

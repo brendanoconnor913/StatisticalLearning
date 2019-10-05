@@ -1,0 +1,582 @@
+> nonil = autononame[complete.cases(autononame),]
+> cor(nonil)
+Error in cor(nonil) : 'x' must be numeric
+> View(nonil)
+> View(nonil)
+> nonil = as.numeric(nonil)
+Error: (list) object cannot be coerced to type 'double'
+> nonil = sapply(nonil, as.numeric)
+> cor(nonil)
+                    mpg  cylinders displacement horsepower     weight
+mpg           1.0000000 -0.7762599   -0.8044430  0.4228227 -0.8317389
+cylinders    -0.7762599  1.0000000    0.9509199 -0.5466585  0.8970169
+displacement -0.8044430  0.9509199    1.0000000 -0.4820705  0.9331044
+horsepower    0.4228227 -0.5466585   -0.4820705  1.0000000 -0.4821507
+weight       -0.8317389  0.8970169    0.9331044 -0.4821507  1.0000000
+acceleration  0.4222974 -0.5040606   -0.5441618  0.2662877 -0.4195023
+year          0.5814695 -0.3467172   -0.3698041  0.1274167 -0.3079004
+origin        0.5636979 -0.5649716   -0.6106643  0.2973734 -0.5812652
+             acceleration       year     origin
+mpg             0.4222974  0.5814695  0.5636979
+cylinders      -0.5040606 -0.3467172 -0.5649716
+displacement   -0.5441618 -0.3698041 -0.6106643
+horsepower      0.2662877  0.1274167  0.2973734
+weight         -0.4195023 -0.3079004 -0.5812652
+acceleration    1.0000000  0.2829009  0.2100836
+year            0.2829009  1.0000000  0.1843141
+origin          0.2100836  0.1843141  1.0000000
+> mlr = lm(mpg~.)
+Error in terms.formula(formula, data = data) : 
+  '.' in formula and no 'data' argument
+> mlr = lm(mpg~., nonil)
+Error in model.frame.default(formula = mpg ~ ., data = nonil, drop.unused.levels = TRUE) : 
+  'data' must be a data.frame, not a matrix or an array
+> cleaned = data.frame(nonil)
+> mlr = lm(mpg~., cleaned)
+> summary(mlr)
+
+Call:
+lm(formula = mpg ~ ., data = cleaned)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-9.629 -2.034 -0.046  1.801 13.010 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  -2.128e+01  4.259e+00  -4.998 8.78e-07 ***
+cylinders    -2.927e-01  3.382e-01  -0.865   0.3874    
+displacement  1.603e-02  7.284e-03   2.201   0.0283 *  
+horsepower    7.942e-03  6.809e-03   1.166   0.2442    
+weight       -6.870e-03  5.799e-04 -11.846  < 2e-16 ***
+acceleration  1.539e-01  7.750e-02   1.986   0.0477 *  
+year          7.734e-01  4.939e-02  15.661  < 2e-16 ***
+origin        1.346e+00  2.691e-01   5.004 8.52e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 3.331 on 389 degrees of freedom
+Multiple R-squared:  0.822, Adjusted R-squared:  0.8188 
+F-statistic: 256.7 on 7 and 389 DF,  p-value: < 2.2e-16
+
+> par(mfrow=c(2,2))
+> plot(mlr)
+> ?lm
+> fitInt = lm(mpg~.+horsepower:year+cylinders*horsepower)
+Error in terms.formula(formula, data = data) : 
+  '.' in formula and no 'data' argument
+> fitInt = lm(mpg~.+horsepower:year+cylinders*horsepower, cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + horsepower:year + cylinders * horsepower, 
+    data = cleaned)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.1924 -2.1289 -0.0451  1.8536 12.8549 
+
+Coefficients:
+                       Estimate Std. Error t value Pr(>|t|)    
+(Intercept)          -5.4395430  8.5748662  -0.634   0.5262    
+cylinders            -0.2872439  0.3898909  -0.737   0.4617    
+displacement          0.0136941  0.0073807   1.855   0.0643 .  
+horsepower           -0.2743224  0.1331708  -2.060   0.0401 *  
+weight               -0.0068511  0.0005787 -11.839  < 2e-16 ***
+acceleration          0.1498006  0.0779452   1.922   0.0554 .  
+year                  0.5696836  0.1087826   5.237 2.69e-07 ***
+origin                1.3901554  0.2689947   5.168 3.80e-07 ***
+horsepower:year       0.0035528  0.0016866   2.107   0.0358 *  
+cylinders:horsepower  0.0023028  0.0054060   0.426   0.6704    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 3.32 on 387 degrees of freedom
+Multiple R-squared:  0.8241,    Adjusted R-squared:   0.82 
+F-statistic: 201.4 on 9 and 387 DF,  p-value: < 2.2e-16
+
+> fitInt = lm(mpg~.+cylinders:year+year*horsepower, cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + cylinders:year + year * horsepower, data = cleaned)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-8.2961 -2.0696  0.0662  1.6415 12.0701 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     -1.155e+02  1.992e+01  -5.801 1.38e-08 ***
+cylinders        1.618e+01  2.748e+00   5.887 8.56e-09 ***
+displacement     7.199e-03  7.096e-03   1.014   0.3110    
+horsepower       1.925e-01  1.440e-01   1.337   0.1820    
+weight          -6.894e-03  5.531e-04 -12.465  < 2e-16 ***
+acceleration     2.534e-01  7.573e-02   3.346   0.0009 ***
+year             1.992e+00  2.585e-01   7.707 1.10e-13 ***
+origin           1.208e+00  2.591e-01   4.663 4.29e-06 ***
+cylinders:year  -2.124e-01  3.538e-02  -6.003 4.45e-09 ***
+horsepower:year -2.463e-03  1.893e-03  -1.301   0.1939    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 3.177 on 387 degrees of freedom
+Multiple R-squared:  0.839, Adjusted R-squared:  0.8352 
+F-statistic: 224.1 on 9 and 387 DF,  p-value: < 2.2e-16
+
+> fitInt = lm(mpg~.+cylinders:year+weight:displacement, cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + cylinders:year + weight:displacement, 
+    data = cleaned)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-8.5117 -1.7688 -0.0625  1.4835 12.9896 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(>|t|)    
+(Intercept)         -6.986e+01  1.171e+01  -5.964 5.56e-09 ***
+cylinders            1.161e+01  2.169e+00   5.351 1.50e-07 ***
+displacement        -7.100e-02  1.068e-02  -6.651 9.96e-11 ***
+horsepower           5.823e-04  5.934e-03   0.098   0.9219    
+weight              -1.090e-02  6.664e-04 -16.356  < 2e-16 ***
+acceleration         2.739e-01  6.844e-02   4.002 7.52e-05 ***
+year                 1.557e+00  1.462e-01  10.648  < 2e-16 ***
+origin               4.461e-01  2.495e-01   1.788   0.0745 .  
+cylinders:year      -1.466e-01  2.772e-02  -5.288 2.08e-07 ***
+displacement:weight  2.021e-05  2.205e-06   9.165  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.886 on 387 degrees of freedom
+Multiple R-squared:  0.8671,    Adjusted R-squared:  0.864 
+F-statistic: 280.6 on 9 and 387 DF,  p-value: < 2.2e-16
+
+> fitInt = lm(mpg~.+cylinders:year+weight:displacement+displacement:year, cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + cylinders:year + weight:displacement + 
+    displacement:year, data = cleaned)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-8.533 -1.752 -0.047  1.441 13.267 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(>|t|)    
+(Intercept)         -6.184e+01  1.621e+01  -3.815 0.000159 ***
+cylinders            7.585e+00  6.025e+00   1.259 0.208839    
+displacement         9.968e-04  1.012e-01   0.010 0.992143    
+horsepower           1.017e-03  5.968e-03   0.170 0.864789    
+weight              -1.075e-02  7.006e-04 -15.338  < 2e-16 ***
+acceleration         2.737e-01  6.848e-02   3.997 7.70e-05 ***
+year                 1.448e+00  2.118e-01   6.834 3.23e-11 ***
+origin               4.145e-01  2.535e-01   1.635 0.102887    
+cylinders:year      -9.317e-02  7.961e-02  -1.170 0.242599    
+displacement:weight  1.985e-05  2.261e-06   8.777  < 2e-16 ***
+displacement:year   -9.538e-04  1.333e-03  -0.716 0.474565    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.887 on 386 degrees of freedom
+Multiple R-squared:  0.8673,    Adjusted R-squared:  0.8639 
+F-statistic: 252.3 on 10 and 386 DF,  p-value: < 2.2e-16
+
+> fitInt = lm(mpg~.+cylinders:year+weight:displacement+horsepower:acceleration, cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + cylinders:year + weight:displacement + 
+    horsepower:acceleration, data = cleaned)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-8.768 -1.715 -0.091  1.393 12.992 
+
+Coefficients:
+                          Estimate Std. Error t value Pr(>|t|)    
+(Intercept)             -7.577e+01  1.225e+01  -6.185 1.58e-09 ***
+cylinders                1.205e+01  2.182e+00   5.522 6.17e-08 ***
+displacement            -7.014e-02  1.067e-02  -6.575 1.58e-10 ***
+horsepower               6.750e-02  4.190e-02   1.611  0.10804    
+weight                  -1.086e-02  6.653e-04 -16.329  < 2e-16 ***
+acceleration             4.942e-01  1.527e-01   3.237  0.00131 ** 
+year                     1.583e+00  1.468e-01  10.782  < 2e-16 ***
+origin                   4.669e-01  2.493e-01   1.873  0.06183 .  
+cylinders:year          -1.513e-01  2.782e-02  -5.439 9.54e-08 ***
+displacement:weight      1.988e-05  2.209e-06   8.999  < 2e-16 ***
+horsepower:acceleration -4.182e-03  2.592e-03  -1.613  0.10754    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.88 on 386 degrees of freedom
+Multiple R-squared:  0.868, Adjusted R-squared:  0.8646 
+F-statistic: 253.9 on 10 and 386 DF,  p-value: < 2.2e-16
+
+> fitInt = lm(mpg~.+cylinders:year+cylinders:displacement+horsepower:acceleration, cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + cylinders:year + cylinders:displacement + 
+    horsepower:acceleration, data = cleaned)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-10.2179  -1.6740  -0.1053   1.4638  13.1799 
+
+Coefficients:
+                          Estimate Std. Error t value Pr(>|t|)    
+(Intercept)             -8.326e+01  1.276e+01  -6.523 2.16e-10 ***
+cylinders                1.063e+01  2.348e+00   4.529 7.91e-06 ***
+displacement            -7.139e-02  1.370e-02  -5.211 3.07e-07 ***
+horsepower               1.230e-01  4.359e-02   2.821  0.00504 ** 
+weight                  -6.509e-03  5.278e-04 -12.333  < 2e-16 ***
+acceleration             7.238e-01  1.607e-01   4.503 8.88e-06 ***
+year                     1.618e+00  1.534e-01  10.543  < 2e-16 ***
+origin                   6.170e-01  2.627e-01   2.349  0.01933 *  
+cylinders:year          -1.609e-01  2.907e-02  -5.536 5.72e-08 ***
+cylinders:displacement   1.068e-02  1.639e-03   6.516 2.25e-10 ***
+horsepower:acceleration -7.664e-03  2.703e-03  -2.835  0.00482 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 3.006 on 386 degrees of freedom
+Multiple R-squared:  0.8561,    Adjusted R-squared:  0.8524 
+F-statistic: 229.7 on 10 and 386 DF,  p-value: < 2.2e-16
+
+> fitInt = lm(mpg~.+displacement:weight+cylinders:displacement+horsepower:acceleration, cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + displacement:weight + cylinders:displacement + 
+    horsepower:acceleration, data = cleaned)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.9603 -1.8584 -0.1032  1.7014 12.1941 
+
+Coefficients:
+                          Estimate Std. Error t value Pr(>|t|)    
+(Intercept)             -1.393e+01  4.721e+00  -2.952  0.00335 ** 
+cylinders                4.074e-01  5.885e-01   0.692  0.48915    
+displacement            -6.917e-02  1.364e-02  -5.072 6.12e-07 ***
+horsepower               4.298e-02  4.449e-02   0.966  0.33459    
+weight                  -1.141e-02  9.845e-04 -11.591  < 2e-16 ***
+acceleration             3.391e-01  1.643e-01   2.064  0.03964 *  
+year                     8.191e-01  4.455e-02  18.389  < 2e-16 ***
+origin                   4.656e-01  2.620e-01   1.777  0.07631 .  
+displacement:weight      2.263e-05  3.781e-06   5.987 4.90e-09 ***
+cylinders:displacement  -6.086e-04  2.684e-03  -0.227  0.82073    
+horsepower:acceleration -2.544e-03  2.760e-03  -0.922  0.35722    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.988 on 386 degrees of freedom
+Multiple R-squared:  0.8579,    Adjusted R-squared:  0.8542 
+F-statistic: 233.1 on 10 and 386 DF,  p-value: < 2.2e-16
+
+> fitInt = lm(mpg~.+cylinders:weight+cylinders:displacement+horsepower:acceleration, cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + cylinders:weight + cylinders:displacement + 
+    horsepower:acceleration, data = cleaned)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-11.0166  -1.7942  -0.1555   1.6206  12.4038 
+
+Coefficients:
+                          Estimate Std. Error t value Pr(>|t|)    
+(Intercept)             -0.6601607  6.1237685  -0.108   0.9142    
+cylinders               -4.7051278  0.7047061  -6.677 8.53e-11 ***
+displacement             0.0087126  0.0235882   0.369   0.7121    
+horsepower               0.0327998  0.0471146   0.696   0.4867    
+weight                  -0.0153244  0.0020865  -7.345 1.24e-12 ***
+acceleration             0.3456826  0.1716062   2.014   0.0447 *  
+year                     0.8133083  0.0454100  17.910  < 2e-16 ***
+origin                   0.6867579  0.2670493   2.572   0.0105 *  
+cylinders:weight         0.0014311  0.0003242   4.414 1.32e-05 ***
+cylinders:displacement   0.0002981  0.0031688   0.094   0.9251    
+horsepower:acceleration -0.0020408  0.0029153  -0.700   0.4843    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 3.047 on 386 degrees of freedom
+Multiple R-squared:  0.8522,    Adjusted R-squared:  0.8484 
+F-statistic: 222.5 on 10 and 386 DF,  p-value: < 2.2e-16
+
+> fitInt = lm(mpg~.+displacement:weight+cylinders:displacement+horsepower:acceleration, cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + displacement:weight + cylinders:displacement + 
+    horsepower:acceleration, data = cleaned)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.9603 -1.8584 -0.1032  1.7014 12.1941 
+
+Coefficients:
+                          Estimate Std. Error t value Pr(>|t|)    
+(Intercept)             -1.393e+01  4.721e+00  -2.952  0.00335 ** 
+cylinders                4.074e-01  5.885e-01   0.692  0.48915    
+displacement            -6.917e-02  1.364e-02  -5.072 6.12e-07 ***
+horsepower               4.298e-02  4.449e-02   0.966  0.33459    
+weight                  -1.141e-02  9.845e-04 -11.591  < 2e-16 ***
+acceleration             3.391e-01  1.643e-01   2.064  0.03964 *  
+year                     8.191e-01  4.455e-02  18.389  < 2e-16 ***
+origin                   4.656e-01  2.620e-01   1.777  0.07631 .  
+displacement:weight      2.263e-05  3.781e-06   5.987 4.90e-09 ***
+cylinders:displacement  -6.086e-04  2.684e-03  -0.227  0.82073    
+horsepower:acceleration -2.544e-03  2.760e-03  -0.922  0.35722    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.988 on 386 degrees of freedom
+Multiple R-squared:  0.8579,    Adjusted R-squared:  0.8542 
+F-statistic: 233.1 on 10 and 386 DF,  p-value: < 2.2e-16
+
+> fitInt = lm(mpg~.+displacement:weight+horsepower:acceleration, cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + displacement:weight + horsepower:acceleration, 
+    data = cleaned)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-10.0493  -1.8236  -0.1036   1.7058  12.1869 
+
+Coefficients:
+                          Estimate Std. Error t value Pr(>|t|)    
+(Intercept)             -1.390e+01  4.713e+00  -2.950  0.00337 ** 
+cylinders                2.943e-01  3.115e-01   0.945  0.34546    
+displacement            -7.098e-02  1.105e-02  -6.422 3.94e-10 ***
+horsepower               4.533e-02  4.322e-02   1.049  0.29488    
+weight                  -1.125e-02  6.855e-04 -16.413  < 2e-16 ***
+acceleration             3.508e-01  1.558e-01   2.251  0.02494 *  
+year                     8.192e-01  4.449e-02  18.414  < 2e-16 ***
+origin                   4.561e-01  2.583e-01   1.766  0.07821 .  
+displacement:weight      2.195e-05  2.255e-06   9.731  < 2e-16 ***
+horsepower:acceleration -2.699e-03  2.672e-03  -1.010  0.31304    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.984 on 387 degrees of freedom
+Multiple R-squared:  0.8579,    Adjusted R-squared:  0.8546 
+F-statistic: 259.6 on 9 and 387 DF,  p-value: < 2.2e-16
+
+> fitInt = lm(mpg~.+displacement:cylinders+horsepower:acceleration, cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + displacement:cylinders + horsepower:acceleration, 
+    data = cleaned)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-11.8134  -1.7702  -0.0273   1.7140  12.3573 
+
+Coefficients:
+                          Estimate Std. Error t value Pr(>|t|)    
+(Intercept)             -1.759e+01  4.887e+00  -3.598 0.000362 ***
+cylinders               -2.172e+00  4.185e-01  -5.189 3.42e-07 ***
+displacement            -7.551e-02  1.420e-02  -5.319 1.77e-07 ***
+horsepower               1.062e-01  4.512e-02   2.354 0.019083 *  
+weight                  -6.422e-03  5.474e-04 -11.733  < 2e-16 ***
+acceleration             6.028e-01  1.652e-01   3.648 0.000300 ***
+year                     8.052e-01  4.644e-02  17.337  < 2e-16 ***
+origin                   5.966e-01  2.726e-01   2.189 0.029186 *  
+cylinders:displacement   1.228e-02  1.674e-03   7.337 1.30e-12 ***
+horsepower:acceleration -6.527e-03  2.797e-03  -2.334 0.020115 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 3.119 on 387 degrees of freedom
+Multiple R-squared:  0.8447,    Adjusted R-squared:  0.8411 
+F-statistic: 233.9 on 9 and 387 DF,  p-value: < 2.2e-16
+
+> fitInt = lm(mpg~.+displacement:cylinders+cylinders:weight+cylinders:year, cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + displacement:cylinders + cylinders:weight + 
+    cylinders:year, data = cleaned)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.2735 -1.6350 -0.0589  1.4586 12.4376 
+
+Coefficients:
+                         Estimate Std. Error t value Pr(>|t|)    
+(Intercept)            -5.885e+01  1.245e+01  -4.726 3.22e-06 ***
+cylinders               7.150e+00  2.365e+00   3.023  0.00267 ** 
+displacement            1.554e-02  2.151e-02   0.723  0.47027    
+horsepower             -1.129e-03  6.087e-03  -0.185  0.85297    
+weight                 -1.556e-02  1.903e-03  -8.177 4.25e-15 ***
+acceleration            2.943e-01  7.085e-02   4.154 4.02e-05 ***
+year                    1.569e+00  1.498e-01  10.472  < 2e-16 ***
+origin                  7.107e-01  2.579e-01   2.756  0.00613 ** 
+cylinders:displacement -1.590e-03  2.884e-03  -0.551  0.58173    
+cylinders:weight        1.459e-03  2.938e-04   4.964 1.04e-06 ***
+cylinders:year         -1.500e-01  2.841e-02  -5.279 2.17e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.945 on 386 degrees of freedom
+Multiple R-squared:  0.862, Adjusted R-squared:  0.8584 
+F-statistic:   241 on 10 and 386 DF,  p-value: < 2.2e-16
+
+> fitInt = lm(mpg~.+displacement:weight+cylinders:weight+cylinders:year, cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + displacement:weight + cylinders:weight + 
+    cylinders:year, data = cleaned)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-8.305 -1.780  0.011  1.401 13.020 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(>|t|)    
+(Intercept)         -7.298e+01  1.268e+01  -5.756 1.76e-08 ***
+cylinders            1.263e+01  2.689e+00   4.698 3.67e-06 ***
+displacement        -8.433e-02  2.325e-02  -3.628 0.000324 ***
+horsepower           1.118e-03  5.996e-03   0.187 0.852118    
+weight              -9.957e-03  1.604e-03  -6.206 1.40e-09 ***
+acceleration         2.673e-01  6.925e-02   3.861 0.000133 ***
+year                 1.562e+00  1.465e-01  10.659  < 2e-16 ***
+origin               4.252e-01  2.517e-01   1.689 0.092056 .  
+displacement:weight  2.381e-05  6.002e-06   3.967 8.68e-05 ***
+cylinders:weight    -2.808e-04  4.349e-04  -0.646 0.518891    
+cylinders:year      -1.475e-01  2.778e-02  -5.310 1.85e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.888 on 386 degrees of freedom
+Multiple R-squared:  0.8673,    Adjusted R-squared:  0.8638 
+F-statistic: 252.2 on 10 and 386 DF,  p-value: < 2.2e-16
+
+> fitInt = lm(mpg~.+sqrt(weight), cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + sqrt(weight), data = cleaned)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.6199 -1.7447 -0.1411  1.6940 12.6380 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  59.439716   9.357485   6.352 5.95e-10 ***
+cylinders    -0.277903   0.305242  -0.910   0.3632    
+displacement  0.009112   0.006615   1.377   0.1692    
+horsepower    0.005267   0.006152   0.856   0.3925    
+weight        0.021057   0.002998   7.025 9.69e-12 ***
+acceleration  0.148614   0.069952   2.125   0.0343 *  
+year          0.825195   0.044909  18.375  < 2e-16 ***
+origin        0.620934   0.254672   2.438   0.0152 *  
+sqrt(weight) -3.057489   0.323140  -9.462  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 3.007 on 388 degrees of freedom
+Multiple R-squared:  0.8554,    Adjusted R-squared:  0.8524 
+F-statistic: 286.9 on 8 and 388 DF,  p-value: < 2.2e-16
+
+> fitInt = lm(mpg~.+sqrt(weight)+I(year^2), cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + sqrt(weight) + I(year^2), data = cleaned)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.1138 -1.5766 -0.0661  1.5458 12.4932 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  452.421043  71.612161   6.318 7.31e-10 ***
+cylinders     -0.122641   0.295561  -0.415   0.6784    
+displacement   0.002667   0.006482   0.411   0.6810    
+horsepower     0.001774   0.005964   0.297   0.7663    
+weight         0.021577   0.002891   7.464 5.62e-13 ***
+acceleration   0.174085   0.067584   2.576   0.0104 *  
+year          -9.565315   1.878861  -5.091 5.57e-07 ***
+origin         0.601085   0.245507   2.448   0.0148 *  
+sqrt(weight)  -3.058026   0.311477  -9.818  < 2e-16 ***
+I(year^2)      0.068295   0.012346   5.532 5.85e-08 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.898 on 387 degrees of freedom
+Multiple R-squared:  0.866, Adjusted R-squared:  0.8629 
+F-statistic: 277.9 on 9 and 387 DF,  p-value: < 2.2e-16
+
+> fitInt = lm(mpg~.+sqrt(weight)+I(horsepower^2)+, cleaned)
+Error: unexpected ',' in "fitInt = lm(mpg~.+sqrt(weight)+I(horsepower^2)+,"
+> fitInt = lm(mpg~.+sqrt(weight)+I(horsepower^2) cleaned)
+Error: unexpected symbol in "fitInt = lm(mpg~.+sqrt(weight)+I(horsepower^2) cleaned"
+> fitInt = lm(mpg~.+sqrt(weight)+I(horsepower^2), cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + sqrt(weight) + I(horsepower^2), data = cleaned)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-9.261 -1.700 -0.116  1.583 12.232 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     38.8472817 11.6300044   3.340 0.000918 ***
+cylinders       -0.4622699  0.3087766  -1.497 0.135182    
+displacement     0.0070531  0.0065887   1.070 0.285067    
+horsepower       0.0902496  0.0296316   3.046 0.002480 ** 
+weight           0.0141100  0.0037990   3.714 0.000234 ***
+acceleration     0.1307900  0.0695442   1.881 0.060767 .  
+year             0.7995390  0.0453294  17.638  < 2e-16 ***
+origin           0.6118594  0.2522364   2.426 0.015734 *  
+sqrt(weight)    -2.2459330  0.4232060  -5.307 1.88e-07 ***
+I(horsepower^2) -0.0009307  0.0003176  -2.931 0.003584 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.978 on 387 degrees of freedom
+Multiple R-squared:  0.8585,    Adjusted R-squared:  0.8552 
+F-statistic: 260.9 on 9 and 387 DF,  p-value: < 2.2e-16
+
+> fitInt = lm(mpg~.+sqrt(weight)+log(horsepower^2), cleaned)
+> summary(fitInt)
+
+Call:
+lm(formula = mpg ~ . + sqrt(weight) + log(horsepower^2), data = cleaned)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.5874 -1.7649 -0.1326  1.6689 12.5985 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       56.950757  10.213325   5.576 4.62e-08 ***
+cylinders         -0.349018   0.326927  -1.068   0.2864    
+displacement       0.009544   0.006658   1.434   0.1525    
+horsepower        -0.004732   0.017491  -0.271   0.7869    
+weight             0.020183   0.003324   6.072 3.01e-09 ***
+acceleration       0.152431   0.070287   2.169   0.0307 *  
+year               0.820709   0.045541  18.021  < 2e-16 ***
+origin             0.608493   0.255691   2.380   0.0178 *  
+sqrt(weight)      -2.960065   0.360602  -8.209 3.37e-15 ***
+log(horsepower^2)  0.132320   0.216652   0.611   0.5417    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 3.009 on 387 degrees of freedom
+Multiple R-squared:  0.8555,    Adjusted R-squared:  0.8522 
+F-statistic: 254.6 on 9 and 387 DF,  p-value: < 2.2e-16

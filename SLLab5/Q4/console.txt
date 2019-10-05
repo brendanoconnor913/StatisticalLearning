@@ -1,0 +1,817 @@
+
+R version 3.4.1 (2017-06-30) -- "Single Candle"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Workspace loaded from ~/R/.RData]
+
+> n = 1000
+Warning message:
+R graphics engine version 12 is not supported by this version of RStudio. The Plots tab will be disabled until a newer version of RStudio is installed. 
+> beta0 = 1
+> beta1 = .2
+> x = reunif(n=n,min=0,max=1.5)
+Error in reunif(n = n, min = 0, max = 1.5) : 
+  could not find function "reunif"
+> x = runif(n=n,min=0,max=1.5)
+> my = exp(beta0 + beta1 * x)
+> mu = exp(beta0 + beta1 * x)
+> y = rpois(n=n, lambda=mu)
+> sample(20, 1000, replace=FALSE)
+Error in sample.int(x, size, replace, prob) : 
+  cannot take a sample larger than the population when 'replace = FALSE'
+> sample(x=20, size=1000, replace=FALSE)
+Error in sample.int(x, size, replace, prob) : 
+  cannot take a sample larger than the population when 'replace = FALSE'
+> sample(x=20, size=1000, replace=TRUE)
+   [1]  8 19 19 13 16 17 15 18 17 15  1 10  5 10 14 16 17 20 13
+  [20] 19  7  1 17  7 17 12  1 11 12  3  5  6 16 13  6  1 12 19
+  [39]  5 12 13  3 10  9  8  9 19  8  3 14  1 15  9 11 19 11  5
+  [58]  5 11  1 20  3  7  3  2 19 19 20 10  2 15 10  2  4  6 18
+  [77] 18 16 13 20  7  5  8 16  4 16 12 16 18  7  1 13 17  2 20
+  [96]  5 12 19  7 13 14 19 19 15 13 17 20 11  1 14 19 18  9  8
+ [115] 10 16  7  2 16 11 17  7  3  5 20  3  1 15 10  8  4 15 11
+ [134]  2 15 19 16 19  4  7 10  8  2  7  1  5  1 17  7 17  9  5
+ [153]  7 20 18  7  3 10 13 18 16 16 12  8  3 14  2 13 12 11  3
+ [172]  8  6 13  9  9  1 15 13  4 10 18 18  6  4 19 10  2  3  9
+ [191] 19  3 13  7 16  3  3 17  4  6 11 20 20  3 10  2 10  4 18
+ [210]  9 20 19 11 11  3 17  3  5 18 15 13 13 20  3 17  7 18  5
+ [229]  7 18  1 13  9  9  8 13 17  9 11 14  7  4  3 13 16 20 11
+ [248] 15 10  5 11  6  4  5 16  9 16 16  9  5 10  3 20 11  2 13
+ [267]  1 16  6  4 14 19  6  9  1  1 11 13 14 12 12  8 15 17 15
+ [286] 11 20 10  6  9 14 15 17 11  2 15  8 14  2 11  6 12  4 18
+ [305] 16 12  4  3 16  6  4 15 11  5  6 11 11 18  8 11 14 10  5
+ [324]  2  9  4 13  7  4 14  1 12 17 12  7 15  1 10  2  6 14  9
+ [343] 15  9 19 20 15  1  5  2  1  7 12 12  3 14 11 16 14 20  6
+ [362]  4  9 15  6  3  6 10  4  7  2 12 18 18  4  8 12  5 17 16
+ [381] 18 16  7 17 20 18  3 17 10  9 18 13  5 10 18  8 18 20 17
+ [400]  4 19  8 15 19 20  7  2 10 20  5 20 10 11 13  1 17  8 12
+ [419]  5 14 19 14 12 14 19 18  2  1 12 14  8  4  2 15 18  1  6
+ [438] 12  5 20 12 12  6  2 18  1  4 14 15 19  1 10  2 19  5  5
+ [457] 20 14  4 14 12  7 18 12 10  4 17 14  3  7  3 10 18 17 15
+ [476] 18  7  8 12 17  5  4  4  6 17 18 11 19  4 17 15 20 12  9
+ [495] 18 12 13 18 10 19  3 15  1 19  9 18 16 10  3  8 19  7  8
+ [514] 11 17  9  5 10  7 16 14 17  5  1  4 19  7 15 20  1  6 18
+ [533] 20  7 12  1 10  6 19 19 14 15  2 12 10  6  1  6  5  9  9
+ [552] 20 12 11  7 20  3 18 12 13  9 15 18 14 16  4 11  8  3 16
+ [571]  5 18 19 20  6 20  6  2  5  7  6 14 18  9  7 20  3 12 13
+ [590]  9  7 15 16 17  8  6  6 10  9 15  4 11 14 10  7  8 13 20
+ [609]  9 10 12 16 12  3  6 17 13  2 13  8  7 13 11 18 13  5  9
+ [628]  9  3 11 18  6 15 13  6 12  1 19 12  5  9  4 14  9  1  3
+ [647] 11  6 13 13 15  6 15 12 16  2 19  7 14  8  8  7 15  4  8
+ [666] 16 12 14  3  3 11  4 16 17 13 14  3 19  1  9  2  4 16 15
+ [685] 16 17 11 11 19  8  3 11 13 19 16 16 18 15 11 18 19 20 18
+ [704]  5  6  5  2  9  4 20 14 16 14 17  4  1  2  6  4 20  9  5
+ [723] 12 16  9  1  3 15  7  5 20 20  6  2 11 19 15  4 15  4 13
+ [742] 17 12  4  5 19 19  1 17  8 15 15 11 13  5 15 16 13  7 19
+ [761] 18 20 18 18 20 13 14  1  6 11 10 13 20  6  9  3 10 16 12
+ [780] 18 17  7 11 16  2 10  8  4  4 11 19 19 13  5  2  2  4  5
+ [799] 10  4  4 17  4 18  6  6  6  6  1  5 18 20 13 18 20 18  6
+ [818]  4 14  9 15  1  2  2  5 10  3  9  4 18 10 15  7  3  9 11
+ [837] 12 11 11 17  6  6 11 19  1 12 18  6  1 15  1 17 10 12 16
+ [856] 19  7 13  1  3 12 12  4  4 18 17 18  6  6 14 11 11  6  2
+ [875] 20  8 11 10 12  7 17 12  7  1  8  4  4 10 15 18  1 17  6
+ [894] 18 15  7 11 20 15 15 14 19  4  7 18 20 12  7  7 18  4 12
+ [913] 15 12  9 13  6  9 14  6 18 12  2  4 12 10 15 13 17 11 18
+ [932]  1 11 10 20 13 11 18 10  6 12 11 11  2 19  8  6  4  2 16
+ [951]  6 16  7  2  5  7 17  9 20 15  4  6  3 12 10 11 16 11 12
+ [970] 10 13  3 13  9  4  2 14  6  4  3 15 13 11 20  8 11 13 12
+ [989] 20 11 20  5 20 14 20  8 18 11 11 16
+> x = sample(x=20, size=1000, replace=TRUE)
+> ?rnom
+No documentation for ‘rnom’ in specified packages and libraries:
+you could try ‘??rnom’
+> ?rnorm
+> x1 = rnorm(1000, mean=1,sd=1)
+> x2 = rnorm(1000, mean=1,sd=10)
+> x2 = rnorm(1000, mean=13,sd=10)
+> x2 = rnorm(1000, mean=1,sd=10)
+> x3 = rnorm(1000, mean=13,sd=10)
+> x4 = rnorm(1000, mean=13,sd=4)
+> x5 = rnorm(1000, mean=13,sd=.5)
+> x5 = rnorm(1000, mean=20,sd=.5)
+> x5 = rnorm(1000, mean=13,sd=.5)
+> x6 = rnorm(1000, mean=20,sd=.5)
+> x6 = rnorm(1000, mean=20,sd=32)
+> x6 = rnorm(1000, mean=22,sd=32)
+> x6 = rnorm(1000, mean=22,sd=1)
+> x6 = rnorm(1000, mean=24,sd=1)
+> x6 = rnorm(1000, mean=12,sd=1)
+> x6 = rnorm(1000, mean=20,sd=.5)
+> x7 = rnorm(1000, mean=14,sd=23)
+> x8 = rnorm(1000, mean=52,sd=11)
+> x9 = rnorm(1000, mean=1,sd=11)
+> x10 = rnorm(1000, mean=1,sd=44)
+> x11 = rnorm(1000, mean=19,sd=44)
+> x12 = rnorm(1000, mean=19,sd=3)
+> x13 = rnorm(1000, mean=2,sd=3)
+> m = sample(20, size=20, replace=TRUE)
+> sd = sample(44, size=20, replace=TRUE)
+> for(i in 1:20) {
++     x[i] = rnorm(1000, mean=m[i], sd=sd[i])
++ }
+There were 20 warnings (use warnings() to see them)
+> for(i in 1:20) {
++     x[,i] = rnorm(1000, mean=m[i], sd=sd[i])
++ }
+Error in x[, i] <- rnorm(1000, mean = m[i], sd = sd[i]) : 
+  incorrect number of subscripts on matrix
+> df = data.frame()
+> for(i in 1:20) {
++     df[,i] = rnorm(1000, mean=m[i], sd=sd[i])
++ }
+Error in `[<-.data.frame`(`*tmp*`, , i, value = c(-3.77679343439459, 30.6189708730331,  : 
+  replacement has 1000 rows, data has 0
+> df = data.frame(matrix(ncol = 20, nrow = 1000))
+> for(i in 1:20) {
++     df[,i] = rnorm(1000, mean=m[i], sd=sd[i])
++ }
+> View(df)
+> View(df)
+> beta = sample(20, size=20, replace=TRUE)
+> zeroes = sample(10,size=20)
+Error in sample.int(x, size, replace, prob) : 
+  cannot take a sample larger than the population when 'replace = FALSE'
+> zeroes = sample(20,size=10)
+> beta[zeroes,] = 0
+Error in beta[zeroes, ] = 0 : incorrect number of subscripts on matrix
+> beta[zeroes] = 0
+> e = rnorm(1000, mean=0, sd=5)
+> df$y = beta*df + e
+> y = beta*df + e
+> View(df)
+> View(df)
+> df = data.frame(matrix(ncol = 20, nrow = 1000))
+> for(i in 1:20) {
++     +     df[,i] = rnorm(1000, mean=m[i], sd=sd[i])
++     + }
+Error: unexpected '}' in:
+"    +     df[,i] = rnorm(1000, mean=m[i], sd=sd[i])
+    + }"
+> for(i in 1:20) {
++     df[,i] = rnorm(1000, mean=m[i], sd=sd[i])
++ }
+> y = as.matrix(df) %*% beta
+> View(y)
+> View(y)
+> df$y = y
+> df$y = y + e
+> train =  sample(1000, size=100, replace=FALSE)
+> regfit.full = regsubset(y~., data=df[train,])
+Error in regsubset(y ~ ., data = df[train, ]) : 
+  could not find function "regsubset"
+> regfit.full = regsubsets(y~., data=df[train,])
+Error in regsubsets(y ~ ., data = df[train, ]) : 
+  could not find function "regsubsets"
+> library(glmnet)
+Loading required package: Matrix
+Loading required package: foreach
+foreach: simple, scalable parallel programming from Revolution Analytics
+Use Revolution R for scalability, fault tolerance and more.
+http://www.revolutionanalytics.com
+Loaded glmnet 2.0-13
+
+> regfit.full = regsubsets(y~., data=df[train,])
+Error in regsubsets(y ~ ., data = df[train, ]) : 
+  could not find function "regsubsets"
+> library(leaps)
+> regfit.full = regsubsets(y~., data=df[train,])
+> plot(regfit.full)
+> names(regfit.full)
+ [1] "np"        "nrbar"     "d"         "rbar"      "thetab"   
+ [6] "first"     "last"      "vorder"    "tol"       "rss"      
+[11] "bound"     "nvmax"     "ress"      "ir"        "nbest"    
+[16] "lopt"      "il"        "ier"       "xnames"    "method"   
+[21] "force.in"  "force.out" "sserr"     "intercept" "lindep"   
+[26] "nullrss"   "nn"        "call"     
+> regfit.summary = summary(regfit.full)
+> names(regfit.summary)
+[1] "which"  "rsq"    "rss"    "adjr2"  "cp"     "bic"    "outmat"
+[8] "obj"   
+> regfit.summary.which
+Error: object 'regfit.summary.which' not found
+> regfit.summary$which
+  (Intercept)    X1    X2    X3    X4    X5    X6    X7    X8   X9
+1        TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE TRUE
+2        TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE TRUE
+3        TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE TRUE
+4        TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE TRUE
+5        TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE TRUE
+6        TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE TRUE
+7        TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE TRUE
+8        TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE TRUE
+    X10   X11   X12   X13   X14   X15   X16   X17   X18   X19   X20
+1 FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+2 FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+3 FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+4 FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+5  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+6  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE
+7  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE
+8  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE  TRUE
+> msevec = data.frame(matrix(ncol=20,nrow=1))
+> 
+> }
+Error: unexpected '}' in "}"
+> regfit.summary
+Subset selection object
+Call: regsubsets.formula(y ~ ., data = df[train, ])
+20 Variables  (and intercept)
+    Forced in Forced out
+X1      FALSE      FALSE
+X2      FALSE      FALSE
+X3      FALSE      FALSE
+X4      FALSE      FALSE
+X5      FALSE      FALSE
+X6      FALSE      FALSE
+X7      FALSE      FALSE
+X8      FALSE      FALSE
+X9      FALSE      FALSE
+X10     FALSE      FALSE
+X11     FALSE      FALSE
+X12     FALSE      FALSE
+X13     FALSE      FALSE
+X14     FALSE      FALSE
+X15     FALSE      FALSE
+X16     FALSE      FALSE
+X17     FALSE      FALSE
+X18     FALSE      FALSE
+X19     FALSE      FALSE
+X20     FALSE      FALSE
+1 subsets of each size up to 8
+Selection Algorithm: exhaustive
+         X1  X2  X3  X4  X5  X6  X7  X8  X9  X10 X11 X12 X13 X14 X15
+1  ( 1 ) " " " " " " " " " " " " " " " " "*" " " " " " " " " " " " "
+2  ( 1 ) " " " " " " " " " " " " " " " " "*" " " " " " " " " "*" " "
+3  ( 1 ) " " " " " " " " " " "*" " " " " "*" " " " " " " " " "*" " "
+4  ( 1 ) " " " " " " "*" " " "*" " " " " "*" " " " " " " " " "*" " "
+5  ( 1 ) " " " " " " "*" " " "*" " " " " "*" "*" " " " " " " "*" " "
+6  ( 1 ) " " " " " " "*" " " "*" " " " " "*" "*" " " " " " " "*" " "
+7  ( 1 ) " " " " " " "*" " " "*" " " " " "*" "*" " " " " " " "*" " "
+8  ( 1 ) " " " " " " "*" " " "*" " " " " "*" "*" " " " " " " "*" " "
+         X16 X17 X18 X19 X20
+1  ( 1 ) " " " " " " " " " "
+2  ( 1 ) " " " " " " " " " "
+3  ( 1 ) " " " " " " " " " "
+4  ( 1 ) " " " " " " " " " "
+5  ( 1 ) " " " " " " " " " "
+6  ( 1 ) "*" " " " " " " " "
+7  ( 1 ) "*" " " " " " " "*"
+8  ( 1 ) "*" " " " " "*" "*"
+> for(i=1:8){
+Error: unexpected '=' in "for(i="
+>     fit.pred=predict()
+Error in UseMethod("predict") : 
+  no applicable method for 'predict' applied to an object of class "NULL"
+> }
+Error: unexpected '}' in "}"
+> ?regsubsets
+> for{
+Error: unexpected '{' in "for{"
+>     fit.pred
+Error: object 'fit.pred' not found
+> }
+Error: unexpected '}' in "}"
+> regfit.summary$which[1]
+[1] TRUE
+> regfit.summary$which[1,]
+(Intercept)          X1          X2          X3          X4 
+       TRUE       FALSE       FALSE       FALSE       FALSE 
+         X5          X6          X7          X8          X9 
+      FALSE       FALSE       FALSE       FALSE        TRUE 
+        X10         X11         X12         X13         X14 
+      FALSE       FALSE       FALSE       FALSE       FALSE 
+        X15         X16         X17         X18         X19 
+      FALSE       FALSE       FALSE       FALSE       FALSE 
+        X20 
+      FALSE 
+> for(i=1:8){
+Error: unexpected '=' in "for(i="
+>     lm = lm(y~regfit.summary$which[i,],data=df[-train,])
+Error in regfit.summary$which[i, ] : subscript out of bounds
+>     
+> }
+Error: unexpected '}' in "}"
+> regfit.full
+Subset selection object
+Call: regsubsets.formula(y ~ ., data = df[train, ])
+20 Variables  (and intercept)
+    Forced in Forced out
+X1      FALSE      FALSE
+X2      FALSE      FALSE
+X3      FALSE      FALSE
+X4      FALSE      FALSE
+X5      FALSE      FALSE
+X6      FALSE      FALSE
+X7      FALSE      FALSE
+X8      FALSE      FALSE
+X9      FALSE      FALSE
+X10     FALSE      FALSE
+X11     FALSE      FALSE
+X12     FALSE      FALSE
+X13     FALSE      FALSE
+X14     FALSE      FALSE
+X15     FALSE      FALSE
+X16     FALSE      FALSE
+X17     FALSE      FALSE
+X18     FALSE      FALSE
+X19     FALSE      FALSE
+X20     FALSE      FALSE
+1 subsets of each size up to 8
+Selection Algorithm: exhaustive
+> names(regfit.full)
+ [1] "np"        "nrbar"     "d"         "rbar"      "thetab"   
+ [6] "first"     "last"      "vorder"    "tol"       "rss"      
+[11] "bound"     "nvmax"     "ress"      "ir"        "nbest"    
+[16] "lopt"      "il"        "ier"       "xnames"    "method"   
+[21] "force.in"  "force.out" "sserr"     "intercept" "lindep"   
+[26] "nullrss"   "nn"        "call"     
+> regfit.full$np
+[1] 21
+> ?regift.full
+No documentation for ‘regift.full’ in specified packages and libraries:
+you could try ‘??regift.full’
+> regfit.full$method
+[1] "exhaustive"
+> regfit.full$nvmax
+[1] 9
+> lm = lm(y~regfit.summary$which[i,],data=df[train,])
+Error in regfit.summary$which[i, ] : subscript out of bounds
+> lm = lm(y~regfit.summary$which[1,],data=df[train,])
+Error in model.frame.default(formula = y ~ regfit.summary$which[1, ],  : 
+  variable lengths differ (found for 'regfit.summary$which[1, ]')
+> lm = lm(y~df[,regfit.summary$which[1,]],data=df[train,])
+Error in model.frame.default(formula = y ~ df[, regfit.summary$which[1,  : 
+  invalid type (list) for variable 'df[, regfit.summary$which[1, ]]'
+> ps = regfit.summary$which[1,]
+> ps[,-1]
+Error in ps[, -1] : incorrect number of dimensions
+> ps[,2:20]
+Error in ps[, 2:20] : incorrect number of dimensions
+> ps
+(Intercept)          X1          X2          X3          X4 
+       TRUE       FALSE       FALSE       FALSE       FALSE 
+         X5          X6          X7          X8          X9 
+      FALSE       FALSE       FALSE       FALSE        TRUE 
+        X10         X11         X12         X13         X14 
+      FALSE       FALSE       FALSE       FALSE       FALSE 
+        X15         X16         X17         X18         X19 
+      FALSE       FALSE       FALSE       FALSE       FALSE 
+        X20 
+      FALSE 
+> train.errors = rep(NA,20)
+> x.train = model.matrix(y~.,data=df[-train,])
+> names(regfit.summary)
+[1] "which"  "rsq"    "rss"    "adjr2"  "cp"     "bic"    "outmat"
+[8] "obj"   
+> plot(regfit.summary$rss)
+> test.errors = rep(NA,20)
+> plot(mean(regfit.summary$rss))
+> x.test = model.matrix(y~.,data=df[-train,])
+> for(i in 1:20){
++     coefi=coef(regfit.full,id=i)
++     pred = x.text[,names(coefi)]%*%coefi
++     test.errors[i] = mean((df$y[-train]-pred)^2)
++ }
+Error in x.text : object 'x.text' not found
+> for(i in 1:20){
++     coefi=coef(regfit.full,id=i)
++     pred = x.test[,names(coefi)]%*%coefi
++     test.errors[i] = mean((df$y[-train]-pred)^2)
++ }
+Error in s$which[id, , drop = FALSE] : subscript out of bounds
+> coef(regfit.full)
+Error in coef.regsubsets(regfit.full) : 
+  argument "id" is missing, with no default
+> coef(regfit.full, id=1)
+(Intercept)          X9 
+ 1354.77102    18.05218 
+> coef(regfit.full, id=20)
+Error in s$which[id, , drop = FALSE] : subscript out of bounds
+> coef(regfit.full, id=19)
+Error in s$which[id, , drop = FALSE] : subscript out of bounds
+> coef(regfit.full, id=17)
+Error in s$which[id, , drop = FALSE] : subscript out of bounds
+> coef(regfit.full, id=8)
+(Intercept)          X4          X6          X9         X10 
+  54.237474   14.209364   18.941009   15.029078    8.172614 
+        X14         X16         X19         X20 
+  17.144009   11.119052    2.062965    4.558931 
+> coef(regfit.full, id=9)
+Error in s$which[id, , drop = FALSE] : subscript out of bounds
+> for(i in 1:8){
++     coefi=coef(regfit.full,id=i)
++     pred = x.test[,names(coefi)]%*%coefi
++     test.errors[i] = mean((df$y[-train]-pred)^2)
++ }
+> plot(test.errors)
+> ?regsubsets
+> regfit.full = regsubsets(y~., data=df[train,], nvmax=20)
+> for(i in 1:8){
++     coefi=coef(regfit.full,id=i)
++     pred = x.test[,names(coefi)]%*%coefi
++     test.errors[i] = mean((df$y[-train]-pred)^2)
++ }
+> plot(test.errors)
+> for(i in 1:20){
++     coefi=coef(regfit.full,id=i)
++     pred = x.test[,names(coefi)]%*%coefi
++     test.errors[i] = mean((df$y[-train]-pred)^2)
++ }
+> plot(test.errors)
+> min(test.errors)
+[1] 30.05796
+> test.errors
+ [1] 678313.67564 365880.59264 164756.62853  92945.35298  37088.97083
+ [6]  18562.03292  10362.52622   1444.59850     30.93019     30.05796
+[11]     30.45245     31.00734     31.64221     31.88250     32.29992
+[16]     32.71519     32.64501     32.60203     32.58213     32.63263
+> beta
+ [1]  0  0  0 14  1 19  0  0 15  8  3  0  0 17  0 11  0  0  2  5
+> coef(regfit.full,id=10)
+(Intercept)          X4          X5          X6          X9 
+   1.199035   14.017363    1.789036   18.995520   15.003348 
+        X10         X11         X14         X16         X19 
+   8.006916    2.958597   17.004738   11.032496    1.992897 
+        X20 
+   4.929533 
+> as.matrix(coef(regfit.full,id=10))
+                 [,1]
+(Intercept)  1.199035
+X4          14.017363
+X5           1.789036
+X6          18.995520
+X9          15.003348
+X10          8.006916
+X11          2.958597
+X14         17.004738
+X16         11.032496
+X19          1.992897
+X20          4.929533
+> coes = as.matrix(coef(regfit.full,id=10))
+> coes = [2:11,1]
+Error: unexpected '[' in "coes = ["
+> coes = coes[2:11,1]
+> coes
+       X4        X5        X6        X9       X10       X11       X14 
+14.017363  1.789036 18.995520 15.003348  8.006916  2.958597 17.004738 
+      X16       X19       X20 
+11.032496  1.992897  4.929533 
+> initcoes = beta[beta != 0]
+> sqrt(4)
+[1] 2
+> coefdist = sqrt(sum((initcoes-coes)^2))
+> plot(coefdist)
+> coefdist = sqrt(sum((initcoes-coes)^2))
+> distances = rep(NA,20)
+> for(i=1:20){
+Error: unexpected '=' in "for(i="
+>     coes = as.matrix(coef(regfit.full,id=i))[2:11,1]
+>     distances[i] = sqrt(sum((initcoes-coes)^2))
+> }
+Error: unexpected '}' in "}"
+> for(i in 1:20){
++     coes = as.matrix(coef(regfit.full,id=i))[2:11,1]
++     distances[i] = sqrt(sum((initcoes-coes)^2))
++ }
+Error in as.matrix(coef(regfit.full, id = i))[2:11, 1] : 
+  subscript out of bounds
+> for(i in 1:20){
++     coes = as.matrix(coef(regfit.full,id=i))[2:i+1,1]
++     distances[i] = sqrt(sum((initcoes-coes)^2))
++ }
+Error in as.matrix(coef(regfit.full, id = i))[2:i + 1, 1] : 
+  subscript out of bounds
+> for(i in 1:20){
++     coes = as.matrix(coef(regfit.full,id=i))[2:(i+1),1]
++     distances[i] = sqrt(sum((initcoes-coes)^2))
++ }
+There were 15 warnings (use warnings() to see them)
+> for(i in 1:20){
++     coes = as.matrix(coef(regfit.full,id=i))[2:i,1]
++     distances[i] = sqrt(sum((initcoes-coes)^2))
++ }
+There were 15 warnings (use warnings() to see them)
+> for(i in 1:20){
++     coes = as.matrix(coef(regfit.full,id=i))[1:i+1,1]
++     distances[i] = sqrt(sum((initcoes-coes)^2))
++ }
+There were 15 warnings (use warnings() to see them)
+> for(i in 1:20){
++     coes = as.matrix(coef(regfit.full,id=i))
++     coes = coes[2:i+1,1]
++     distances[i] = sqrt(sum((initcoes-coes)^2))
++ }
+Error in coes[2:i + 1, 1] : subscript out of bounds
+> for(i in 1:20){
++     coes = as.matrix(coef(regfit.full,id=i))
++     coes[1,1] = NA
++     distances[i] = sqrt(sum((initcoes-coes)^2))
++ }
+Error in initcoes - coes : 
+  dims [product 2] do not match the length of object [10]
+> names(coes)
+NULL
+> coes = as.matrix(coef(regfit.full,id=2))
+> names(coes)
+NULL
+> names(regfit.full)
+ [1] "np"        "nrbar"     "d"         "rbar"      "thetab"   
+ [6] "first"     "last"      "vorder"    "tol"       "rss"      
+[11] "bound"     "nvmax"     "ress"      "ir"        "nbest"    
+[16] "lopt"      "il"        "ier"       "xnames"    "method"   
+[21] "force.in"  "force.out" "sserr"     "intercept" "lindep"   
+[26] "nullrss"   "nn"        "call"     
+> regfit.full$nbest
+[1] 1
+> regfit.full$3best
+Error: unexpected numeric constant in "regfit.full$3"
+> which(regfit.full,1)
+Error in which(regfit.full, 1) : argument to 'which' is not logical
+> regfit.summary$which
+  (Intercept)    X1    X2    X3    X4    X5    X6    X7    X8   X9
+1        TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE TRUE
+2        TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE TRUE
+3        TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE TRUE
+4        TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE TRUE
+5        TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE TRUE
+6        TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE TRUE
+7        TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE TRUE
+8        TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE TRUE
+    X10   X11   X12   X13   X14   X15   X16   X17   X18   X19   X20
+1 FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+2 FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+3 FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+4 FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+5  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+6  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE
+7  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE
+8  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE  TRUE
+> size(regfit.summary$which)
+Error in size(regfit.summary$which) : could not find function "size"
+> dim(regfit.summary$which)
+[1]  8 21
+> concat([1], [1,2])
+Error: unexpected '[' in "concat(["
+> beta
+ [1]  0  0  0 14  1 19  0  0 15  8  3  0  0 17  0 11  0  0  2  5
+> append(0,beta)
+ [1]  0  0  0  0 14  1 19  0  0 15  8  3  0  0 17  0 11  0  0  2  5
+> beta[regfit.summary$which[1,],]
+Error in beta[regfit.summary$which[1, ], ] : 
+  incorrect number of dimensions
+> beta[regfit.summary$which[1,]]
+[1] 0 8
+> for(i in 1:20){
++     coes = as.matrix(coef(regfit.full,id=i))
++     tmpcoes = beta[regfit.summary$which[i,]]
++     distances[i] = sqrt(sum((tmpcoes-coes)^2))
++ }
+Error in regfit.summary$which[i, ] : subscript out of bounds
+> regfit.summary = summary(regfit.full)
+> for(i in 1:20){
++     coes = as.matrix(coef(regfit.full,id=i))
++     tmpcoes = beta[regfit.summary$which[i,]]
++     distances[i] = sqrt(sum((tmpcoes-coes)^2))
++ }
+> regfit.summary$which
+   (Intercept)    X1    X2    X3    X4    X5    X6    X7    X8   X9
+1         TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE TRUE
+2         TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE TRUE
+3         TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE TRUE
+4         TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE TRUE
+5         TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE TRUE
+6         TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE TRUE
+7         TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE TRUE
+8         TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE TRUE
+9         TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE TRUE
+10        TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE TRUE
+11        TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE TRUE
+12        TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE TRUE
+13        TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE TRUE
+14        TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE TRUE
+15        TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE TRUE
+16        TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE TRUE
+17        TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE TRUE
+18        TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE TRUE
+19        TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE TRUE
+20        TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE TRUE
+     X10   X11   X12   X13   X14   X15   X16   X17   X18   X19   X20
+1  FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+2  FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+3  FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+4  FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+5   TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+6   TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE
+7   TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE
+8   TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE  TRUE
+9   TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE  TRUE
+10  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE  TRUE
+11  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE  TRUE
+12  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE
+13  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE
+14  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
+15  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
+16  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
+17  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
+18  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
+19  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+20  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+> beta[regfit.summary$which[2,]]
+[1] 0 8 0
+> beta[regfit.summary$which[20,]]
+ [1]  0  0  0 14  1 19  0  0 15  8  3  0  0 17  0 11  0  0  2  5 NA
+> beta[regfit.summary$which[1,]]
+[1] 0 8
+> beta[regfit.summary$which[21,]]
+Error in regfit.summary$which[21, ] : subscript out of bounds
+> for(i in 1:20){
++     coes = as.matrix(coef(regfit.full,id=i))
++     tmpcoes = beta[regfit.summary$which[i,]]
++     distances[i] = sqrt(sum((tmpcoes-coes)^2))
++ }
+> for(i in 1:20){
++     coes = as.matrix(coef(regfit.full,id=i))
++     tmpcoes = beta[regfit.summary$which[i,]]
++     distances[i] = sqrt(sum((tmpcoes-coes)^2))
++ }
+> distances
+ [1] 1354.8083  951.9864  629.7097  350.0269  304.1059  103.1943
+ [7]        NA        NA        NA        NA        NA        NA
+[13]        NA        NA        NA        NA        NA        NA
+[19]        NA        NA
+> summary(regfit)
+Error in summary(regfit) : object 'regfit' not found
+> summary(regfit.full)
+Subset selection object
+Call: regsubsets.formula(y ~ ., data = df[train, ], nvmax = 20)
+20 Variables  (and intercept)
+    Forced in Forced out
+X1      FALSE      FALSE
+X2      FALSE      FALSE
+X3      FALSE      FALSE
+X4      FALSE      FALSE
+X5      FALSE      FALSE
+X6      FALSE      FALSE
+X7      FALSE      FALSE
+X8      FALSE      FALSE
+X9      FALSE      FALSE
+X10     FALSE      FALSE
+X11     FALSE      FALSE
+X12     FALSE      FALSE
+X13     FALSE      FALSE
+X14     FALSE      FALSE
+X15     FALSE      FALSE
+X16     FALSE      FALSE
+X17     FALSE      FALSE
+X18     FALSE      FALSE
+X19     FALSE      FALSE
+X20     FALSE      FALSE
+1 subsets of each size up to 20
+Selection Algorithm: exhaustive
+          X1  X2  X3  X4  X5  X6  X7  X8  X9  X10 X11 X12 X13 X14 X15
+1  ( 1 )  " " " " " " " " " " " " " " " " "*" " " " " " " " " " " " "
+2  ( 1 )  " " " " " " " " " " " " " " " " "*" " " " " " " " " "*" " "
+3  ( 1 )  " " " " " " " " " " "*" " " " " "*" " " " " " " " " "*" " "
+4  ( 1 )  " " " " " " "*" " " "*" " " " " "*" " " " " " " " " "*" " "
+5  ( 1 )  " " " " " " "*" " " "*" " " " " "*" "*" " " " " " " "*" " "
+6  ( 1 )  " " " " " " "*" " " "*" " " " " "*" "*" " " " " " " "*" " "
+7  ( 1 )  " " " " " " "*" " " "*" " " " " "*" "*" " " " " " " "*" " "
+8  ( 1 )  " " " " " " "*" " " "*" " " " " "*" "*" " " " " " " "*" " "
+9  ( 1 )  " " " " " " "*" " " "*" " " " " "*" "*" "*" " " " " "*" " "
+10  ( 1 ) " " " " " " "*" "*" "*" " " " " "*" "*" "*" " " " " "*" " "
+11  ( 1 ) " " " " "*" "*" "*" "*" " " " " "*" "*" "*" " " " " "*" " "
+12  ( 1 ) " " " " "*" "*" "*" "*" " " " " "*" "*" "*" " " " " "*" "*"
+13  ( 1 ) " " "*" "*" "*" "*" "*" " " " " "*" "*" "*" " " " " "*" "*"
+14  ( 1 ) "*" " " "*" "*" "*" "*" " " " " "*" "*" "*" " " " " "*" "*"
+15  ( 1 ) "*" "*" "*" "*" "*" "*" " " " " "*" "*" "*" " " " " "*" "*"
+16  ( 1 ) "*" "*" "*" "*" "*" "*" " " " " "*" "*" "*" " " "*" "*" "*"
+17  ( 1 ) "*" "*" "*" "*" "*" "*" "*" " " "*" "*" "*" " " "*" "*" "*"
+18  ( 1 ) "*" "*" "*" "*" "*" "*" "*" "*" "*" "*" "*" " " "*" "*" "*"
+19  ( 1 ) "*" "*" "*" "*" "*" "*" "*" "*" "*" "*" "*" " " "*" "*" "*"
+20  ( 1 ) "*" "*" "*" "*" "*" "*" "*" "*" "*" "*" "*" "*" "*" "*" "*"
+          X16 X17 X18 X19 X20
+1  ( 1 )  " " " " " " " " " "
+2  ( 1 )  " " " " " " " " " "
+3  ( 1 )  " " " " " " " " " "
+4  ( 1 )  " " " " " " " " " "
+5  ( 1 )  " " " " " " " " " "
+6  ( 1 )  "*" " " " " " " " "
+7  ( 1 )  "*" " " " " " " "*"
+8  ( 1 )  "*" " " " " "*" "*"
+9  ( 1 )  "*" " " " " "*" "*"
+10  ( 1 ) "*" " " " " "*" "*"
+11  ( 1 ) "*" " " " " "*" "*"
+12  ( 1 ) "*" " " " " "*" "*"
+13  ( 1 ) "*" " " " " "*" "*"
+14  ( 1 ) "*" " " "*" "*" "*"
+15  ( 1 ) "*" " " "*" "*" "*"
+16  ( 1 ) "*" " " "*" "*" "*"
+17  ( 1 ) "*" " " "*" "*" "*"
+18  ( 1 ) "*" " " "*" "*" "*"
+19  ( 1 ) "*" "*" "*" "*" "*"
+20  ( 1 ) "*" "*" "*" "*" "*"
+> as.matrix(coef(regfit.full,id=20))
+                     [,1]
+(Intercept)  0.7573563814
+X1           0.0136137384
+X2           0.0105585378
+X3          -0.0264693615
+X4          14.0163249657
+X5           1.8828221654
+X6          18.9948896830
+X7          -0.0053610259
+X8           0.0016703173
+X9          15.0034972100
+X10          8.0052975400
+X11          2.9488552322
+X12          0.0007473835
+X13          0.1537163089
+X14         17.0077085044
+X15         -0.0150648879
+X16         11.0475544787
+X17          0.0010179904
+X18         -0.0486332305
+X19          1.9861061305
+X20          4.9249455938
+> as.matrix(coef(regfit.full,id=21))
+Error in s$which[id, , drop = FALSE] : subscript out of bounds
+> beta[regfit.summary$which[20,]]
+ [1]  0  0  0 14  1 19  0  0 15  8  3  0  0 17  0 11  0  0  2  5 NA
+> beta[regfit.summary$which[8,]]
+[1]  0  1  0  8  3  0  0  5 NA
+> beta[regfit.summary$which[6,]]
+[1] 0 1 0 8 3 0 0
+> beta[regfit.summary$which[7,]]
+[1]  0  1  0  8  3  0  0 NA
+> regfit.summary$which[7,]
+(Intercept)          X1          X2          X3          X4 
+       TRUE       FALSE       FALSE       FALSE        TRUE 
+         X5          X6          X7          X8          X9 
+      FALSE        TRUE       FALSE       FALSE        TRUE 
+        X10         X11         X12         X13         X14 
+       TRUE       FALSE       FALSE       FALSE        TRUE 
+        X15         X16         X17         X18         X19 
+      FALSE        TRUE       FALSE       FALSE       FALSE 
+        X20 
+       TRUE 
+> as.matrix(regfit.summary$which[7,])
+             [,1]
+(Intercept)  TRUE
+X1          FALSE
+X2          FALSE
+X3          FALSE
+X4           TRUE
+X5          FALSE
+X6           TRUE
+X7          FALSE
+X8          FALSE
+X9           TRUE
+X10          TRUE
+X11         FALSE
+X12         FALSE
+X13         FALSE
+X14          TRUE
+X15         FALSE
+X16          TRUE
+X17         FALSE
+X18         FALSE
+X19         FALSE
+X20          TRUE
+> beta[as.matrix(regfit.summary$which[7,])]
+[1]  0  1  0  8  3  0  0 NA
+> beta = prepend(0,beta)
+Error in prepend(0, beta) : could not find function "prepend"
+> beta
+ [1]  0  0  0 14  1 19  0  0 15  8  3  0  0 17  0 11  0  0  2  5
+> append(0,beta)
+ [1]  0  0  0  0 14  1 19  0  0 15  8  3  0  0 17  0 11  0  0  2  5
+> beta = append(0,beta)
+> beta[regfit.summary$which[7,]]
+[1]  0 14 19 15  8 17 11  5
+> for(i in 1:20){
++     coes = as.matrix(coef(regfit.full,id=i))
++     tmpcoes = beta[regfit.summary$which[i,]]
++     distances[i] = sqrt(sum((tmpcoes-coes)^2))
++ }
+> distances
+ [1] 1354.774457  951.784940  629.132211  348.538373  302.548550
+ [6]   97.786747    3.374928   54.240345    2.916609    1.438211
+[11]    1.622669    1.886207    1.789567    3.041963    2.815977
+[16]    1.259022    1.246661    1.214475    1.172534    1.179538
+> plot(distances)
+

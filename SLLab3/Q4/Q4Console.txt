@@ -1,0 +1,101 @@
+
+R version 3.4.1 (2017-06-30) -- "Single Candle"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Workspace loaded from ~/R/.RData]
+
+> require(class)
+Loading required package: class
+Warning message:
+R graphics engine version 12 is not supported by this version of RStudio. The Plots tab will be disabled until a newer version of RStudio is installed. 
+> require(MASS)
+Loading required package: MASS
+> ?lda
+> attach(Boston)
+> ?Boston
+> medcrim = median(crim)
+> newboston = Boston
+> View(Weekly)
+> View(Weekly)
+> View(Weekly)
+> View(Weekly)
+> newboston$crim01 = ifelse(crim < medcrim,0,1)
+> newboston = newboston[complete.cases(newboston),]
+> pairs(newboston)
+> detach(Boston)
+> attach(newboston)
+> plot(zn, crim01)
+> plot(nox, crim01)
+> plot(rm, crim01)
+> plot(rad, crim01)
+> plot(tax, crim01)
+> plot(ptratio, crim01)
+> plot(black, crim01)
+> plot(lstat, crim01)
+> lda.fit = lda(crim01~zn+nox+rm+lstat)
+> bostrain = newboston[1:253,]
+> bostest = newboston[254:506,]
+> lda.fit = lda(crim01~zn+nox+rm+lstat, data=bostrain)
+> plot(lda.fit)
+> lda.pred = predict(lda.fit, bostest)
+> table(lda.pred$class, bostest$crim01)
+   
+      0   1
+  0  79  34
+  1  11 129
+> mean(lda.pred$class == bostest$crim01)
+[1] 0.8221344
+> glm.fit = glm(crim01~zn+nox+rm+lstat, data=bostrain, family=binomial)
+> glm.probs = predict(glm.fit, newdata=bostest, type="response")
+> glm.pred = ifelse(glm.probs > 0.5, 1, 0)
+> table(glm.pred, bostest$crim01)
+        
+glm.pred   0   1
+       0  75  16
+       1  15 147
+> mean(glm.pred == bostest$crim01)
+[1] 0.8774704
+> plot(glm.pred)
+> predCols = cbind(zn,nox,rm,lstat)
+> knn.pred = knn(predCols[1:253],predCols[254:506],bostrain$crim01,k=1)
+Error in knn(predCols[1:253], predCols[254:506], bostrain$crim01, k = 1) : 
+  dims of 'test' and 'train' differ
+> knn.pred = knn(predCols[1:253,],predCols[254:506,],bostrain$crim01,k=1)
+> table(knn.pred,bostest$crim01)
+        
+knn.pred  0  1
+       0 81 67
+       1  9 96
+> mean(knn.pred == bostest$crim01)
+[1] 0.6996047
+> knn.pred = knn(predCols[1:253,],predCols[254:506,],bostrain$crim01,k=5)
+> table(knn.pred,bostest$crim01)
+        
+knn.pred  0  1
+       0 86 69
+       1  4 94
+> mean(knn.pred == bostest$crim01)
+[1] 0.7114625
+> knn.pred = knn(predCols[1:253,],predCols[254:506,],bostrain$crim01,k=10)
+> table(knn.pred,bostest$crim01)
+        
+knn.pred  0  1
+       0 85 75
+       1  5 88
+> mean(knn.pred == bostest$crim01)
+[1] 0.6837945

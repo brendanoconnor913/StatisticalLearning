@@ -1,0 +1,174 @@
+
+R version 3.4.2 (2017-09-28) -- "Short Summer"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Workspace loaded from ~/R/.RData]
+
+> library(e1071)
+Warning message:
+R graphics engine version 12 is not supported by this version of RStudio. The Plots tab will be disabled until a newer version of RStudio is installed. 
+> x1 = runif (500) -0.5
+> x2 = runif (500) -0.5
+> y = 1*(x1^2-x2^2 > 0)
+> ?runif
+> df = data.frame(x1, x2)
+> plot(x2~.)
+Error in terms.formula(formula, data = data) : 
+  '.' in formula and no 'data' argument
+> plot(x2~.,data=df)
+> plot(x2~.,data=df, col=y+3)
+> ?plot
+> plot(x2~.,data=df, col=y+2)
+> plot(x2~.,data=df, col=y)
+> plot(x2~.,data=df, col=y+1)
+> plot(x2~.,data=df, col=y+4)
+> plot(x2~.,data=df, col=y+2)
+> glm.fit = glm(y~., data=df, family=binomial)
+> glm.probs = predict(glm.fit,type="response")
+> glm.pred = ifelse(glm.probs > .5, 1, 0)
+> plot(x2~., data=df, col=glm.pred+3)
+> newdf = data.frame(x1^2, x1*x2, x2^2)
+> glm.fit2 = glm(y~., data=newdf, family=binomial)
+Warning messages:
+1: glm.fit: algorithm did not converge 
+2: glm.fit: fitted probabilities numerically 0 or 1 occurred 
+> glm.probs = predict(glm.fit2, type="response")
+> glm.pred2 = ifelse(glm.probs > .5, 1, 0)
+> plot(x2~x1, data=newdf, col=glm.pred+3)
+> plot(x2~x1, data=newdf, col=glm.pred+3)
+> plot(x2~x1, data=df, col=glm.pred+3)
+> newdf = data.frame(x1^2, x1*x2, x2^2, y)
+> glm.fit2 = glm(y~., data=newdf, family=binomial)
+Warning messages:
+1: glm.fit: algorithm did not converge 
+2: glm.fit: fitted probabilities numerically 0 or 1 occurred 
+> newdf = data.frame(x1^2, x2^2, y)
+> glm.fit2 = glm(y~., data=newdf, family=binomial)
+Warning messages:
+1: glm.fit: algorithm did not converge 
+2: glm.fit: fitted probabilities numerically 0 or 1 occurred 
+> newdf = data.frame(x1^2, y)
+> glm.fit2 = glm(y~., data=newdf, family=binomial)
+> newdf = data.frame(x1^2, log(x2), y)
+Warning message:
+In log(x2) : NaNs produced
+> newdf = data.frame(x1^2, x2, y)
+> newdf = data.frame(x1^2, log(x2), y)
+Warning message:
+In log(x2) : NaNs produced
+> newdf = data.frame(x1^2, x2, y)
+> glm.fit2 = glm(y~., data=newdf, family=binomial)
+> glm.probs2 = predict(glm.fit2, type="response")
+> glm.pred2 = ifelse(glm.probs2 > .5, 1, 0)
+> plot(x2~x1, data=df, col = glm.pred2+3)
+> View(newdf)
+> View(df)
+> ?runif
+> hist(x1)
+> hist(x2)
+> plot(x1~seq(from=-.5,to=.5,by=.01))
+Error in (function (formula, data = NULL, subset = NULL, na.action = na.fail,  : 
+  variable lengths differ (found for 'seq(from = -0.5, to = 0.5, by = 0.01)')
+> plot(x1)
+> plot(x1, col=2)
+> plot(x2~x1, col=2)
+> plot(x1, col=2)
+> plot(x2~x1, col=2)
+> plot(x2~x1, col=y+2)
+> plot(y~., data=df)
+> plot(y~x1, data=df)
+> plot(y~x1+x2, data=df)
+Hit <Return> to see next plot: 
+Hit <Return> to see next plot: 
+> 
+> 
+> library(plot3d)
+Error in library(plot3d) : there is no package called ‘plot3d’
+> library(plot3D)
+> surf3D(x1,x2,y)
+Error in surf3D(x1, x2, y) : 'x' should be a matrix
+> newdf = data.frame(x1*x2, y)
+> glm.fit2 = glm(y~., data=newdf, family=binomial)
+> glm.probs2 = predict(glm.fit2, type="response")
+> glm.pred2 = ifelse(glm.probs2 > .5, 1, 0)
+> plot(x2~x1, data=df, col = glm.pred2+3)
+> plot(x2~x1, data=df, col = glm.pred2+5)
+> newdf = data.frame(x1*x2, x2^2, y)
+> glm.fit2 = glm(y~., data=newdf, family=binomial)
+> glm.probs2 = predict(glm.fit2, type="response")
+> glm.pred2 = ifelse(glm.probs2 > .5, 1, 0)
+> plot(x2~x1, data=df, col = glm.pred2+5)
+> newdf = data.frame(x1*x2, x2, x1, y)
+> glm.fit2 = glm(y~., data=newdf, family=binomial)
+> glm.probs2 = predict(glm.fit2, type="response")
+> glm.pred2 = ifelse(glm.probs2 > .5, 1, 0)
+> plot(x2~x1, data=df, col = glm.pred2+5)
+> newdf = data.frame(x1*x2, x2^2, y)
+> glm.fit2 = glm(y~., data=newdf, family=binomial)
+> glm.probs2 = predict(glm.fit2, type="response")
+> glm.pred2 = ifelse(glm.probs2 > .5, 1, 0)
+> plot(x2~x1, data=df, col = glm.pred2+5)
+> svmfit = svm(y~.,data=df,kernel="linear",cost=10,scale=FALSE)
+> plot(x2~x2, data=df, col=svmfit+2)
+Error in svmfit + 2 : non-numeric argument to binary operator
+> plot(svmfit,df)
+> plot(svmfit,df)
+> print(svmfit)
+
+Call:
+svm(formula = y ~ ., data = df, kernel = "linear", cost = 10, 
+    scale = FALSE)
+
+
+Parameters:
+   SVM-Type:  eps-regression 
+ SVM-Kernel:  linear 
+       cost:  10 
+      gamma:  0.5 
+    epsilon:  0.1 
+
+
+Number of Support Vectors:  483
+
+> ?svm
+> svm.pred = predict(svmfit, df)
+> plot(x2~x1,data=df, col=svm.pred+2)
+> svmfit = svm(y~.,data=df,kernel="nonlinear",cost=10,scale=FALSE)
+Error in svm.default(x, y, scale = scale, ..., na.action = na.action) : 
+  wrong kernel specification!
+> svmfit = svm(y~.,data=df,kernel="radial",cost=10,scale=FALSE)
+> svm.pred2 = predict(svmfit, df)
+> plot(x2~x1,data=df, col=svm.pred2+2)
+> plot(x2~x1,data=df, col=svm.pred2+4)
+> plot(x2~x1,data=df, col=svm.pred2+3)
+> View(y)
+> svmfit = svm(y~.,data=df,kernel="radial",cost=3,scale=FALSE)
+> svm.pred2 = predict(svmfit, df)
+> plot(x2~x1,data=df, col=svm.pred2+3)
+> svmfit = svm(y~.,data=df,kernel="radial",cost=0,scale=FALSE)
+Error in svm.default(x, y, scale = scale, ..., na.action = na.action) : 
+  C <= 0!
+> svmfit = svm(y~.,data=df,kernel="radial",cost=0.1,scale=FALSE)
+> svm.pred2 = predict(svmfit, df)
+> plot(x2~x1,data=df, col=svm.pred2+3)
+> svmfit = svm(y~.,data=df,kernel="radial",cost=50,scale=FALSE)
+> svm.pred2 = predict(svmfit, df)
+> svmfit = svm(y~.,data=df,kernel="radial",cost=0.1,scale=FALSE)
+> svmfit = svm(y~.,data=df,kernel="radial",cost=50,scale=FALSE)
+> svm.pred2 = predict(svmfit, df)
+> plot(x2~x1,data=df, col=svm.pred2+3)

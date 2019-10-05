@@ -1,0 +1,363 @@
+
+R version 3.4.2 (2017-09-28) -- "Short Summer"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Workspace loaded from ~/R/.RData]
+
+> require(ISLR)
+Loading required package: ISLR
+Warning message:
+R graphics engine version 12 is not supported by this version of RStudio. The Plots tab will be disabled until a newer version of RStudio is installed. 
+> require(tree)
+Loading required package: tree
+> load("~/R/Carseats.rda")
+> attach(Carseats)
+> train = sample(1:nrows(Carseats),250)
+Error in nrows(Carseats) : could not find function "nrows"
+> train = sample(1:nrow(Carseats),250)
+> tree.carseats = tree(Sales~.,data=Carseats, subset=train)
+> summary(tree.carseats)
+
+Regression tree:
+tree(formula = Sales ~ ., data = Carseats, subset = train)
+Variables actually used in tree construction:
+[1] "ShelveLoc"   "Price"       "Advertising" "Age"        
+[5] "Education"   "Income"      "CompPrice"  
+Number of terminal nodes:  17 
+Residual mean deviance:  2.441 = 568.7 / 233 
+Distribution of residuals:
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-4.49300 -0.96260  0.04476  0.00000  0.98810  3.21400 
+> plot(tree.carseats)
+> tree.pred = predict(tree.carseats,Carseats[-train,])
+> mse = wieth(Carseats[-train,],mean((Sales-tree.pred)^2))
+Error in wieth(Carseats[-train, ], mean((Sales - tree.pred)^2)) : 
+  could not find function "wieth"
+> mse = with(Carseats[-train,],mean((Sales-tree.pred)^2))
+> mse
+[1] 4.920421
+> plot(tree.carseats);text(tree.carseats,pretty=0)
+> ?cv.tree
+> cv.carseats = cv.tree(tree.carseats)
+> cv.carseats
+$size
+ [1] 17 16 15 14 13 12 11  9  8  7  6  5  3  2  1
+
+$dev
+ [1] 1218.669 1234.689 1260.077 1192.749 1210.330 1212.663
+ [7] 1224.536 1289.171 1289.171 1313.668 1320.403 1534.928
+[13] 1520.074 1513.828 2024.322
+
+$k
+ [1]      -Inf  20.60686  21.31181  26.30773  28.23151  29.33745
+ [7]  30.11948  38.00623  38.01466  43.94590  51.59591  99.79568
+[13] 107.79388 172.83963 583.20613
+
+$method
+[1] "deviance"
+
+attr(,"class")
+[1] "prune"         "tree.sequence"
+> View(Carseats)
+> View(Carseats)
+> plot(cv.carseats)
+> prune.carseats = prune.tree(tree.carseats,best=14)
+> plot(prune.carseats);text(prune.carseats,pretty=0)
+> mse = with(Carseats[-train,],mean((Sales-prune.carseats)^2))
+Error in Sales - prune.carseats : non-numeric argument to binary operator
+> prune.pred = predict(prune.carseats, Carseats[-train,])
+> mse = with(Carseats[-train,],mean((Sales-prune.pred)^2))
+> mse
+[1] 4.73591
+> prune.carseats
+node), split, n, deviance, yval
+      * denotes terminal node
+
+ 1) root 250 2006.000  7.573  
+   2) ShelveLoc: Bad,Medium 197 1141.000  6.781  
+     4) Price < 88 18   94.310  9.734  
+       8) Advertising < 1.5 6   30.430  7.963 *
+       9) Advertising > 1.5 12   35.640 10.620 *
+     5) Price > 88 179  874.000  6.484  
+      10) ShelveLoc: Bad 53  230.300  5.295  
+        20) Price < 129.5 35  128.600  6.003  
+          40) Age < 42.5 12   30.460  7.554 *
+          41) Age > 42.5 23   54.170  5.193 *
+        21) Price > 129.5 18   50.130  3.919 *
+      11) ShelveLoc: Medium 126  537.400  6.983  
+        22) Age < 47.5 51  167.900  8.113  
+          44) Advertising < 10.5 26   67.380  7.266 *
+          45) Advertising > 10.5 25   62.460  8.993 *
+        23) Age > 47.5 75  260.300  6.216  
+          46) Income < 58 34  135.400  5.462  
+            92) Price < 124.5 21   44.820  6.323 *
+            93) Price > 124.5 13   49.930  4.072 *
+          47) Income > 58 41   89.520  6.840 *
+   3) ShelveLoc: Good 53  281.200 10.520  
+     6) Price < 109.5 19   58.600 12.350  
+      12) CompPrice < 120.5 9    6.136 11.040 *
+      13) CompPrice > 120.5 10   23.120 13.530 *
+     7) Price > 109.5 34  122.800  9.492  
+      14) Advertising < 14.5 28   81.570  9.056 *
+      15) Advertising > 14.5 6   11.150 11.520 *
+> summary(prune.carseats)
+
+Regression tree:
+snip.tree(tree = tree.carseats, nodes = c(14L, 45L, 93L))
+Variables actually used in tree construction:
+[1] "ShelveLoc"   "Price"       "Advertising" "Age"        
+[5] "Income"      "CompPrice"  
+Number of terminal nodes:  14 
+Residual mean deviance:  2.699 = 636.9 / 236 
+Distribution of residuals:
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-4.49300 -1.03900  0.03389  0.00000  1.09300  3.47400 
+> ?tree
+> require(gbm)
+Loading required package: gbm
+Warning message:
+In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
+  there is no package called ‘gbm’
+> require(gbm)
+Loading required package: gbm
+Loading required package: survival
+Loading required package: lattice
+Loading required package: splines
+Loading required package: parallel
+Loaded gbm 2.1.3
+> boost.carseats = gbm(Sales~.,data=Carseats[-train,],distribution="gaussian",shrinkage=0.01,interaction.depth=4)
+> summary(boost.carseats)
+                    var    rel.inf
+Price             Price 41.7894800
+ShelveLoc     ShelveLoc 35.5423968
+Advertising Advertising  7.6416658
+Age                 Age  6.9141479
+CompPrice     CompPrice  5.1352558
+Income           Income  1.9919927
+Population   Population  0.5317467
+US                   US  0.2742098
+Education     Education  0.1791045
+Urban             Urban  0.0000000
+> boost.carseats = gbm(Sales~.,data=Carseats[train,],distribution="gaussian",shrinkage=0.01,interaction.depth=4)
+> summary(boost.carseats)
+                    var     rel.inf
+ShelveLoc     ShelveLoc 45.18247245
+Price             Price 27.35405741
+Age                 Age 10.12110695
+Advertising Advertising  6.50396043
+CompPrice     CompPrice  5.57846639
+Income           Income  4.90351502
+Population   Population  0.16449531
+US                   US  0.11039379
+Education     Education  0.08153225
+Urban             Urban  0.00000000
+> ?importance
+No documentation for ‘importance’ in specified packages and libraries:
+you could try ‘??importance’
+> ?importance()
+Error in .helpForCall(topicExpr, parent.frame()) : 
+  no methods for ‘importance’ and no documentation for it as a function
+> ?Importance
+No documentation for ‘Importance’ in specified packages and libraries:
+you could try ‘??Importance’
+> ?"importance"
+No documentation for ‘importance’ in specified packages and libraries:
+you could try ‘??importance’
+> tree
+function (formula, data, weights, subset, na.action = na.pass, 
+    control = tree.control(nobs, ...), method = "recursive.partition", 
+    split = c("deviance", "gini"), model = FALSE, x = FALSE, 
+    y = TRUE, wts = TRUE, ...) 
+{
+    if (is.data.frame(model)) {
+        m <- model
+        model <- FALSE
+    }
+    else {
+        m <- match.call(expand.dots = FALSE)
+        m$method <- m$model <- m$control <- m$... <- m$x <- m$y <- m$wts <- m$split <- NULL
+        m[[1L]] <- as.name("model.frame.default")
+        m <- eval.parent(m)
+        if (method == "model.frame") 
+            return(m)
+    }
+    split <- match.arg(split)
+    Terms <- attr(m, "terms")
+    if (any(attr(Terms, "order") > 1)) 
+        stop("trees cannot handle interaction terms")
+    Y <- model.extract(m, "response")
+    if (is.matrix(Y) && ncol(Y) > 1L) 
+        stop("trees cannot handle multiple responses")
+    ylevels <- levels(Y)
+    w <- model.extract(m, "weights")
+    if (!length(w)) 
+        w <- rep(1, nrow(m))
+    if (any(yna <- is.na(Y))) {
+        Y[yna] <- 1
+        w[yna] <- 0
+    }
+    offset <- attr(Terms, "offset")
+    if (!is.null(offset)) {
+        if (length(ylevels)) 
+            stop("offset not implemented for classification trees")
+        offset <- m[[offset]]
+        Y <- Y - offset
+    }
+    X <- tree.matrix(m)
+    xlevels <- attr(X, "column.levels")
+    if (is.null(xlevels)) {
+        xlevels <- rep(list(NULL), ncol(X))
+        names(xlevels) <- dimnames(X)[[2L]]
+    }
+    nobs <- length(Y)
+    if (nobs == 0L) 
+        stop("no observations from which to fit a model")
+    if (!is.null(control$nobs) && control$nobs < nobs) {
+        stop("control$nobs < number of observations in data")
+    }
+    fit <- .C(BDRgrow1, as.double(X), as.double(unclass(Y)), 
+        as.double(w), as.integer(c(sapply(xlevels, length), length(ylevels))), 
+        as.integer(rep(1, nobs)), as.integer(nobs), as.integer(ncol(X)), 
+        node = integer(control$nmax), var = integer(control$nmax), 
+        cutleft = character(control$nmax), cutright = character(control$nmax), 
+        n = double(control$nmax), dev = double(control$nmax), 
+        yval = double(control$nmax), yprob = double(max(control$nmax * 
+            length(ylevels), 1)), as.integer(control$minsize), 
+        as.integer(control$mincut), as.double(max(0, control$mindev)), 
+        nnode = as.integer(0L), where = integer(nobs), as.integer(control$nmax), 
+        as.integer(split == "gini"), as.integer(sapply(m, is.ordered)), 
+        NAOK = TRUE)
+    n <- fit$nnode
+    frame <- data.frame(fit[c("var", "n", "dev", "yval")])[1L:n, 
+        ]
+    frame$var <- factor(frame$var, 0:length(xlevels), c("<leaf>", 
+        names(xlevels)))
+    frame$splits <- array(unlist(fit[c("cutleft", "cutright")]), 
+        c(control$nmax, 2), list(character(0L), c("cutleft", 
+            "cutright")))[1L:n, , drop = FALSE]
+    if (length(ylevels)) {
+        frame$yval <- factor(frame$yval, 1L:length(ylevels), 
+            ylevels)
+        class(frame$yval) <- class(Y)
+        frame$yprob <- t(array(fit$yprob, c(length(ylevels), 
+            control$nmax), list(ylevels, character(0L)))[, 1L:n, 
+            drop = FALSE])
+    }
+    row.names(frame) <- fit$node[1L:n]
+    fit <- list(frame = frame, where = fit$where, terms = Terms, 
+        call = match.call())
+    attr(fit$where, "names") <- row.names(m)
+    if (n > 1L) 
+        class(fit) <- "tree"
+    else class(fit) <- c("singlenode", "tree")
+    attr(fit, "xlevels") <- xlevels
+    if (length(ylevels)) 
+        attr(fit, "ylevels") <- ylevels
+    if (is.logical(model) && model) 
+        fit$model <- m
+    if (x) 
+        fit$x <- X
+    if (y) 
+        fit$y <- Y
+    if (wts) 
+        fit$weights <- w
+    fit
+}
+<bytecode: 0x77d96a0>
+<environment: namespace:tree>
+> ?`gbm-package`
+> library(randomForest)
+Error in library(randomForest) : 
+  there is no package called ‘randomForest’
+> library(randomForest)
+randomForest 4.6-12
+Type rfNews() to see new features/changes/bug fixes.
+> importance(boost.carseats)
+Error in UseMethod("importance") : 
+  no applicable method for 'importance' applied to an object of class "gbm"
+> mean((Carseats[-train,]$Sales - tree.pred)^2)
+[1] 4.920421
+> set.seed(1)
+> bag.carseat = randomForest(Sales~.,data=Carseats,subset=train,mtry=11,importance=TRUE)
+Warning message:
+In randomForest.default(m, y, ...) :
+  invalid mtry: reset to within valid range
+> bag.carseat = randomForest(Sales~.,data=Carseats,subset=train,mtry=10,importance=TRUE)
+> bag.carseat
+
+Call:
+ randomForest(formula = Sales ~ ., data = Carseats, mtry = 10,      importance = TRUE, subset = train) 
+               Type of random forest: regression
+                     Number of trees: 500
+No. of variables tried at each split: 10
+
+          Mean of squared residuals: 2.75043
+                    % Var explained: 65.72
+> bag.pred.carseat = predict(bag.carseat,newdata=Carseats[-train,])
+> mean((bag.pred.carseat - Carseats[-train,]$Sales)^2)
+[1] 2.611114
+> importance(bag.carseat)
+               %IncMSE IncNodePurity
+CompPrice   23.9140730    174.523551
+Income      12.1889044    117.997159
+Advertising 18.2269719    153.780945
+Population  -0.1687615     62.188207
+Price       52.2853504    510.562497
+ShelveLoc   66.9485419    660.517144
+Age         22.0748483    202.536888
+Education    1.6603943     58.507026
+Urban       -0.1701449      7.975917
+US           3.4500606      7.984126
+> oob.err = double(10)
+> test.err = double(10)
+> for(mtry in 1:10){
++     fit = randomForest(Sales~.,data=Carseats,subset=train,mtry=mtry,ntree=400)
++     oob.err[mtry]=fit$mse[400]
++     pred=predict(fit,Carseats[-train,])
++     test.err[mtry]=with(Carseats[-train,mean((Sales-pred)^2)])
++ }
+Error in eval(substitute(expr), data, enclos = parent.frame()) : 
+  numeric 'envir' arg not of length one
+In addition: Warning message:
+In Sales - pred :
+  longer object length is not a multiple of shorter object length
+> for(mtry in 1:10){
++     fit = randomForest(Sales~.,data=Carseats,subset=train,mtry=mtry,ntree=400)
++     oob.err[mtry]=fit$mse[400]
++     pred=predict(fit,Carseats[-train,])
++     test.err[mtry]=with(Carseats[-train,],mean((Sales-pred)^2))
++ }
+> for(mtry in 1:10){
++     fit = randomForest(Sales~.,data=Carseats,subset=train,mtry=mtry,ntree=400)
++     oob.err[mtry]=fit$mse[400]
++     pred=predict(fit,Carseats[-train,])
++     test.err[mtry]=with(Carseats[-train,],mean((Sales-pred)^2))
++ }
+> importance(fit)
+            IncNodePurity
+CompPrice      173.445571
+Income         116.313575
+Advertising    146.450820
+Population      62.141115
+Price          510.494671
+ShelveLoc      651.916352
+Age            204.467911
+Education       60.606731
+Urban           10.071683
+US               8.249449
+> matplot(1:mtry,cbind(test.err,oob.err),pch=19,col=c("red","blue"),type="b")

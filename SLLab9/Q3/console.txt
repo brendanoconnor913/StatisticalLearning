@@ -1,0 +1,62 @@
+
+R version 3.4.2 (2017-09-28) -- "Short Summer"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Workspace loaded from ~/R/.RData]
+
+> data = USArrests
+Warning message:
+R graphics engine version 12 is not supported by this version of RStudio. The Plots tab will be disabled until a newer version of RStudio is installed. 
+> hc.complete = hclust(dist(x),method="complete")
+Error in as.matrix(x) : object 'x' not found
+> hc.complete = hclust(dist(data),method="complete")
+> plot(hc.complete)
+> hc.cut = cutree(hc.complete,3)
+> plot(hc.cut)
+> table(hc.cute,which)
+Error in table(hc.cute, which) : object 'hc.cute' not found
+> hc.cut
+       Alabama         Alaska        Arizona       Arkansas 
+             1              1              1              2 
+    California       Colorado    Connecticut       Delaware 
+             1              2              3              1 
+       Florida        Georgia         Hawaii          Idaho 
+             1              2              3              3 
+      Illinois        Indiana           Iowa         Kansas 
+             1              3              3              3 
+      Kentucky      Louisiana          Maine       Maryland 
+             3              1              3              1 
+ Massachusetts       Michigan      Minnesota    Mississippi 
+             2              1              3              1 
+      Missouri        Montana       Nebraska         Nevada 
+             2              3              3              1 
+ New Hampshire     New Jersey     New Mexico       New York 
+             3              2              1              1 
+North Carolina   North Dakota           Ohio       Oklahoma 
+             1              3              3              2 
+        Oregon   Pennsylvania   Rhode Island South Carolina 
+             2              3              2              1 
+  South Dakota      Tennessee          Texas           Utah 
+             3              2              2              3 
+       Vermont       Virginia     Washington  West Virginia 
+             3              2              2              3 
+     Wisconsin        Wyoming 
+             3              2 
+> hcscale.complete = hclust(dist(scale(data)),method="complete")
+> plot(hcscale.complete)
+

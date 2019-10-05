@@ -1,0 +1,57 @@
+2.
+a)
+> test.pca = prcomp(scale(USArrests))
+> test.pca$sdev
+[1] 1.5748783 0.9948694 0.5971291 0.4164494
+> test.pca$sdev^2
+[1] 2.4802416 0.9897652 0.3565632 0.1734301
+> pve = test.pca$sdev^2/sum(test.pca$sdev^2)
+> pve
+[1] 0.62006039 0.24744129 0.08914080 0.04335752
+
+b)
+> testsqrd = apply(scale(USArrests) %*% pcs, 2, square)
+> summed = apply(testsqrd,2,sum)
+> summed/sum(squared)
+       PC1        PC2        PC3        PC4 
+0.62006039 0.24744129 0.08914080 0.04335752 
+
+3.
+b)
+> hc.cut
+       Alabama         Alaska        Arizona       Arkansas 
+             1              1              1              2 
+    California       Colorado    Connecticut       Delaware 
+             1              2              3              1 
+       Florida        Georgia         Hawaii          Idaho 
+             1              2              3              3 
+      Illinois        Indiana           Iowa         Kansas 
+             1              3              3              3 
+      Kentucky      Louisiana          Maine       Maryland 
+             3              1              3              1 
+ Massachusetts       Michigan      Minnesota    Mississippi 
+             2              1              3              1 
+      Missouri        Montana       Nebraska         Nevada 
+             2              3              3              1 
+ New Hampshire     New Jersey     New Mexico       New York 
+             3              2              1              1 
+North Carolina   North Dakota           Ohio       Oklahoma 
+             1              3              3              2 
+        Oregon   Pennsylvania   Rhode Island South Carolina 
+             2              3              2              1 
+  South Dakota      Tennessee          Texas           Utah 
+             3              2              2              3 
+       Vermont       Virginia     Washington  West Virginia 
+             3              2              2              3 
+     Wisconsin        Wyoming 
+             3              2 
+
+d)
+In eyeballing the differences between the two trees it appears that
+when the data is scaled it results in a far more "balanced" tree. 
+This seems to indicate by scaling the data we get a better picture
+of how the various features relate and cluster since scale no 
+longer distorts relationships/distances. As a result it seems that
+it would be a good idea to scale all the data before performing any
+hierarchical clustering so as avoid capturing differences in scale
+as part of you clustering (which is something to be avoided).

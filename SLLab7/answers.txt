@@ -1,0 +1,155 @@
+2.
+b)
+Regression tree:
+tree(formula = Sales ~ ., data = Carseats, subset = train)
+Variables actually used in tree construction:
+[1] "ShelveLoc"   "Price"       "Advertising" "Age"        
+[5] "Education"   "Income"      "CompPrice"  
+Number of terminal nodes:  17 
+Residual mean deviance:  2.441 = 568.7 / 233 
+Distribution of residuals:
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-4.49300 -0.96260  0.04476  0.00000  0.98810  3.21400 
+
+> mse = with(Carseats[-train,],mean((Sales-tree.pred)^2))
+> mse
+[1] 4.920421
+
+The resulting MSE is relatively low. Jugdging by the tree it may
+be due to correlations in the data and having an overfit tree.
+
+c)
+$size
+ [1] 17 16 15 14 13 12 11  9  8  7  6  5  3  2  1
+
+$dev
+ [1] 1218.669 1234.689 1260.077 1192.749 1210.330 1212.663
+ [7] 1224.536 1289.171 1289.171 1313.668 1320.403 1534.928
+[13] 1520.074 1513.828 2024.322
+
+$k
+ [1]      -Inf  20.60686  21.31181  26.30773  28.23151  29.33745
+ [7]  30.11948  38.00623  38.01466  43.94590  51.59591  99.79568
+[13] 107.79388 172.83963 583.20613
+
+$method
+[1] "deviance"
+
+attr(,"class")
+[1] "prune"         "tree.sequence"
+
+> prune.carseats = prune.tree(tree.carseats,best=14)
+> plot(prune.carseats);text(prune.carseats,pretty=0)
+> mse = with(Carseats[-train,],mean((Sales-prune.carseats)^2))
+Error in Sales - prune.carseats : non-numeric argument to binary operator
+> prune.pred = predict(prune.carseats, Carseats[-train,])
+> mse = with(Carseats[-train,],mean((Sales-prune.pred)^2))
+> mse
+[1] 4.73591
+
+We see that the mse is improved but not considerably by pruning.
+
+d)
+> bag.carseat
+
+Call:
+ randomForest(formula = Sales ~ ., data = Carseats, mtry = 10,      importance = TRUE, subset = train) 
+               Type of random forest: regression
+                     Number of trees: 500
+No. of variables tried at each split: 10
+
+          Mean of squared residuals: 2.75043
+                    % Var explained: 65.72
+
+Test MSE:
+> mean((bag.pred.carseat - Carseats[-train,]$Sales)^2)
+[1] 2.611114
+
+> importance(bag.carseat)
+               %IncMSE IncNodePurity
+CompPrice   23.9140730    174.523551
+Income      12.1889044    117.997159
+Advertising 18.2269719    153.780945
+Population  -0.1687615     62.188207
+Price       52.2853504    510.562497
+ShelveLoc   66.9485419    660.517144
+Age         22.0748483    202.536888
+Education    1.6603943     58.507026
+Urban       -0.1701449      7.975917
+US           3.4500606      7.984126
+
+We see that ShelveLoc,Price, and CompPrice are the most important variables.
+
+e)
+> importance(fit)
+            IncNodePurity
+CompPrice      173.445571
+Income         116.313575
+Advertising    146.450820
+Population      62.141115
+Price          510.494671
+ShelveLoc      651.916352
+Age            204.467911
+Education       60.606731
+Urban           10.071683
+US               8.249449
+
+We see from the plot of MSE vs m that as the number of predictors increases
+so does the MSE although considerable drop off is observed in the first
+few variables which is consistant with what we see above in the importance
+table.
+
+3.
+e)
+> boost.min.testmse
+[1] 0.2551701
+
+> lm.mse = mean((newHit[-train,]$newSal - lm.pred)^2)
+> lm.mse
+[1] 0.4917959
+
+> for(i in 1:19){
++     coefi=coef(regfit,id=i)
++     pred=test.mat[,names(coefi)]%*%coefi
++     val.errors[i] = mean((newHit$newSal[-train]-pred)^2)
++ }
+> min(val.errors)
+[1] 0.468457
+
+We see from this that the boosting model drastically outperforms
+the linear model and the best subset model.
+
+f)
+> summary(boost.hitters)
+                var    rel.inf
+CAtBat       CAtBat 17.8468690
+PutOuts     PutOuts 11.6972026
+Assists     Assists  7.8665578
+CHmRun       CHmRun  7.4909285
+HmRun         HmRun  5.5232156
+AtBat         AtBat  5.4644856
+Walks         Walks  5.3871773
+RBI             RBI  5.2901638
+CRBI           CRBI  4.9353959
+Errors       Errors  4.6356394
+CRuns         CRuns  4.5616834
+CWalks       CWalks  4.5215520
+Hits           Hits  3.9059997
+Division   Division  3.0094769
+Years         Years  2.9277754
+Runs           Runs  2.6476499
+CHits         CHits  1.3291644
+NewLeague NewLeague  0.7572281
+League       League  0.2018348
+
+We see that CAtBat and PutOuts appear to be the strongest predictors.
+
+g)
+> bag.pred = predict(bag.tree,newHit[-train,],ntree=1000)
+> bag.mse = mean((newHit[-train,]$newSal - bag.pred)^2)
+> bag.mse
+[1] 0.2295615
+
+We see that surprisingly bagging outperformed boosting and therefore
+all of the other models.
+

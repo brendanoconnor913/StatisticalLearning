@@ -1,0 +1,347 @@
+> load("~/R/Weekly.rda")
+> attach(Weekly)
+The following objects are masked from Weekly (pos = 3):
+
+    Direction, Lag1, Lag2, Lag3, Lag4, Lag5, Today, Volume,
+    Year
+
+The following objects are masked from Weekly (pos = 6):
+
+    Direction, Lag1, Lag2, Lag3, Lag4, Lag5, Today, Volume,
+    Year
+
+> names(Weekly)
+[1] "Year"      "Lag1"      "Lag2"      "Lag3"      "Lag4"     
+[6] "Lag5"      "Volume"    "Today"     "Direction"
+> summary(Weekly)
+      Year           Lag1               Lag2         
+ Min.   :1990   Min.   :-18.1950   Min.   :-18.1950  
+ 1st Qu.:1995   1st Qu.: -1.1540   1st Qu.: -1.1540  
+ Median :2000   Median :  0.2410   Median :  0.2410  
+ Mean   :2000   Mean   :  0.1506   Mean   :  0.1511  
+ 3rd Qu.:2005   3rd Qu.:  1.4050   3rd Qu.:  1.4090  
+ Max.   :2010   Max.   : 12.0260   Max.   : 12.0260  
+      Lag3               Lag4               Lag5         
+ Min.   :-18.1950   Min.   :-18.1950   Min.   :-18.1950  
+ 1st Qu.: -1.1580   1st Qu.: -1.1580   1st Qu.: -1.1660  
+ Median :  0.2410   Median :  0.2380   Median :  0.2340  
+ Mean   :  0.1472   Mean   :  0.1458   Mean   :  0.1399  
+ 3rd Qu.:  1.4090   3rd Qu.:  1.4090   3rd Qu.:  1.4050  
+ Max.   : 12.0260   Max.   : 12.0260   Max.   : 12.0260  
+     Volume            Today          Direction 
+ Min.   :0.08747   Min.   :-18.1950   Down:484  
+ 1st Qu.:0.33202   1st Qu.: -1.1540   Up  :605  
+ Median :1.00268   Median :  0.2410             
+ Mean   :1.57462   Mean   :  0.1499             
+ 3rd Qu.:2.05373   3rd Qu.:  1.4050             
+ Max.   :9.32821   Max.   : 12.0260             
+> pairs(Weekly)
+> pairs(Weekly, col=Direction)
+> glm.fit = glm(Direction~.-Today-Year, Weekly, family=binomial)
+> summary(glm.git)
+Error in summary(glm.git) : object 'glm.git' not found
+> summary(glm.fit)
+
+Call:
+glm(formula = Direction ~ . - Today - Year, family = binomial, 
+    data = Weekly)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.6949  -1.2565   0.9913   1.0849   1.4579  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)   
+(Intercept)  0.26686    0.08593   3.106   0.0019 **
+Lag1        -0.04127    0.02641  -1.563   0.1181   
+Lag2         0.05844    0.02686   2.175   0.0296 * 
+Lag3        -0.01606    0.02666  -0.602   0.5469   
+Lag4        -0.02779    0.02646  -1.050   0.2937   
+Lag5        -0.01447    0.02638  -0.549   0.5833   
+Volume      -0.02274    0.03690  -0.616   0.5377   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1496.2  on 1088  degrees of freedom
+Residual deviance: 1486.4  on 1082  degrees of freedom
+AIC: 1500.4
+
+Number of Fisher Scoring iterations: 4
+
+> glm.probs = predict(glm.fit, type="response")
+> glm.pred = ifelse(glm.probs>0.5,"Up","Down")
+> table(glm.pred,Direction)
+        Direction
+glm.pred Down  Up
+    Down   54  48
+    Up    430 557
+> mean(glm.pred$class==Direction)
+Error in glm.pred$class : $ operator is invalid for atomic vectors
+> mean(glm.pred==Direction)
+[1] 0.5610652
+> trainperiod = Year >= 1990 & Year < 2008
+> glm.fit = glm(Direction~Lag2, Weekly, family=binomial, subset=trainperiod)
+> glm.probs = predict(glm.fit, newdata=Weekly[trainperiod,],type="response")
+> glm.pred = ifelse(glm.probs > 0.5, "Up", "Down")
+> testdata = Direction[!trainperiod]
+> table(glm.pred, testdata)
+Error in table(glm.pred, testdata) : 
+  all arguments must have the same length
+> testdata
+  [1] Down Down Up   Up   Down Up   Up   Down Down Down Up   Down Up  
+ [14] Down Up   Up   Up   Down Up   Down Up   Down Down Down Down Down
+ [27] Down Up   Down Up   Up   Up   Down Down Down Up   Up   Down Down
+ [40] Down Up   Down Up   Down Down Down Up   Down Up   Up   Down Up  
+ [53] Down Down Down Down Up   Down Down Down Down Up   Up   Up   Up  
+ [66] Up   Up   Down Up   Up   Down Up   Up   Up   Up   Down Down Down
+ [79] Down Up   Up   Up   Up   Down Up   Up   Down Up   Up   Down Down
+ [92] Up   Up   Down Down Up   Up   Down Up   Up   Up   Down Up   Down
+[105] Up   Down Down Down Down Up   Up   Down Up   Up   Up   Up   Up  
+[118] Up   Down Up   Down Down Up   Down Up   Down Up   Up   Down Down
+[131] Up   Down Up   Down Up   Down Down Down Up   Up   Up   Up   Down
+[144] Up   Up   Up   Up   Up   Down Up   Down Up   Up   Up   Up   Up  
+Levels: Down Up
+> trainperiod = Year >= 1990 & Year =< 2008
+Error: unexpected '<' in "trainperiod = Year >= 1990 & Year =<"
+> trainperiod = Year >= 1990 & Year <= 2008
+> glm.fit = glm(Direction~Lag2, Weekly, family=binomial, subset=trainperiod)
+> glm.probs = predict(glm.fit, newdata=Weekly[!trainperiod,],type="response")
+> glm.pred = ifelse(glm.probs > 0.5, "Up", "Down")
+> table(glm.pred, testdata)
+Error in table(glm.pred, testdata) : 
+  all arguments must have the same length
+> length(testdata)
+[1] 156
+> length(glm.pred)
+[1] 104
+> glm.probs = predict(glm.fit, newdata=Direction[!trainperiod,],type="response")
+Error in `[.default`(Direction, !trainperiod, ) : 
+  incorrect number of dimensions
+> table(glm.pred, Weekly[!trainperiod,]$Direction)
+        
+glm.pred Down Up
+    Down    9  5
+    Up     34 56
+> mean(glm.pred==Weekly[!trainperiod,]$Direction)
+[1] 0.625
+> ?qda
+> ?lda
+> ?lda()
+> lda.fit = lda(Direction~Lag2, Weekly, trainperiod)
+Error in lda.default(x, grouping, ...) : invalid 'prior'
+> ?lda
+> require(MASS)
+> ?lda
+> lda.fit = lda(Direction~Lag2, Weekly, trainperiod)
+Error in lda.default(x, grouping, ...) : invalid 'prior'
+> require(ISLR)
+> ?lda
+> lda.fit = lda(Direction~Lag2, Weekly, trainperiod)
+Error in lda.default(x, grouping, ...) : invalid 'prior'
+> lda.fit = lda(Direction~Lag2, Weekly, subset = trainperiod)
+> lda.fit
+Call:
+lda(Direction ~ Lag2, data = Weekly, subset = trainperiod)
+
+Prior probabilities of groups:
+     Down        Up 
+0.4477157 0.5522843 
+
+Group means:
+            Lag2
+Down -0.03568254
+Up    0.26036581
+
+Coefficients of linear discriminants:
+           LD1
+Lag2 0.4414162
+> testdata
+  [1] Down Down Up   Up   Down Up   Up   Down Down Down Up   Down Up  
+ [14] Down Up   Up   Up   Down Up   Down Up   Down Down Down Down Down
+ [27] Down Up   Down Up   Up   Up   Down Down Down Up   Up   Down Down
+ [40] Down Up   Down Up   Down Down Down Up   Down Up   Up   Down Up  
+ [53] Down Down Down Down Up   Down Down Down Down Up   Up   Up   Up  
+ [66] Up   Up   Down Up   Up   Down Up   Up   Up   Up   Down Down Down
+ [79] Down Up   Up   Up   Up   Down Up   Up   Down Up   Up   Down Down
+ [92] Up   Up   Down Down Up   Up   Down Up   Up   Up   Down Up   Down
+[105] Up   Down Down Down Down Up   Up   Down Up   Up   Up   Up   Up  
+[118] Up   Down Up   Down Down Up   Down Up   Down Up   Up   Down Down
+[131] Up   Down Up   Down Up   Down Down Down Up   Up   Up   Up   Down
+[144] Up   Up   Up   Up   Up   Down Up   Down Up   Up   Up   Up   Up  
+Levels: Down Up
+> lda.pred = predict(lda.fit, testdata)
+> data.frame(lda.pred)[1:5,]
+  class posterior.Down posterior.Up        LD1
+1    Up      0.4269994    0.5730006  0.6374843
+2    Up      0.4377018    0.5622982  0.3037737
+3    Up      0.4531753    0.5468247 -0.1756043
+4    Up      0.4862963    0.5137037 -1.1935101
+5    Up      0.3998411    0.6001589  1.4947146
+> table(lda.pred$class, testdata)
+Error in table(lda.pred$class, testdata) : 
+  all arguments must have the same length
+> table(lda.pred$class, Weekly[!trainperiod,]$Direction)
+Error in table(lda.pred$class, Weekly[!trainperiod, ]$Direction) : 
+  all arguments must have the same length
+> length(lda.pred$class)
+[1] 1089
+> length(Weekly[!trainperiod,]$Direction)
+[1] 104
+> length(testdata)
+[1] 156
+> dim(lda.pred$class)
+NULL
+> alttraining = subset(Weekly, trainperiod)
+> dim(alttraining)
+[1] 985   9
+> names(alttraining)
+[1] "Year"      "Lag1"      "Lag2"      "Lag3"      "Lag4"     
+[6] "Lag5"      "Volume"    "Today"     "Direction"
+> alttesting = subset(Weekly, !trainperiod)
+> dim(alttesting)
+[1] 104   9
+> lda.fit = lda(Direction~Lag2, Weekly, subset=trainperiod)
+> lda.pred = predict(lda.fit, testdata$Direction)
+Error in testdata$Direction : $ operator is invalid for atomic vectors
+> lda.pred = predict(lda.fit, alttestdata$Direction)
+Error in is.data.frame(data) : object 'alttestdata' not found
+> lda.pred = predict(lda.fit, alttesting$Direction)
+> lda.pred = predict(lda.fit, alttesting)
+> table(lda.pred$class, alttesting$Direction)
+      
+       Down Up
+  Down    9  5
+  Up     34 56
+> mean(lda.pred$class == alttesting$Direction)
+[1] 0.625
+> ?qda
+> qda.fit = qda(Direction~Lag2, Weekly, subset=trainperiod)
+> qda.pred = predict(qda.fit, alttesting)
+> table(qda.pred$class, alttesting$Direction)
+      
+       Down Up
+  Down    0  0
+  Up     43 61
+> mean(qda.pred$class == alttesting$Direction)
+[1] 0.5865385
+> knn.pred = knn(alttraining, alttesting, alttraining$Direction, k=1)
+Error in knn(alttraining, alttesting, alttraining$Direction, k = 1) : 
+  could not find function "knn"
+> library(class)
+> knn.pred = knn(alttraining, alttesting, alttraining$Direction, k=1)
+Error in knn(alttraining, alttesting, alttraining$Direction, k = 1) : 
+  NA/NaN/Inf in foreign function call (arg 6)
+In addition: Warning messages:
+1: In knn(alttraining, alttesting, alttraining$Direction, k = 1) :
+  NAs introduced by coercion
+2: In knn(alttraining, alttesting, alttraining$Direction, k = 1) :
+  NAs introduced by coercion
+> ?cbind
+> knn.pred = knn(alttraining$Lag2, alttesting$Lag2, alttraining$Direction, k=1)
+Error in knn(alttraining$Lag2, alttesting$Lag2, alttraining$Direction,  : 
+  dims of 'test' and 'train' differ
+> knn.pred = knn(Weeks[trainperiod,]$Lag2, Weeks[!trainperiod,]$Lag2, Weeks[trainperiod,]$Direction, k=1)
+Error in as.matrix(train) : object 'Weeks' not found
+> knn.pred = knn(Weekly[trainperiod,]$Lag2, Weekly[!trainperiod,]$Lag2, Weekly[trainperiod,]$Direction, k=1)
+Error in knn(Weekly[trainperiod, ]$Lag2, Weekly[!trainperiod, ]$Lag2,  : 
+  dims of 'test' and 'train' differ
+> ?knn
+> length(Lag2)
+[1] 1089
+> knn.pred = knn(Lag2[trainperiod,], Lag2[!trainperiod,], Direction[trainperiod],k=1)
+Error in Lag2[trainperiod, ] : incorrect number of dimensions
+> length(Lag2)
+[1] 1089
+> length(Direction[trainperiod])
+[1] 985
+> length(Weekly[trainperiod,]$Direction)
+[1] 985
+> length(Lag2[trainperiod])
+[1] 985
+> knn.pred = knn(Lag2[trainperiod], Lag2[!trainperiod], Direction[trainperiod],k=1)
+Error in knn(Lag2[trainperiod], Lag2[!trainperiod], Direction[trainperiod],  : 
+  dims of 'test' and 'train' differ
+> knn.pred = knn(date.frame(Lag2[trainperiod]), data.frame(Lag2[!trainperiod]), Direction[trainperiod],k=1)
+Error in date.frame(Lag2[trainperiod]) : 
+  could not find function "date.frame"
+> knn.pred = knn(data.frame(Lag2[trainperiod]), data.frame(Lag2[!trainperiod]), Direction[trainperiod],k=1)
+> table(knn.pred, Direction[!trainperiod])
+        
+knn.pred Down Up
+    Down   21 30
+    Up     22 31
+> mean(knn.pred == Direction[!trainperiod])
+[1] 0.5
+> knn.pred = knn(data.frame(Lag2[trainperiod]), data.frame(Lag2[!trainperiod]), Direction[trainperiod],k=10)
+> table(knn.pred, Direction[!trainperiod])
+        
+knn.pred Down Up
+    Down   20 20
+    Up     23 41
+> mean(knn.pred == Direction[!trainperiod])
+[1] 0.5865385
+> knn.pred = knn(data.frame(Lag2[trainperiod]), data.frame(Lag2[!trainperiod]), Direction[trainperiod],k=20)
+> table(knn.pred, Direction[!trainperiod])
+        
+knn.pred Down Up
+    Down   22 22
+    Up     21 39
+> mean(knn.pred == Direction[!trainperiod])
+[1] 0.5865385
+> lda.fit = lda(Direction~Lag2+Year, Weekly, trainperiod)
+Error in lda.default(x, grouping, ...) : invalid 'prior'
+> lda.fit = lda(Direction~Lag2+Year, Weekly, subset=trainperiod)
+> lda.pred = predict(lda.fit, alttesting)
+> table(lda.pred$class, alttesting$Direction)
+      
+       Down Up
+  Down   13 13
+  Up     30 48
+> mean(lda.pred$class == alttesting$Direction)
+[1] 0.5865385
+> names(Weekly)
+[1] "Year"      "Lag1"      "Lag2"      "Lag3"      "Lag4"     
+[6] "Lag5"      "Volume"    "Today"     "Direction"
+> lda.fit = lda(Direction~Lag2+Volume, Weekly, subset=trainperiod)
+> lda.pred = predict(lda.fit, alttesting)
+> table(lda.pred$class, alttesting$Direction)
+      
+       Down Up
+  Down   20 25
+  Up     23 36
+> mean(lda.pred$class == alttesting$Direction)
+[1] 0.5384615
+> lda.fit = lda(Direction~Lag2^2, Weekly, subset=trainperiod)
+> lda.pred = predict(lda.fit, alttesting)
+> table(lda.pred$class, alttesting$Direction)
+      
+       Down Up
+  Down    9  5
+  Up     34 56
+> mean(lda.pred$class == alttesting$Direction)
+[1] 0.625
+> lda.fit = lda(Direction~sqrt(Lag2), Weekly, subset=trainperiod)
+Warning message:
+In sqrt(Lag2) : NaNs produced
+> lda.pred = predict(lda.fit, alttesting)
+There were 45 warnings (use warnings() to see them)
+> table(lda.pred$class, alttesting$Direction)
+      
+       Down Up
+  Down    1  6
+  Up     22 31
+> mean(lda.pred$class == alttesting$Direction)
+[1] NA
+> lda.fit = lda(Direction~I(Lag2^2), Weekly, subset=trainperiod)
+> lda.pred = predict(lda.fit, alttesting)
+> table(lda.pred$class, alttesting$Direction)
+      
+       Down Up
+  Down    0  0
+  Up     43 61
+> mean(lda.pred$class == alttesting$Direction)
+[1] 0.5865385
+
+

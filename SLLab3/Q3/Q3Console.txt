@@ -1,0 +1,207 @@
+
+R version 3.4.1 (2017-06-30) -- "Single Candle"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Workspace loaded from ~/R/.RData]
+
+> auto = read.table("Auto.data", header = TRUE)
+Warning message:
+R graphics engine version 12 is not supported by this version of RStudio. The Plots tab will be disabled until a newer version of RStudio is installed. 
+> View(auto)
+> View(auto)
+> attach(auto)
+> mpgmedian = median(mpg)
+> newauto = auto
+> newauto = [copmlete.cases(newauto),]
+Error: unexpected '[' in "newauto = ["
+> newauto = newauto[copmlete.cases(newauto),]
+Error in copmlete.cases(newauto) : 
+  could not find function "copmlete.cases"
+> newauto = newauto[complete.cases(newauto),]
+> newauto$med = 1
+> View(newauto)
+> View(newauto)
+> newauto$med = NULL
+> newuato$mpg01 = 1
+Error in newuato$mpg01 = 1 : object 'newuato' not found
+> newauto$mpg01 = ifelse( < mpgmedian, 0, 1)
+Error: unexpected '<' in "newauto$mpg01 = ifelse( <"
+> newauto$mpg01 = ifelse(mpg < mpgmedian, 0, 1)
+> scatter(newauto, mpg01)
+Error in scatter(newauto, mpg01) : could not find function "scatter"
+> pairs(newauto, mpg01)
+Error in pairs.default(newauto, mpg01) : object 'mpg01' not found
+> pairs(newauto, col=newauto$mpg01)
+> pairs(newauto)
+> detach(auto)
+> attach(newauto)
+> plot(mpg01, displacement)
+> plot(displacement, mpg01, type="box")
+Warning message:
+In plot.xy(xy, type, ...) :
+  plot type 'box' will be truncated to first character
+> plot(displacement, mpg01)
+> pairs(newauto)
+> plot(weight, mpg01)
+> plot(horsepower, mpg01)
+> plot(as.numeric(horsepower), mpg01)
+> pairs(newauto)
+> newautotrain = [1:200,]
+Error: unexpected '[' in "newautotrain = ["
+> newautotrain = newauto[1:200,]
+> newautotest = newauto[201:,]
+Error: unexpected ',' in "newautotest = newauto[201:,"
+> newautotest = newauto[201:397,]
+> ?lda
+No documentation for ‘lda’ in specified packages and libraries:
+you could try ‘??lda’
+> require(MASS)
+Loading required package: MASS
+> ?lda
+> lda.fit = lda(mpg01~displacement+weight+horsepower, data=newauto)
+> lda.fit = lda(mpg01~displacement+weight+horsepower, data=newautotest)
+Error in lda.default(x, grouping, ...) : 
+  variables  7 11 15 22 28 31 32 34 35 37 39 42 43 44 45 46 47 48 49 50 51 53 55 56 59 78 84 88 90 91 appear to be constant within groups
+> View(newautotest)
+> View(newautotest)
+> lda.fit = lda(mpg01~displacement+weight+horsepower, data = newautotest)
+Error in lda.default(x, grouping, ...) : 
+  variables  7 11 15 22 28 31 32 34 35 37 39 42 43 44 45 46 47 48 49 50 51 53 55 56 59 78 84 88 90 91 appear to be constant within groups
+> lda.fit = lda(mpg01~displacement+weight, data = newautotest)
+> lda.fit = lda(mpg01~displacement+weight+horsepower, data = newautotest)
+Error in lda.default(x, grouping, ...) : 
+  variables  7 11 15 22 28 31 32 34 35 37 39 42 43 44 45 46 47 48 49 50 51 53 55 56 59 78 84 88 90 91 appear to be constant within groups
+> lda.fit = lda(mpg01~displacement+horsepower, data = newautotest)
+Error in lda.default(x, grouping, ...) : 
+  variables  6 10 14 21 27 30 31 33 34 36 38 41 42 43 44 45 46 47 48 49 50 52 54 55 58 77 83 87 89 90 appear to be constant within groups
+> lda.fit = lda(mpg01~displacement+weight+as.numeric(horsepower), data = newautotest)
+> lda.pred = predict(lda.fit, newautotest)
+> table(lda.pred$class, newautotest$mpg01)
+   
+      0   1
+  0  51   5
+  1  15 126
+> mean(lda.pred$class == newautotest$mpg01)
+[1] 0.8984772
+> qda.fit = qda(mpg01~displacement+weight+as.numeric(horsepower), data = newautotest)
+> qda.pred = predict(qda.fit, newautotest)
+> table(qda.pred$class, newautotest$mpg01)
+   
+      0   1
+  0  57  10
+  1   9 121
+> lda.fit = lda(mpg01~displacement+weight+horsepower, data=newautotrain)
+Error in lda.default(x, grouping, ...) : 
+  variables  4  5  8 13 16 19 20 21 23 24 26 29 52 57 60 61 62 64 66 71 74 79 81 86 appear to be constant within groups
+> lda.fit = lda(mpg01~displacement+weight+as.numeric(horsepower), data = newautotrain)
+> lda.pred = predict(lda.fit, newautotest)
+> table(lda.pred$class, newautotest$mpg01)
+   
+      0   1
+  0  59  16
+  1   7 115
+> mean(lda.pred$class == newautotest$mpg01)
+[1] 0.8832487
+> qda.fit = qda(mpg01~displacement+weight+as.numeric(horsepower), data = newautotrain)
+> qda.pred = predict(qda.fit, newautotest)
+> table(qda.pred$class, newautotest$mpg01)
+   
+      0   1
+  0  63  23
+  1   3 108
+> mean(qda.pred$class == newautotest$mpg01)
+[1] 0.8680203
+> glm.fit = glm(mpg01~displacement+weight+as.numeric(horsepower), data = newautotrain, family = binomial)
+> glm.probs = predict(glm.fit, type = "response")
+> glm.pred = ifelse(glm.probs=0.5,1,0)
+Error in ifelse(glm.probs = 0.5, 1, 0) : 
+  unused argument (glm.probs = 0.5)
+> glm.pred = ifelse(glm.probs>0.5,1,0)
+> table(glm.pred,newautotest$mpg01)
+Error in table(glm.pred, newautotest$mpg01) : 
+  all arguments must have the same length
+> table(glm.pred$class,newautotest$mpg01)
+Error in glm.pred$class : $ operator is invalid for atomic vectors
+> glm.probs = predict(glm.fit, newdata=newautotrain type = "response")
+Error: unexpected symbol in "glm.probs = predict(glm.fit, newdata=newautotrain type"
+> glm.probs = predict(glm.fit, newdata=newautotrain, type = "response")
+> glm.pred = ifelse(glm.probs>0.5,1,0)
+> table(glm.pred, newautotest$mpg01)
+Error in table(glm.pred, newautotest$mpg01) : 
+  all arguments must have the same length
+> glm.probs = predict(glm.fit, newdata=newautotest, type = "response")
+> glm.pred = ifelse(glm.probs>0.5,1,0)
+> table(glm.pred, newautotest$mpg01)
+        
+glm.pred  0  1
+       0 63 36
+       1  3 95
+> mean(glm.pred == newautotest$mpg01)
+[1] 0.8020305
+> View(newautotrain)
+> View(newautotrain)
+> predCols = cbind(newauto$displacement,as.numeric(newauto$horsepower),newauto$weight)
+> View(predCols)
+> train = 1:200
+> knn.pred = knn(predCols[train,],predCols[!train,],newautotrain$mpg01,k=1)
+Error in knn(predCols[train, ], predCols[!train, ], newautotrain$mpg01,  : 
+  could not find function "knn"
+> require(ISLR)
+Loading required package: ISLR
+> knn.pred = knn(predCols[train,],predCols[!train,],newautotrain$mpg01,k=1)
+Error in knn(predCols[train, ], predCols[!train, ], newautotrain$mpg01,  : 
+  could not find function "knn"
+> require(MASS)
+> knn.pred = knn(predCols[train,],predCols[!train,],newautotrain$mpg01,k=1)
+Error in knn(predCols[train, ], predCols[!train, ], newautotrain$mpg01,  : 
+  could not find function "knn"
+> library(class)
+> knn.pred = knn(predCols[train,],predCols[!train,],newautotrain$mpg01,k=1)
+> table(knn.pred,newautotest$mpg01)
+Error in table(knn.pred, newautotest$mpg01) : 
+  all arguments must have the same length
+> length(predcols[!train,])
+Error: object 'predcols' not found
+> length(predCols[!train,])
+[1] 0
+> length(predCols[train,])
+[1] 600
+> knn.pred = knn(predCols[1:200,],predCols[201:397,],newautotrain$mpg01,k=1)
+> table(knn.pred,newautotest$mpg01)
+        
+knn.pred   0   1
+       0  62  29
+       1   4 102
+> mean(knn.pred == newautotest$mpg01)
+[1] 0.8324873
+> knn.pred = knn(predCols[1:200,],predCols[201:397,],newautotrain$mpg01,k=5)
+> table(knn.pred,newautotest$mpg01)
+        
+knn.pred   0   1
+       0  62  25
+       1   4 106
+> mean(knn.pred == newautotest$mpg01)
+[1] 0.8527919
+> knn.pred = knn(predCols[1:200,],predCols[201:397,],newautotrain$mpg01,k=10)
+> table(knn.pred,newautotest$mpg01)
+        
+knn.pred   0   1
+       0  63  25
+       1   3 106
+> mean(knn.pred == newautotest$mpg01)
+[1] 0.857868

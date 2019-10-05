@@ -1,0 +1,65 @@
+2.
+i)
+
+We see that the kernel methods both performed really well. Infact there 
+is no difference between the linear and radial performance as seen in the
+pictures. However with the other models the boundaries clearly do not 
+accurately fit the underlying boundary.
+
+3.
+b)
+> costerrors
+  [1] 0.004 0.004 0.004 0.004 0.004 0.004 0.002 0.004
+  [9] 0.004 0.004 0.004 0.004 0.004 0.004 0.002 0.002
+ [17] 0.002 0.002 0.002 0.002 0.002 0.004 0.004 0.004
+ [25] 0.002 0.004 0.004 0.004 0.004 0.004 0.004 0.004
+ [33] 0.004 0.004 0.004 0.004 0.004 0.004 0.004 0.004
+ [41] 0.004 0.004 0.004 0.004 0.004 0.004 0.004 0.004
+ [49] 0.004 0.004 0.004 0.004 0.004 0.004 0.004 0.004
+ [57] 0.004 0.004 0.004 0.004 0.004 0.004 0.004 0.002
+ [65] 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002
+ [73] 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002
+ [81] 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002
+ [89] 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002
+ [97] 0.002 0.002 0.002 0.002
+
+The preceding are results from testing 5 fold cross validation
+As we can see the results are fairly sturdy. After a certain point
+the error reduces to a minimum.
+
+> mean(costerrors)
+[1] 0.00308
+
+c)
+
+> morecosterrors
+  [1] 0.514 0.510 0.508 0.508 0.508 0.508 0.508 0.508
+  [9] 0.508 0.508 0.508 0.508 0.508 0.508 0.508 0.512
+ [17] 0.512 0.512 0.512 0.512 0.512 0.512 0.512 0.512
+ [25] 0.512 0.512 0.512 0.512 0.514 0.514 0.514 0.514
+ [33] 0.514 0.514 0.514 0.514 0.514 0.514 0.514 0.514
+ [41] 0.514 0.512 0.512 0.512 0.512 0.512 0.512 0.512
+ [49] 0.512 0.512 0.512 0.512 0.512 0.512 0.512 0.512
+ [57] 0.512 0.512 0.512 0.512 0.512 0.512 0.512 0.512
+ [65] 0.514 0.514 0.514 0.514 0.514 0.514 0.514 0.514
+ [73] 0.514 0.514 0.514 0.514 0.514 0.514 0.514 0.514
+ [81] 0.514 0.514 0.514 0.514 0.514 0.514 0.514 0.514
+ [89] 0.514 0.514 0.514 0.514 0.514 0.514 0.514 0.514
+ [97] 0.514 0.514 0.514 0.514
+
+> mean(morecosterrors)
+[1] 0.51246
+
+It looks like the minimum occurs around c=3 to c=15. This trend
+for the best performances is in contrast to the best performers in 
+the cv case where they all appeared at larger cost sizes.
+
+d)
+
+We see that the test error is substaintially higher, where the 
+cv error is trivial and the test error is incredibly high. This
+would indicate that the training is drastically overfitting the
+training data. The problem is that the test errors increase as
+the cost increases which should not be the case since an increase
+in cost should decrease variance. Pretty perplexed as to why
+I am encountering these results. 

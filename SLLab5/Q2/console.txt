@@ -1,0 +1,487 @@
+
+R version 3.4.1 (2017-06-30) -- "Single Candle"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Workspace loaded from ~/R/.RData]
+
+> x = rnorm(100)
+Warning message:
+R graphics engine version 12 is not supported by this version of RStudio. The Plots tab will be disabled until a newer version of RStudio is installed. 
+> e = rnorm(100)
+> b0 = 22
+> b1 = 49
+> b2 = 4
+> b3 = 66
+> y = bo + b1*x + b2*(x^2) + b3*(x^3)
+Error: object 'bo' not found
+> y = b0 + b1*x + b2*(x^2) + b3*(x^3)
+> y = b0 + b1*x + b2*(x^2) + b3*(x^3) + e
+> regsubset(y)
+Error in regsubset(y) : could not find function "regsubset"
+> library(leaps)
+Error in library(leaps) : there is no package called ‘leaps’
+> regsubsets(y)
+Error in regsubsets(y) : could not find function "regsubsets"
+> regsubsets(y~.)
+Error in regsubsets(y ~ .) : could not find function "regsubsets"
+> library(ISLR)
+> regsubset(y~.)
+Error in regsubset(y ~ .) : could not find function "regsubset"
+> library(leaps)
+> regsubset(y~.)
+Error in regsubset(y ~ .) : could not find function "regsubset"
+> regsubsets(y~.)
+Error in terms.formula(formula, data = data) : 
+  '.' in formula and no 'data' argument
+> regsubsets(y~x)
+Error in terms(formula, data = data) : 
+  argument "data" is missing, with no default
+> regsubsets(y~.,data=x)
+Error in terms.formula(formula, data = data) : 
+  '.' in formula and no 'data' argument
+> regsubsets(y~.)
+Error in terms.formula(formula, data = data) : 
+  '.' in formula and no 'data' argument
+> summary(y)
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-1016.70   -51.76    18.93    22.38    74.92  2619.18 
+> regfit.full = regsubsets(y~x)
+Error in terms(formula, data = data) : 
+  argument "data" is missing, with no default
+> regfit.full = regsubsets(y~x, data=x)
+Error in eval(predvars, data, env) : 
+  numeric 'envir' arg not of length one
+> regfit.full = regsubsets(y~x)
+Error in terms(formula, data = data) : 
+  argument "data" is missing, with no default
+> regfit.full = regsubsets(y~x+x^2+x^3+x^4+x^5+x^6+x^7+x^8+x^9+x^10)
+Error in terms(formula, data = data) : 
+  argument "data" is missing, with no default
+> regfit.full = regsubsets(y~x+x^2+x^3+x^4+x^5+x^6+x^7+x^8+x^9+x^10)
+Error in terms(formula, data = data) : 
+  argument "data" is missing, with no default
+> df = data.frame(y,x,x^2,x^3,x^4,x^5,x^6,x^7,x^8,x^9,x^10)
+> regfit.full = regsubsets(y~.,data=df)
+> summary(regfit.full)
+Subset selection object
+Call: regsubsets.formula(y ~ ., data = df)
+10 Variables  (and intercept)
+     Forced in Forced out
+x        FALSE      FALSE
+x.2      FALSE      FALSE
+x.3      FALSE      FALSE
+x.4      FALSE      FALSE
+x.5      FALSE      FALSE
+x.6      FALSE      FALSE
+x.7      FALSE      FALSE
+x.8      FALSE      FALSE
+x.9      FALSE      FALSE
+x.10     FALSE      FALSE
+1 subsets of each size up to 8
+Selection Algorithm: exhaustive
+         x   x.2 x.3 x.4 x.5 x.6 x.7 x.8 x.9 x.10
+1  ( 1 ) " " " " "*" " " " " " " " " " " " " " " 
+2  ( 1 ) "*" " " "*" " " " " " " " " " " " " " " 
+3  ( 1 ) "*" "*" "*" " " " " " " " " " " " " " " 
+4  ( 1 ) "*" "*" "*" " " " " " " " " " " " " "*" 
+5  ( 1 ) "*" "*" "*" " " "*" " " "*" " " " " " " 
+6  ( 1 ) "*" "*" "*" " " "*" " " " " "*" " " "*" 
+7  ( 1 ) "*" "*" "*" " " " " "*" " " "*" "*" "*" 
+8  ( 1 ) "*" "*" "*" "*" " " "*" " " "*" "*" "*" 
+> x^2
+  [1] 7.094868e-02 1.065661e+00 1.635161e-01 2.393897e-01 2.180400e-01
+  [6] 4.541418e-01 9.353305e-03 2.097950e+00 1.737940e-01 7.901516e-01
+ [11] 3.016425e+00 1.825445e+00 1.014434e+00 1.586005e+00 1.094766e+01
+ [16] 7.379383e-01 1.064360e+00 3.891199e-01 2.484768e+00 2.464201e-01
+ [21] 1.456842e-01 8.535925e-03 2.359471e+00 5.354694e-01 5.160618e-01
+ [26] 1.292952e+00 6.787133e-02 3.766393e-03 6.849283e-01 4.165466e-02
+ [31] 1.428533e-03 1.584473e+00 6.249419e-02 7.941302e-02 1.049471e+00
+ [36] 9.302283e-01 1.943639e-01 6.761250e-01 3.339030e-01 2.320084e-03
+ [41] 1.649818e-02 1.075453e+00 1.066788e+00 1.271569e+00 6.884112e-02
+ [46] 2.232716e-02 5.011673e+00 2.639453e+00 5.807920e-01 1.002201e+00
+ [51] 2.446287e+00 1.212229e-03 4.059370e-01 2.705056e-03 8.928945e-03
+ [56] 8.463147e-01 5.890555e+00 1.108341e-01 1.200554e+00 1.537073e+00
+ [61] 3.814283e-01 2.557291e+00 1.020827e+00 1.059286e-01 6.082493e-01
+ [66] 1.680111e-01 3.428088e+00 3.469023e+00 1.706144e-02 5.389538e-01
+ [71] 9.484445e-01 9.842290e-01 4.005609e+00 1.391505e+00 4.935299e-01
+ [76] 7.359307e-03 1.710494e-01 6.621146e-02 1.811325e+00 1.296699e+00
+ [81] 8.295596e-02 4.283008e-01 2.406439e-04 3.200407e+00 1.959381e-02
+ [86] 3.434144e-01 2.792305e-02 7.143026e-01 3.507485e-04 4.221151e+00
+ [91] 8.802380e-03 1.048549e+00 8.246917e-02 1.192886e+00 8.590092e-02
+ [96] 3.107548e-01 6.742021e-01 4.073530e-01 2.301994e+00 4.242950e-01
+> reg.summary = summary(regfit.full)
+> plot(reg.summary$cp)
+> reg.summary$names
+NULL
+> names(reg.summary)
+[1] "which"  "rsq"    "rss"    "adjr2"  "cp"     "bic"    "outmat"
+[8] "obj"   
+> plot(reg.summary$bic)
+> plot(reg.summary$rsq)
+> which.min(reg.summary$cp)
+[1] 3
+> which.min(reg.summary$rsq)
+[1] 1
+> which.max(reg.summary$rsq)
+[1] 8
+> which.min(reg.summary$bic)
+[1] 3
+> coef(regfit.full,3)
+(Intercept)           x         x.2         x.3 
+  22.068243   49.123438    4.066615   65.983165 
+> regfit.forward = regsubsets(y~.,data=df,method="forward")
+> forward.summary = summary(regfit.forward)
+> plot(regfit.forward,scale="Cp")
+> summary(regit.forward)
+Error in summary(regit.forward) : object 'regit.forward' not found
+> summary(regfit.forward)
+Subset selection object
+Call: regsubsets.formula(y ~ ., data = df, method = "forward")
+10 Variables  (and intercept)
+     Forced in Forced out
+x        FALSE      FALSE
+x.2      FALSE      FALSE
+x.3      FALSE      FALSE
+x.4      FALSE      FALSE
+x.5      FALSE      FALSE
+x.6      FALSE      FALSE
+x.7      FALSE      FALSE
+x.8      FALSE      FALSE
+x.9      FALSE      FALSE
+x.10     FALSE      FALSE
+1 subsets of each size up to 8
+Selection Algorithm: forward
+         x   x.2 x.3 x.4 x.5 x.6 x.7 x.8 x.9 x.10
+1  ( 1 ) " " " " "*" " " " " " " " " " " " " " " 
+2  ( 1 ) "*" " " "*" " " " " " " " " " " " " " " 
+3  ( 1 ) "*" "*" "*" " " " " " " " " " " " " " " 
+4  ( 1 ) "*" "*" "*" " " " " " " " " " " " " "*" 
+5  ( 1 ) "*" "*" "*" " " " " "*" " " " " " " "*" 
+6  ( 1 ) "*" "*" "*" " " "*" "*" " " " " " " "*" 
+7  ( 1 ) "*" "*" "*" "*" "*" "*" " " " " " " "*" 
+8  ( 1 ) "*" "*" "*" "*" "*" "*" "*" " " " " "*" 
+> which.min(forward.summary$cp)
+[1] 3
+> which.ax(forward.summary$rsq)
+Error in which.ax(forward.summary$rsq) : 
+  could not find function "which.ax"
+> which.max(forward.summary$rsq)
+[1] 8
+> which.min(foward.summary$bic)
+Error in which.min(foward.summary$bic) : 
+  object 'foward.summary' not found
+> which.min(forward.summary$bic)
+[1] 3
+> coef(regfit.forward)
+Error in coef.regsubsets(regfit.forward) : 
+  argument "id" is missing, with no default
+> coef(regfit.forward, 3)
+(Intercept)           x         x.2         x.3 
+  22.068243   49.123438    4.066615   65.983165 
+> regfit.back = regsubsets(y~.,data=df,method="backward")
+> back.summary = summary(regfit.back)
+> back.summary
+Subset selection object
+Call: regsubsets.formula(y ~ ., data = df, method = "backward")
+10 Variables  (and intercept)
+     Forced in Forced out
+x        FALSE      FALSE
+x.2      FALSE      FALSE
+x.3      FALSE      FALSE
+x.4      FALSE      FALSE
+x.5      FALSE      FALSE
+x.6      FALSE      FALSE
+x.7      FALSE      FALSE
+x.8      FALSE      FALSE
+x.9      FALSE      FALSE
+x.10     FALSE      FALSE
+1 subsets of each size up to 8
+Selection Algorithm: backward
+         x   x.2 x.3 x.4 x.5 x.6 x.7 x.8 x.9 x.10
+1  ( 1 ) " " " " "*" " " " " " " " " " " " " " " 
+2  ( 1 ) "*" " " "*" " " " " " " " " " " " " " " 
+3  ( 1 ) "*" "*" "*" " " " " " " " " " " " " " " 
+4  ( 1 ) "*" "*" "*" " " " " " " " " " " " " "*" 
+5  ( 1 ) "*" "*" "*" " " " " " " " " "*" " " "*" 
+6  ( 1 ) "*" "*" "*" " " " " " " "*" "*" " " "*" 
+7  ( 1 ) "*" "*" "*" " " " " "*" "*" "*" " " "*" 
+8  ( 1 ) "*" "*" "*" " " "*" "*" "*" "*" " " "*" 
+> which.min(back.summary$cp)
+[1] 3
+> which.max(back.summary$rsq)
+[1] 8
+> which.min(back.summary$bic)
+[1] 3
+> coef(back.summary,3)
+NULL
+> coef(regfit.back,3)
+(Intercept)           x         x.2         x.3 
+  22.068243   49.123438    4.066615   65.983165 
+> folds = sample(rep(1:10), nrows(df))
+Error in nrows(df) : could not find function "nrows"
+> folds = sample(rep(1:10), length=nrow(df))
+Error in sample(rep(1:10), length = nrow(df)) : 
+  unused argument (length = nrow(df))
+> folds = sample(rep(1:10, length=nrow(df))
++ )
+> folds
+  [1]  7  7  2  6  5  6  5 10  3  3  3  8  2  5  4  2 10  8  5  7  6  1
+ [23]  2  5  7 10  4  4  2  1  8  9  9  1  8  2  3  9  7  6  1  1  4  3
+ [45]  3  9  4 10  7  4 10  3  5 10  6  2  5  7  1  1  7  8  2  3  6 10
+ [67]  6  1  1  9  6  5  6  6  2 10  5  8  4  8  1  7  4  4  5  8 10  8
+ [89] 10  7  9  2  9  9  9  3  3  4  8  9
+> table(folds)
+folds
+ 1  2  3  4  5  6  7  8  9 10 
+10 10 10 10 10 10 10 10 10 10 
+> library(glmnet)
+Error in library(glmnet) : there is no package called ‘glmnet’
+> library(glmnet)
+Loading required package: Matrix
+Loading required package: foreach
+foreach: simple, scalable parallel programming from Revolution Analytics
+Use Revolution R for scalability, fault tolerance and more.
+http://www.revolutionanalytics.com
+Loaded glmnet 2.0-13
+
+> ?cv.glmnet
+> fit.lasso = glmnet(df-y, y, alpha=1)
+Error in elnet(x, is.sparse, ix, jx, y, weights, offset, type.gaussian,  : 
+  (list) object cannot be coerced to type 'double'
+> fit.lasso = glmnet(df-y, df$y, alpha=1)
+Error in elnet(x, is.sparse, ix, jx, y, weights, offset, type.gaussian,  : 
+  (list) object cannot be coerced to type 'double'
+> df$y~.-1
+df$y ~ . - 1
+> x = model.matrix(y~.-1,data=df)
+> y=df$y
+> fit.lasso = glmnet(x,y,alpha=1)
+> fit.lasso = cv.glmnet(x,y,alpha=1)
+> plot(fit.lasso,xvar="lambda",label=TRUE)
+There were 12 warnings (use warnings() to see them)
+> View(x)
+> View(x)
+> names(fit.lasso)
+ [1] "lambda"     "cvm"        "cvsd"       "cvup"       "cvlo"      
+ [6] "nzero"      "name"       "glmnet.fit" "lambda.min" "lambda.1se"
+> fit.lasso = glmnet(x,y,alpha=1)
+> cv.lasso = cv.glmnet(x,y,alpha=1)
+> plot(fit.lasso,xvar="lambda",label=TRUE)
+> View(df)
+> View(df)
+> plot(fit.lasso,xvar="lambda",label=TRUE)
+> summary(fit.lasso)
+          Length Class     Mode   
+a0         41    -none-    numeric
+beta      410    dgCMatrix S4     
+df         41    -none-    numeric
+dim         2    -none-    numeric
+lambda     41    -none-    numeric
+dev.ratio  41    -none-    numeric
+nulldev     1    -none-    numeric
+npasses     1    -none-    numeric
+jerr        1    -none-    numeric
+offset      1    -none-    logical
+call        4    -none-    call   
+nobs        1    -none-    numeric
+> coef(fit.lasso)
+11 x 41 sparse Matrix of class "dgCMatrix"
+   [[ suppressing 41 column names ‘s0’, ‘s1’, ‘s2’ ... ]]
+                                                                  
+(Intercept) 22.37842 22.440290 22.49666 22.54803 22.59483 22.63747
+x            .        .         .        .        .        .      
+x.2          .        .         .        .        .        .      
+x.3          .        6.618847 12.64969 18.14478 23.15169 27.71381
+x.4          .        .         .        .        .        .      
+x.5          .        .         .        .        .        .      
+x.6          .        .         .        .        .        .      
+x.7          .        .         .        .        .        .      
+x.8          .        .         .        .        .        .      
+x.9          .        .         .        .        .        .      
+x.10         .        .         .        .        .        .      
+                                                                 
+(Intercept) 22.67633 22.71173 22.74399 22.77338 22.80016 22.82456
+x            .        .        .        .        .        .      
+x.2          .        .        .        .        .        .      
+x.3         31.87063 35.65818 39.10925 42.25374 45.11888 47.72949
+x.4          .        .        .        .        .        .      
+x.5          .        .        .        .        .        .      
+x.6          .        .        .        .        .        .      
+x.7          .        .        .        .        .        .      
+x.8          .        .        .        .        .        .      
+x.9          .        .        .        .        .        .      
+x.10         .        .        .        .        .        .      
+                                                                   
+(Intercept) 22.84680 22.86706 22.88551 22.90233 23.102852 23.369854
+x            .        .        .        .        2.840025  6.720504
+x.2          .        .        .        .        .         .       
+x.3         50.10818 52.27556 54.25039 56.04978 57.222585 58.078748
+x.4          .        .        .        .        .         .       
+x.5          .        .        .        .        .         .       
+x.6          .        .        .        .        .         .       
+x.7          .        .        .        .        .         .       
+x.8          .        .        .        .        .         .       
+x.9          .        .        .        .        .         .       
+x.10         .        .        .        .        .         .       
+                                                                 
+(Intercept) 23.60950 23.83055 24.03203 24.21561 24.38288 24.53530
+x           10.20049 13.41258 16.34039 19.00813 21.43887 23.65368
+x.2          .        .        .        .        .        .      
+x.3         58.86802 59.58039 60.22930 60.82056 61.35929 61.85016
+x.4          .        .        .        .        .        .      
+x.5          .        .        .        .        .        .      
+x.6          .        .        .        .        .        .      
+x.7          .        .        .        .        .        .      
+x.8          .        .        .        .        .        .      
+x.9          .        .        .        .        .        .      
+x.10         .        .        .        .        .        .      
+                                                                 
+(Intercept) 24.67417 24.79802 24.91342 25.01870 25.11463 25.20203
+x           25.67173 27.46924 29.14634 30.67634 32.07051 33.34083
+x.2          .        .        .        .        .        .      
+x.3         62.29743 62.71174 63.08279 63.42056 63.72832 64.00873
+x.4          .        .        .        .        .        .      
+x.5          .        .        .        .        .        .      
+x.6          .        .        .        .        .        .      
+x.7          .        .        .        .        .        .      
+x.8          .        .        .        .        .        .      
+x.9          .        .        .        .        .        .      
+x.10         .        .        .        .        .        .      
+                                                                 
+(Intercept) 25.28168 25.35424 25.41773 25.47797 25.53308 25.58331
+x           34.49830 35.55294 36.47340 37.34901 38.15009 38.88029
+x.2          .        .        .        .        .        .      
+x.3         64.26424 64.49704 64.71582 64.90909 65.08466 65.24459
+x.4          .        .        .        .        .        .      
+x.5          .        .        .        .        .        .      
+x.6          .        .        .        .        .        .      
+x.7          .        .        .        .        .        .      
+x.8          .        .        .        .        .        .      
+x.9          .        .        .        .        .        .      
+x.10         .        .        .        .        .        .      
+                                                        
+(Intercept) 25.62908 25.67079 25.70879 25.74076 25.77212
+x           39.54565 40.15190 40.70429 41.16697 41.62262
+x.2          .        .        .        .        .      
+x.3         65.39030 65.52307 65.64404 65.76095 65.86187
+x.4          .        .        .        .        .      
+x.5          .        .        .        .        .      
+x.6          .        .        .        .        .      
+x.7          .        .        .        .        .      
+x.8          .        .        .        .        .      
+x.9          .        .        .        .        .      
+x.10         .        .        .        .        .      
+> View(x)
+> View(x)
+> fit.ridge=glmnet(x,y,aplha=0)
+Error in glmnet(x, y, aplha = 0) : unused argument (aplha = 0)
+> fit.ridge=glmnet(x,y,aplpha=0)
+Error in glmnet(x, y, aplpha = 0) : unused argument (aplpha = 0)
+> fit.ridge=glmnet(x,y,alpha=0)
+> plot(fit.ridge,xvar="lambda",label=TRUE)
+> fit.lasso=glmnet(x,y)
+> plot(fit.lasso,xvar="lambda",label=TRUE)
+> coef(cv.lasso)
+11 x 1 sparse Matrix of class "dgCMatrix"
+                   1
+(Intercept) 25.62908
+x           39.54565
+x.2          .      
+x.3         65.39030
+x.4          .      
+x.5          .      
+x.6          .      
+x.7          .      
+x.8          .      
+x.9          .      
+x.10         .      
+> min(cv.lasso$lambda)
+[1] 9.019395
+> names(cv.lasso)
+ [1] "lambda"     "cvm"        "cvsd"       "cvup"       "cvlo"      
+ [6] "nzero"      "name"       "glmnet.fit" "lambda.min" "lambda.1se"
+> cv.lasso.cvlo
+Error: object 'cv.lasso.cvlo' not found
+> cv.lasso.lambda.min
+Error: object 'cv.lasso.lambda.min' not found
+> cv.lasso$lambda.min
+[1] 9.019395
+> b7 = 87
+> y = b0 + b7*(x^7) + e
+> df = data.frame(y,x,x^2,x^3,x^4,x^5,x^6,x^7,x^8,x^9,x^10)
+> regfit.full = regsubsets(y~.,data=df)
+Error in leaps.setup(x, y, wt = wt, nbest = nbest, nvmax = nvmax, force.in = force.in,  : 
+  y and x different lengths
+> x = rnorm(100)
+> df = data.frame(y,x,x^2,x^3,x^4,x^5,x^6,x^7,x^8,x^9,x^10)
+> regfit.full = regsubsets(y~.,data=df)
+Error in leaps.setup(x, y, wt = wt, nbest = nbest, nvmax = nvmax, force.in = force.in,  : 
+  y and x different lengths
+> y = b0 + b7*(x^7) + e
+> regfit.full = regsubsets(y~.,data=df)
+Reordering variables and trying again:
+Warning message:
+In leaps.setup(x, y, wt = wt, nbest = nbest, nvmax = nvmax, force.in = force.in,  :
+  3  linear dependencies found
+> df = data.frame(y,x,x^2,x^3,x^4,x^5,x^6,x^7,x^8,x^9,x^10)
+> regfit.full = regsubsets(y~.,data=df)
+> summary(regfit.full)
+Subset selection object
+Call: regsubsets.formula(y ~ ., data = df)
+10 Variables  (and intercept)
+     Forced in Forced out
+x        FALSE      FALSE
+x.2      FALSE      FALSE
+x.3      FALSE      FALSE
+x.4      FALSE      FALSE
+x.5      FALSE      FALSE
+x.6      FALSE      FALSE
+x.7      FALSE      FALSE
+x.8      FALSE      FALSE
+x.9      FALSE      FALSE
+x.10     FALSE      FALSE
+1 subsets of each size up to 8
+Selection Algorithm: exhaustive
+         x   x.2 x.3 x.4 x.5 x.6 x.7 x.8 x.9 x.10
+1  ( 1 ) " " " " " " " " " " " " "*" " " " " " " 
+2  ( 1 ) " " "*" " " " " " " " " "*" " " " " " " 
+3  ( 1 ) " " " " " " "*" " " "*" "*" " " " " " " 
+4  ( 1 ) "*" "*" "*" " " " " " " "*" " " " " " " 
+5  ( 1 ) "*" "*" "*" " " "*" " " "*" " " " " " " 
+6  ( 1 ) "*" " " "*" " " " " " " "*" "*" "*" "*" 
+7  ( 1 ) "*" " " "*" "*" " " " " "*" "*" "*" "*" 
+8  ( 1 ) "*" "*" "*" "*" " " "*" "*" " " "*" "*" 
+> coef(regfit.full)
+Error in coef.regsubsets(regfit.full) : 
+  argument "id" is missing, with no default
+> plot(reg.summary$cp)
+> coef(regfit.full,3)
+(Intercept)         x.4         x.6         x.7 
+ 22.3344489  -0.2973164   0.0728009  86.9931196 
+> x = model.matrix(y~.-1,data=df)
+> y=df$y
+> fit.lasso = glmnet(x,y,alpha=1)
+> fit.lasso = cv.glmnet(x,y,alpha=1)
+> plot(fit.lasso,xvar="lambda",label=TRUE)
+There were 12 warnings (use warnings() to see them)
+> fit.lasso$lambda.min
+[1] 108.5603
+> cv.lasso$lambda.min
+[1] 9.019395
+> plot(cv.lasso,xvar="lambda",label=TRUE)
+There were 12 warnings (use warnings() to see them)

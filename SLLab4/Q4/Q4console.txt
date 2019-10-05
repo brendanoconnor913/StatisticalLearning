@@ -1,0 +1,95 @@
+> library(MASS)
+> attach(MASS)
+Error in attach(MASS) : object 'MASS' not found
+> attach(Boston)
+> mean(medv)
+[1] 22.53281
+> m = mean(medv)
+> mstderr = std(medv)/sqrt(dim(Boston)[1])
+Error in std(medv) : could not find function "std"
+> mstderr = sd(medv)/sqrt(dim(Boston)[1])
+> boot.fn = function(col)
++     return(mean(medv))
+> boo.fn = function(data, index)
++     return(mean(data[index,]$medv))
+> boot(Boston,boo.fn,R=10000)
+
+ORDINARY NONPARAMETRIC BOOTSTRAP
+
+
+Call:
+boot(data = Boston, statistic = boo.fn, R = 10000)
+
+
+Bootstrap Statistics :
+    original       bias    std. error
+t1* 22.53281 -0.005211166   0.4075966
+> mstderr
+[1] 0.4088611
+> t.test(medv)
+
+    One Sample t-test
+
+data:  medv
+t = 55.111, df = 505, p-value < 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 21.72953 23.33608
+sample estimates:
+mean of x 
+ 22.53281 
+
+> m-2*mstderr
+[1] 21.71508
+> m+2*mstderr
+[1] 23.35053
+> median = med(medv)
+Error in med(medv) : could not find function "med"
+> med = median(medv)
+> med
+[1] 21.2
+> boot.fn = function(data, index)
++     return(median(data[index,]$medv))
+> boot(Boston,boot.fn,R=10000)
+
+ORDINARY NONPARAMETRIC BOOTSTRAP
+
+
+Call:
+boot(data = Boston, statistic = boot.fn, R = 10000)
+
+
+Bootstrap Statistics :
+    original   bias    std. error
+t1*     21.2 -0.02035   0.3811409
+> quantile(medv)
+    0%    25%    50%    75%   100% 
+ 5.000 17.025 21.200 25.000 50.000 
+> ?quantile
+> ?percentile
+No documentation for ‘percentile’ in specified packages and libraries:
+you could try ‘??percentile’
+> quantile(medv, c(.90,.99))
+ 90%  99% 
+34.8 50.0 
+> quantile(medv, c(.90,1))
+ 90% 100% 
+34.8 50.0 
+> q = quantile(medv, c(.90,1))
+> boot.fn = function(data, index)
++     return(quantile(data[index,]$medv, c(.1)))
+> quantile(medv, c(.1))
+  10% 
+12.75 
+> boot(Boston,boot.fn,R=10000)
+
+ORDINARY NONPARAMETRIC BOOTSTRAP
+
+
+Call:
+boot(data = Boston, statistic = boot.fn, R = 10000)
+
+
+Bootstrap Statistics :
+    original    bias    std. error
+t1*    12.75 -0.001225   0.5070083

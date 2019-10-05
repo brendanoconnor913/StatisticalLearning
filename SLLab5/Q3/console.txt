@@ -1,0 +1,187 @@
+
+R version 3.4.1 (2017-06-30) -- "Single Candle"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Workspace loaded from ~/R/.RData]
+
+> load("~/R/College.rda")
+Warning message:
+R graphics engine version 12 is not supported by this version of RStudio. The Plots tab will be disabled until a newer version of RStudio is installed. 
+> College = na.omit(College)
+> set.seed(1)
+> test = sample(seq(777),389,replace=FALSE)
+> View(College)
+> lm = glm.fit(Apps~.,data=College[-test,])
+Error in glm.fit(Apps ~ ., data = College[-test, ]) : 
+  unused argument (data = College[-test, ])
+> lm = glm.fit(Apps~.,data=College[-test,:])
+Error: unexpected ':' in "lm = glm.fit(Apps~.,data=College[-test,:"
+> lm = glm.fit(Apps~.,data=College[-test])
+Error in glm.fit(Apps ~ ., data = College[-test]) : 
+  unused argument (data = College[-test])
+> lm = glm.fit(Apps~.)
+Error in dim(data) <- dim : invalid first argument
+> lm = glm.fit(Apps~.data=College)
+Error: unexpected '=' in "lm = glm.fit(Apps~.data="
+> lm.fit = glm.fit(Apps~.data=College)
+Error: unexpected '=' in "lm.fit = glm.fit(Apps~.data="
+> lm.fit = glm(Apps~.data=College)
+Error: unexpected '=' in "lm.fit = glm(Apps~.data="
+> lm.fit = glm(Apps~.,data=College)
+> lm.fit = glm(Apps~.,data=College[-test,])
+> lm.pred = predict(lm.fit, newdata=College[test,])
+> ?mse
+No documentation for ‘mse’ in specified packages and libraries:
+you could try ‘??mse’
+> cv.mse
+Error: object 'cv.mse' not found
+> lm.err = mean((College[text,] - lm.pred)^2)
+Error in `[.default`(xj, i) : invalid subscript type 'closure'
+> lm.err = mean((College[test,] - lm.pred)^2)
+Warning message:
+In Ops.factor(left, right) : ‘-’ not meaningful for factors
+> lm.err = mean((College[test,]$Apps - lm.pred)^2)
+> diff = College[test,]$Appls - lm.pred
+> diff = College[test,]$Apps - lm.pred
+> View(diff)
+> View(College[test,]$Apps)
+> lm.err
+[1] 1350356
+> library(glmnet)
+Loading required package: Matrix
+Loading required package: foreach
+foreach: simple, scalable parallel programming from Revolution Analytics
+Use Revolution R for scalability, fault tolerance and more.
+http://www.revolutionanalytics.com
+Loaded glmnet 2.0-13
+
+> x = model.matrix(Apps~.-1,data=College)
+> y = College$Apps
+> cv.ridge = cv.glmnet(x[-test,],y[-test,],alpha=0)
+Error in y[-test, ] : incorrect number of dimensions
+> cv.ridge = cv.glmnet(x[-test,],y[-test],alpha=0)
+> ridge.pred = predict(cv.ridge,x[test,])
+> ridge.err = mean((College[test,]$Apps - ridge.pred)^2)
+> ridge.err
+[1] 3231001
+> cv.lasso = cv.glmnet(x[-test,],y[-test])
+> ridge.pred = predict(cv.lasso,x[test,])
+> lasso.pred = predict(cv.lasso,x[test,])
+> lasso.err = mean(College[test,]$Apps - lasso.pred)^2)
+Error: unexpected ')' in "lasso.err = mean(College[test,]$Apps - lasso.pred)^2)"
+> lasso.err = mean((College[test,]$Apps - lasso.pred)^2)
+> lasso.err
+[1] 1770708
+> ?glmnet
+> ?glm
+> library(pls)
+Error in library(pls) : there is no package called ‘pls’
+> library(pls)
+
+Attaching package: ‘pls’
+
+The following object is masked from ‘package:stats’:
+
+    loadings
+
+> pcr.fit = pcr(Apps~., data=College, subset=!test,scale=TRUE,validation="CV")
+Error in cvsegments(nobj, k = segments, type = segment.type) : 
+  More segments than observations requested
+> pcr.fit = pcr(Apps~., data=College[-test,],scale=TRUE,validation="CV")
+> summary(pcr.fit)
+Data:   X dimension: 388 17 
+    Y dimension: 388 1
+Fit method: svdpc
+Number of components considered: 17
+
+VALIDATION: RMSEP
+Cross-validated using 10 random segments.
+       (Intercept)  1 comps  2 comps  3 comps  4 comps  5 comps
+CV            3359     3374     1663     1689     1616     1524
+adjCV         3359     3373     1660     1691     1589     1432
+       6 comps  7 comps  8 comps  9 comps  10 comps  11 comps  12 comps
+CV        1345     1295     1238     1225      1221      1214      1217
+adjCV     1340     1263     1225     1223      1218      1210      1213
+       13 comps  14 comps  15 comps  16 comps  17 comps
+CV         1230      1234      1179      1079      1038
+adjCV      1226      1230      1173      1074      1033
+
+TRAINING: % variance explained
+      1 comps  2 comps  3 comps  4 comps  5 comps  6 comps  7 comps
+X     32.3311    57.47    64.56    70.04    75.32    80.49    83.93
+Apps   0.3263    76.09    76.13    80.41    84.69    85.32    87.76
+      8 comps  9 comps  10 comps  11 comps  12 comps  13 comps
+X       87.26    90.40     92.86     94.97     96.85     97.97
+Apps    87.76    87.86     88.00     88.26     88.33     88.34
+      14 comps  15 comps  16 comps  17 comps
+X        98.84     99.37     99.83    100.00
+Apps     88.35     89.82     91.27     92.07
+> validationplot(pcr.fit,val.type="MSEP")
+> names(pcr.fit)
+ [1] "coefficients"  "scores"        "loadings"      "Yloadings"    
+ [5] "projection"    "Xmeans"        "Ymeans"        "fitted.values"
+ [9] "residuals"     "Xvar"          "Xtotvar"       "fit.time"     
+[13] "ncomp"         "method"        "scale"         "validation"   
+[17] "call"          "terms"         "model"        
+> validationplot(pcr.fit,val.type="MSEP")
+> pcr.pred = predict(pcr.fit,College[test,],ncomp=7)
+> pcr.err = mean((College[test,]$Apps - pcr.pred)^2)
+> pcr.err
+[1] 2829459
+> pls.fit = plsr(Apps~.,data=College[-test,],scale=TRUE,validation="CV")
+> summary(pls.fit)
+Data:   X dimension: 388 17 
+    Y dimension: 388 1
+Fit method: kernelpls
+Number of components considered: 17
+
+VALIDATION: RMSEP
+Cross-validated using 10 random segments.
+       (Intercept)  1 comps  2 comps  3 comps  4 comps  5 comps
+CV            3359     1514     1217     1171     1200     1122
+adjCV         3359     1511     1211     1173     1188     1109
+       6 comps  7 comps  8 comps  9 comps  10 comps  11 comps  12 comps
+CV        1085     1068     1063     1053      1056      1060      1062
+adjCV     1078     1062     1057     1047      1050      1054      1055
+       13 comps  14 comps  15 comps  16 comps  17 comps
+CV         1060      1059      1059      1059      1059
+adjCV      1054      1053      1053      1053      1053
+
+TRAINING: % variance explained
+      1 comps  2 comps  3 comps  4 comps  5 comps  6 comps  7 comps
+X       25.07    33.78    62.37    65.67    68.27    73.44    76.54
+Apps    80.48    87.94    88.86    90.12    91.37    91.72    91.85
+      8 comps  9 comps  10 comps  11 comps  12 comps  13 comps
+X       80.92    82.00     84.27     87.92     90.51     92.64
+Apps    91.89    92.03     92.06     92.06     92.07     92.07
+      14 comps  15 comps  16 comps  17 comps
+X        94.06     95.74     96.87    100.00
+Apps     92.07     92.07     92.07     92.07
+> pls.pred=predict(pls.fit,College[-test,],ncomp=6)
+> pls.err = mean((College[test,]$Apps - pls.pred)^2)
+Error in mean((College[test, ]$Apps - pls.pred)^2) : 
+  dims [product 388] do not match the length of object [389]
+In addition: Warning message:
+In College[test, ]$Apps - pls.pred :
+  longer object length is not a multiple of shorter object length
+> pls.pred=predict(pls.fit,College[test,],ncomp=6)
+> pls.err = mean((College[test,]$Apps - pls.pred)^2)
+> pls.err
+[1] 1457453
+
+

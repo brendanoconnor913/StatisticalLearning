@@ -1,0 +1,84 @@
+
+R version 3.4.1 (2017-06-30) -- "Single Candle"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> load("~/R/Carseats.rda")
+Warning message:
+R graphics engine version 12 is not supported by this version of RStudio. The Plots tab will be disabled until a newer version of RStudio is installed. 
+> View(Carseats)
+> View(Carseats)
+> attach(Carseats)
+> mvfit = lm(Sales~Price+Urban+US, Carseats)
+> plot(Sales~Price+Urban+US, Carseats)
+> plot(Sales~(Price+Urban+US), Carseats)
+> plot(Sales~Price, Carseats)
+> plot(Sales~Urban, Carseats)
+> plot(Sales~US, Carseats)
+> summary(mvfit)
+
+Call:
+lm(formula = Sales ~ Price + Urban + US, data = Carseats)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.9206 -1.6220 -0.0564  1.5786  7.0581 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 13.043469   0.651012  20.036  < 2e-16 ***
+Price       -0.054459   0.005242 -10.389  < 2e-16 ***
+UrbanYes    -0.021916   0.271650  -0.081    0.936    
+USYes        1.200573   0.259042   4.635 4.86e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.472 on 396 degrees of freedom
+Multiple R-squared:  0.2393,    Adjusted R-squared:  0.2335 
+F-statistic: 41.52 on 3 and 396 DF,  p-value: < 2.2e-16
+
+> mvfit = lm(Sales~Price+US, Carseats)
+> summary(mvfit)
+
+Call:
+lm(formula = Sales ~ Price + US, data = Carseats)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.9269 -1.6286 -0.0574  1.5766  7.0515 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 13.03079    0.63098  20.652  < 2e-16 ***
+Price       -0.05448    0.00523 -10.416  < 2e-16 ***
+USYes        1.19964    0.25846   4.641 4.71e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.469 on 397 degrees of freedom
+Multiple R-squared:  0.2393,    Adjusted R-squared:  0.2354 
+F-statistic: 62.43 on 2 and 397 DF,  p-value: < 2.2e-16
+
+> conf(mvfit)
+Error in conf(mvfit) : could not find function "conf"
+> confint(mvfit)
+                  2.5 %      97.5 %
+(Intercept) 11.79032020 14.27126531
+Price       -0.06475984 -0.04419543
+USYes        0.69151957  1.70776632
+> par(mfrow=c(2,2))
+> plot(mvfit)

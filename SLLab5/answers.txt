@@ -1,0 +1,120 @@
+2.
+c)
+All but BIC indicate that either 3 or 8 is the optimal value for number of variables.
+It seems that three seems to be the best choice because it also is the smaller model.
+> coef(regfit.full,3)
+(Intercept)           x         x.2         x.3 
+  22.068243   49.123438    4.066615   65.983165 
+
+d)
+Similar results are found when using forward selection:
+> coef(regfit.forward, 3)
+(Intercept)           x         x.2         x.3 
+  22.068243   49.123438    4.066615   65.983165 
+
+and for backward:
+> coef(regfit.back,3)
+(Intercept)           x         x.2         x.3 
+  22.068243   49.123438    4.066615   65.983165 
+
+It this case I doubt there is enough noise or variance for all three subset approaches ot differ.
+
+e)
+> coef(cv.lasso)
+11 x 1 sparse Matrix of class "dgCMatrix"
+                   1
+(Intercept) 25.62908
+x           39.54565
+x.2          .      
+x.3         65.39030
+x.4          .      
+x.5          .      
+x.6          .      
+x.7          .      
+x.8          .      
+x.9          .      
+x.10         .      
+
+> cv.lasso$lambda.min
+[1] 9.019395
+
+We see that the min occurs at lambda=9.019. This indicates that a more flexible model
+performs well in the cross validation.
+
+f)
+1 subsets of each size up to 8
+Selection Algorithm: exhaustive
+         x   x.2 x.3 x.4 x.5 x.6 x.7 x.8 x.9 x.10
+1  ( 1 ) " " " " " " " " " " " " "*" " " " " " " 
+2  ( 1 ) " " "*" " " " " " " " " "*" " " " " " " 
+3  ( 1 ) " " " " " " "*" " " "*" "*" " " " " " " 
+4  ( 1 ) "*" "*" "*" " " " " " " "*" " " " " " " 
+5  ( 1 ) "*" "*" "*" " " "*" " " "*" " " " " " " 
+6  ( 1 ) "*" " " "*" " " " " " " "*" "*" "*" "*" 
+7  ( 1 ) "*" " " "*" "*" " " " " "*" "*" "*" "*" 
+8  ( 1 ) "*" "*" "*" "*" " " "*" "*" " " "*" "*" 
+
+> coef(regfit.full,3)
+(Intercept)         x.4         x.6         x.7 
+ 22.3344489  -0.2973164   0.0728009  86.9931196 
+
+> cv.lasso$lambda.min
+[1] 9.019395
+
+We see pretty similar results when dealing with the new model. The main change is 
+the specific features used to predict the model. 
+
+3.
+
+b) 
+> lm.err
+[1] 1350356
+c)
+> ridge.err
+[1] 3231001
+d)
+> lasso.err
+[1] 1770708
+e)
+> pcr.err
+[1] 2829459
+M=7
+f)
+> pls.err
+[1] 1457453
+M=6
+
+g)
+We see that the least squares error provided the best results. This make sense as much of
+our results until now have indicated a need for decreasing bias over variance. We see that
+the training approaches with less and less variance performed worse and worse.
+
+4.
+ 
+e)
+> test.errors
+ [1] 678313.67564 365880.59264 164756.62853  92945.35298  37088.97083
+ [6]  18562.03292  10362.52622   1444.59850     30.93019     30.05796
+[11]     30.45245     31.00734     31.64221     31.88250     32.29992
+[16]     32.71519     32.64501     32.60203     32.58213     32.63263
+
+we see that the model test error is minimized at size 10. This is approximately
+the halfway point and would also make sense because only half of the coeficients
+were non-zero.
+
+f)
+> beta
+ [1]  0  0  0 14  1 19  0  0 15  8  3  0  0 17  0 11  0  0  2  5
+> coef(regfit.full,id=10)
+(Intercept)          X4          X5          X6          X9 
+   1.199035   14.017363    1.789036   18.995520   15.003348 
+        X10         X11         X14         X16         X19 
+   8.006916    2.958597   17.004738   11.032496    1.992897 
+        X20 
+   4.929533
+
+We see that the coefficients correspond pretty well to the models without much variance
+from the true value. This is also because the error terms had a zero mean and relatively small
+variance.
+
+
